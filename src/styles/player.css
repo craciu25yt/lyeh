@@ -11,7 +11,7 @@ body[ng-app="genius.apple_music_player"] {
     padding: 0;
 }
 div[class="apple_music_player-player"] {
-    background-color: var(--derp-bg-secondary);
+    background-color: var(--lyeh-bg-secondary);
     border-radius: 10px;
 
     padding: 5px;
@@ -45,10 +45,10 @@ div[class^="apple_music_player-player-song_art"] {
     justify-content: center;
 }
 div[class^="apple_music_player-seekbar"]::before {
-    background-color: var(--derp-text-main);
+    background-color: var(--lyeh-text-main);
 }
 div[class^="apple_music_player-player-seekbar-dashed"] {
-    border-bottom: 2px dashed var(--derp-text-main);
+    border-bottom: 2px dashed var(--lyeh-text-main);
 }
 .cover_art-image {
     border-radius: 5px;
@@ -57,5 +57,5 @@ div[class^="apple_music_player-player-seekbar-dashed"] {
     background-color: transparent !important;
 }
 .apple_music_player-seekbar-scrubber-circle {
-    background-color: var(--derp-text-main) !important; /* Replace with your desired color */
+    background-color: var(--lyeh-text-main) !important; /* Replace with your desired color */
 }

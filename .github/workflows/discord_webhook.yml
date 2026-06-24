@@ -1,0 +1,95 @@
+name: Discord Webhook
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get commit info
+        id: commit_info
+        run: |
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+          BEFORE="${{ github.event.before }}"
+          AFTER="${{ github.event.after }}"
+
+          if [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+            echo "New branch or force push detected"
+
+            COMMIT_COUNT=$(git rev-list --count $AFTER)
+            CHANGES=$(git show --shortstat $AFTER)
+
+            COMMITS=$(git log --pretty=format:'• [`%h`](https://github.com/${{ github.repository }}/commit/%H) %s' $AFTER)
+            else
+            COMMIT_COUNT=$(git rev-list --count $AFTER ^$BEFORE)
+            CHANGES=$(git diff --shortstat $BEFORE $AFTER)
+
+            COMMITS=$(git log --pretty=format:'• [`%h`](https://github.com/${{ github.repository }}/commit/%H) %s' $BEFORE..$AFTER)
+            fi
+
+          FILES=$(echo "$CHANGES" | grep -o '[0-9]\+ file' | grep -o '[0-9]\+' || echo "0")
+          ADDS=$(echo "$CHANGES" | grep -o '[0-9]\+ insertion' | grep -o '[0-9]\+' || echo "0")
+          DELS=$(echo "$CHANGES" | grep -o '[0-9]\+ deletion' | grep -o '[0-9]\+' || echo "0")
+
+          # Escape commits as a JSON string
+          COMMITS_JSON=$(echo "$COMMITS" | jq -Rs .)
+
+          {
+            echo "commit_count=$COMMIT_COUNT"
+            echo "files_changed=$FILES"
+            echo "additions=$ADDS"
+            echo "deletions=$DELS"
+            echo "commits=$COMMITS_JSON"
+            } >> $GITHUB_OUTPUT
+      - name: Send Discord notification
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_EMBEDS: >
+            [
+              {
+                "color": 5763719,
+                "author": {
+                  "name": "${{ github.actor }}",
+                  "url": "https://github.com/${{ github.actor }}",
+                  "icon_url": "https://github.com/${{ github.actor }}.png"
+                },
+                "title": "[${{ github.repository }}:main] ${{ steps.commit_info.outputs.commit_count }} new commit(s)",
+                "url": "https://github.com/${{ github.repository }}/commit/${{ github.sha }}",
+                "description": ${{ steps.commit_info.outputs.commits }},
+                "fields": [
+                  {
+                    "name": "Files",
+                    "value": "${{ steps.commit_info.outputs.files_changed }} modified",
+                    "inline": true
+                  },
+                  {
+                    "name": "Additions",
+                    "value": "+${{ steps.commit_info.outputs.additions }}",
+                    "inline": true
+                  },
+                  {
+                    "name": "Deletions",
+                    "value": "-${{ steps.commit_info.outputs.deletions }}",
+                    "inline": true
+                  }
+                ],
+                "timestamp": "${{ github.event.head_commit.timestamp }}",
+                "footer": {
+                  "text": "GitHub",
+                  "icon_url": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                }
+              }
+            ]
+        with:
+          args: ""

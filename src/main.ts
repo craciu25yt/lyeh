@@ -27,7 +27,7 @@ class Genie {
 
 	private init() {
 		console.log("[Genie] Launching 🚀!");
-		document.documentElement.dataset.derpTheme = "dark";
+		document.documentElement.dataset.lyehTheme = "dark";
 
 		const url = new URL(window.location.href);
 		if (url.pathname.startsWith("/artists/")) {
@@ -93,14 +93,14 @@ class Genie {
 			// 			tempImg.onload = () => {
 			// 				const color = this.getAccent(tempImg);
 			// 				const baseColor = color.Vibrant?.color ?? color.LightVibrant?.color;
-			// 				document.documentElement.style.setProperty("--derp-current-song-accent", baseColor!.css());
+			// 				document.documentElement.style.setProperty("--lyeh-current-song-accent", baseColor!.css());
 			// 				const hsl = baseColor!.hsl();
 			// 				const h = hsl.h;
 			// 				const s = hsl.s;
 			// 				const l = hsl.l;
 
 			// 				document.documentElement.style.setProperty(
-			// 					"--derp-current-song-accent-secondary",
+			// 					"--lyeh-current-song-accent-secondary",
 			// 					`hsl(${h}, ${s}%, ${Math.max(0, l - 20)}%)`,
 			// 				);
 
@@ -135,11 +135,11 @@ class Genie {
 					if (node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`)) {
 						const targets = node.querySelectorAll('[class^="LineItem__ItemRow"]');
 						for (const target of targets) {
-							target.parentElement!.classList.add("Derp__ItemParent");
+							target.parentElement!.classList.add("lyeh__ItemParent");
 						}
 					}
 					if (node.querySelector(`[class^="LineItem__ItemRow"]`)) {
-						node.classList.add("Derp__ItemParent");
+						node.classList.add("lyeh__ItemParent");
 						console.log("lirico en la casa");
 					}
 					if (node.matches('[class^="PortalTooltip__Content"]')) {
@@ -301,7 +301,7 @@ class Genie {
 					document.documentElement.style.setProperty("--current-accent", accentColor);
 
 					document.documentElement.style.setProperty(
-						"--derp-bg-primary",
+						"--lyeh-bg-primary",
 						`color-mix(in oklch, ${accentColor} 15%, #292424)`,
 					);
 				}
@@ -314,7 +314,7 @@ class Genie {
 
 			if (songAnchor) {
 				document.documentElement.style.setProperty("--current-accent", "rgb(255, 255, 100)");
-				document.documentElement.style.setProperty("--derp-bg-primary", "#292424");
+				document.documentElement.style.setProperty("--lyeh-bg-primary", "#292424");
 			}
 		});
 	}

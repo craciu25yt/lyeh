@@ -1,12 +1,12 @@
 h4[class^="SiteCommandPalettePage__PageContainer"] {
-    color: var(--derp-text-main) !important;
+    color: var(--lyeh-text-main) !important;
 }
 [class^="SiteCommandPaletteItem__Title"] {
-    color: var(--derp-text-main) !important;
+    color: var(--lyeh-text-main) !important;
 }
 
 div[class^="SiteCommandPalettePage__PageContainer"] h4 {
-    color: var(--derp-text-main) !important;
+    color: var(--lyeh-text-main) !important;
 }
 div[class^="SiteCommandPalettePage__PageContainer"] *[class^="command-palette-list-item"] {
     border-radius: 15px !important;
@@ -21,7 +21,7 @@ input#command-palette-search-input[type="text"] {
     background-image: none !important;
     background-color: rgba(21, 26, 26, 0.5) !important;
     backdrop-filter: blur(10px);
-    color: var(--derp-text-main);
+    color: var(--lyeh-text-main);
     border-radius: 15px !important;
 }
 

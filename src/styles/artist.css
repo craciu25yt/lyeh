@@ -1,5 +1,5 @@
 h2 {
-    color: var(--derp-text-main) !important;
+    color: var(--lyeh-text-main) !important;
 }
 nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"]) {
     background-color: var(--current-accent);
@@ -13,18 +13,18 @@ nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"
     text-decoration: none !important;
 }
 main[class*="ProfileContent-desktop__PageGrid"] path {
-    fill: var(--derp-text-main) !important;
+    fill: var(--lyeh-text-main) !important;
 }
 div[class^="DiscographyItem__Info"] {
-    color: var(--derp-text-main) !important;
+    color: var(--lyeh-text-main) !important;
 }
 
 span[class^="LabelWithIcon__Container"] path {
-    fill: var(--derp-text-main) !important;
+    fill: var(--lyeh-text-main) !important;
 }
 
 button[class^="DropdownList__LabeledButton"] {
-    border: 1px solid var(--derp-text-main);
+    border: 1px solid var(--lyeh-text-main);
 }
 button[class^="DropdownList__LabeledButton"]:hover {
     background-color: rgba(250, 100, 160, 0.5) !important;
@@ -118,7 +118,7 @@ a[class^="ProfilesDropdown__SocialLink"]:hover {
     background-color: rgba(250, 100, 160, 0.5);
 }
 span[class^="DropdownList__Caret"] {
-    background-color: var(--derp-text-main) !important;
+    background-color: var(--lyeh-text-main) !important;
 }
 div[class^="QuestionAnswerList__List"] {
     gap: 10px;
@@ -126,5 +126,5 @@ div[class^="QuestionAnswerList__List"] {
 a[class^="QuestionAnswerList__ItemContainer"] {
     border-radius: 10px !important;
     column-gap: 10px;
-    border: 1px solid var(--derp-text-main) !important;
+    border: 1px solid var(--lyeh-text-main) !important;
 }

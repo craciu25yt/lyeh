@@ -33,7 +33,7 @@ div[class^="LineItem__ItemRow"]:hover {
 }
 
 div[class^="Annotation__Container"] {
-    color: var(--derp-text-main);
+    color: var(--lyeh-text-main);
 }
 /*wtf bro*/
 div[class^="LineItemList__Container"],
@@ -52,13 +52,13 @@ body[class^="act-embed cont-searches"] {
     border-radius: 10px;
     background-color: rgba(41, 36, 36, 0.4);
     backdrop-filter: blur(10px);
-    color: var(--derp-text-main);
+    color: var(--lyeh-text-main);
 }
 mini-song-card .mini_card {
     padding: 10px;
 }
 .mini_card path {
-    fill: var(--derp-text-main) !important;
+    fill: var(--lyeh-text-main) !important;
 }
 .mini_card:hover {
     background-color: #16141496 !important;
@@ -79,7 +79,7 @@ div[class^="thumbnail_grid"] {
     border-radius: 10px;
     background-color: rgba(41, 36, 36, 0.4) !important;
     backdrop-filter: blur(10px);
-    color: var(--derp-text-main);
+    color: var(--lyeh-text-main);
 }
 div[class^="thumbnail_grid-grid_element"] {
     padding: 5px;

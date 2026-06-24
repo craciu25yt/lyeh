@@ -7,10 +7,10 @@ nav[class^="StickyNav-desktop__Container"] div[class^="PageHeaderMenu__Container
 }
 
 div[class^="Question__Attribution"] {
-    color: var(--derp-text-main);
+    color: var(--lyeh-text-main);
 }
 div[class^="Contributors__LabelContainerRow"] {
-    color: var(--derp-text-main);
+    color: var(--lyeh-text-main);
 }
 div[class^="Answer-desktop__Card"] {
     border-radius: 10px;

@@ -3,7 +3,7 @@ div[class^="styleAnchors__PageHeaderDropdownMenu"] {
     border-radius: 10px;
     background-color: rgba(41, 36, 36, 0.4);
     backdrop-filter: blur(10px);
-    color: var(--derp-text-main);
+    color: var(--lyeh-text-main);
     top: 3rem !important;
 }
 
@@ -20,7 +20,7 @@ div[class*="styleAnchors__PageHeaderDropdownMenu"][class*="PageHeaderDropdown-de
 
 [class^="PageHeaderMenu__Title"][class*="PageHeaderMenu__Item"]:hover {
     background-color: rgba(250, 100, 160, 0.7) !important;
-    color: var(--derp-text-main);
+    color: var(--lyeh-text-main);
     transition: background-color 0.3s;
 }
 
@@ -29,7 +29,7 @@ div[class^="PageHeaderInbox-desktop__Label"] {
 }
 
 form[class^="StickyNavSearch-desktop__Form"] {
-    background-color: var(--derp-bg-primary);
+    background-color: var(--lyeh-bg-primary);
     border-radius: 15px;
 }
 
@@ -39,7 +39,7 @@ input[class^="StickyNavSearch-desktop__Input"] {
     -webkit-text-fill-color: #ffffff !important; /* Forces Chrome/Safari to cooperate */
 
     margin-left: 15px;
-    background-color: var(--derp-bg-primary);
+    background-color: var(--lyeh-bg-primary);
 }
 
 div[class^="styleAnchors__PageHeaderDropdownMenu"] div[class^="LineItemList__Container"] {
@@ -52,14 +52,14 @@ div[class^="LineItemDetail__Container"] {
 div[class^="LyricsDiffsSection__Container"] {
     background-color: transparent !important;
 }
-div[class="Derp__ItemParent"]:has([class^="LineItemDetail__Container"]) [class^="LineItem__ItemRow"] {
+div[class="lyeh__ItemParent"]:has([class^="LineItemDetail__Container"]) [class^="LineItem__ItemRow"] {
     border-radius: 10px 10px 0 0;
     border-bottom: none !important;
 }
-div[class="Derp__ItemParent"]:has([class^="LineItemDetail__Container"]) [class^="LineItemDetail__Container"] {
+div[class="lyeh__ItemParent"]:has([class^="LineItemDetail__Container"]) [class^="LineItemDetail__Container"] {
     border-radius: 0 0 10px 10px;
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    color: var(--derp-text-main) !important;
+    color: var(--lyeh-text-main) !important;
 }
 
 div[class^="ExpandableDiff__Lines"] ins {
@@ -177,7 +177,7 @@ textarea[class^="square_input"]:focus {
 .square_button {
     background-color: #161414 !important;
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    color: var(--derp-text-main) !important;
+    color: var(--lyeh-text-main) !important;
     border-radius: 10px !important;
     padding: 5px 10px !important;
 }
