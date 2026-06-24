@@ -1,17 +1,19 @@
 // ==UserScript==
-// @name       Genie
-// @namespace  npm/genius-bleh
-// @version    1.0.0
-// @match      https://genius.com/*
-// @connect    genius.com
-// @connect    images.genius.com
-// @connect    t2.genius.com
-// @grant      GM_addStyle
-// @grant      GM_deleteValue
-// @grant      GM_getValue
-// @grant      GM_setValue
-// @grant      GM_xmlhttpRequest
-// @run-at     document-start
+// @name         Genie
+// @namespace    npm/genius-bleh
+// @version      1.0.0
+// @downloadURL  https://craciu25yt.github.io/lyeh/genie.derp.user.js
+// @updateURL    https://craciu25yt.github.io/lyeh/genie.derp.user.js
+// @match        https://genius.com/*
+// @connect      genius.com
+// @connect      images.genius.com
+// @connect      t2.genius.com
+// @grant        GM_addStyle
+// @grant        GM_deleteValue
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_xmlhttpRequest
+// @run-at       document-start
 // ==/UserScript==
 
 (function() {
