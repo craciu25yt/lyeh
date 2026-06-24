@@ -1,0 +1,61 @@
+div[class^="apple_music_player-container"] {
+    border: 0 !important;
+    background-color: transparent;
+}
+
+body[ng-app="genius.apple_music_player"] {
+    background-color: transparent !important;
+    display: block;
+
+    border-radius: 10px;
+    padding: 0;
+}
+div[class="apple_music_player-player"] {
+    background-color: var(--derp-bg-secondary);
+    border-radius: 10px;
+
+    padding: 5px;
+}
+div[class^="apple_music_player-player-info"] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+div[class^="apple_music_player-player-info-title"] {
+    font-size: 1rem;
+    margin: 0 !important; /* Kills default browser margins */
+    padding: 0;
+    padding-left: 5px;
+    line-height: 1.2;
+}
+div[class^="apple_music_player-player-info-artist"] {
+    font-size: 0.8rem;
+    margin: 0 !important; /* Kills default browser margins */
+    padding: 0;
+    padding-left: 5px;
+    line-height: 1.2;
+}
+div[class^="apple_music_player-player-song_art"] {
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    position: static;
+    align-items: center;
+    justify-content: center;
+}
+div[class^="apple_music_player-seekbar"]::before {
+    background-color: var(--derp-text-main);
+}
+div[class^="apple_music_player-player-seekbar-dashed"] {
+    border-bottom: 2px dashed var(--derp-text-main);
+}
+.cover_art-image {
+    border-radius: 5px;
+}
+.cover_art {
+    background-color: transparent !important;
+}
+.apple_music_player-seekbar-scrubber-circle {
+    background-color: var(--derp-text-main) !important; /* Replace with your desired color */
+}

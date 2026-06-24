@@ -1,0 +1,17 @@
+nav[class^="StickyNav-desktop__Left"] span {
+    color: color-contrast(var(--current-accent)) !important;
+}
+
+nav[class^="StickyNav-desktop__Container"] div[class^="PageHeaderMenu__Container"] span {
+    color: color-contrast(var(--current-accent)) !important;
+}
+
+div[class^="Question__Attribution"] {
+    color: var(--derp-text-main);
+}
+div[class^="Contributors__LabelContainerRow"] {
+    color: var(--derp-text-main);
+}
+div[class^="Answer-desktop__Card"] {
+    border-radius: 10px;
+}

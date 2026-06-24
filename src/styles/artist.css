@@ -1,0 +1,130 @@
+h2 {
+    color: var(--derp-text-main) !important;
+}
+nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"]) {
+    background-color: var(--current-accent);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"]) :is(svg, a, span) {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+    fill: contrast-color(var(--current-accent));
+    color: contrast-color(var(--current-accent)) !important;
+    text-decoration: none !important;
+}
+main[class*="ProfileContent-desktop__PageGrid"] path {
+    fill: var(--derp-text-main) !important;
+}
+div[class^="DiscographyItem__Info"] {
+    color: var(--derp-text-main) !important;
+}
+
+span[class^="LabelWithIcon__Container"] path {
+    fill: var(--derp-text-main) !important;
+}
+
+button[class^="DropdownList__LabeledButton"] {
+    border: 1px solid var(--derp-text-main);
+}
+button[class^="DropdownList__LabeledButton"]:hover {
+    background-color: rgba(250, 100, 160, 0.5) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+button[class^="VotingActions__Button"][aria-pressed="true"] svg[class^="VotingActions__ThumbsUp"] path {
+    fill: #4bbf38 !important;
+}
+button[class^="VotingActions__Button"][aria-pressed="true"] svg[class^="VotingActions__ThumbsDown"] path {
+    fill: #bf4538 !important;
+}
+a[class^="DiscographyItem__Container"] {
+    padding: 3px;
+    border-radius: 10px;
+}
+a[class^="DiscographyItem__Container"]:hover {
+    scale: 1.1;
+    background-color: #16141496;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+div[class^="SizedImage__Container"] {
+    border-radius: 8px;
+}
+div[class^="PopularSongs__Container"],
+div[class^="PopularAlbums__Container"] {
+    background-color: #16141496 !important;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+}
+
+button[class*="ProfileContent-desktop__FeaturedButton"] {
+    background-color: transparent;
+}
+h3[class^="VerifiedBadge__VerifiedBadgeContainer-sc"] {
+    background-color: var(--current-accent);
+    padding: 2px 6px;
+    border-radius: 10px;
+    color: black;
+    fill: white;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+    color: contrast-color(var(--current-accent)) !important;
+}
+h3[class^="VerifiedBadge__VerifiedBadgeContainer-sc"] svg {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+    fill: contrast-color(var(--current-accent));
+}
+h3[class^="VerifiedBadge__VerifiedBadgeContainer-sc"] path {
+    fill: contrast-color(contrast-color(var(--current-accent)));
+}
+
+div[class^="ArtistAvatar__Container"] {
+    border-color: var(--current-accent);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+ul[class^="DiscographyItemList"] {
+    gap: 1rem;
+    overflow: visible;
+}
+
+a[class*="OptOutButton__Container-sc"] {
+    display: none;
+}
+
+hr[class^="ProfileContent-desktop__Divider"] {
+    border-color: rgb(255 255 255 / 20%);
+}
+
+div[class^="CollaboratorEntry__Container"],
+li[class^="IqEarnersList__List"] {
+    border-color: rgb(255 255 255 / 20%) !important;
+}
+/*
+button[class^="PagingActions__PageButton"]:has([style*="background-color"]) {
+    background-color: red;
+}*/
+/* genius just don't update your page 🙏 (will add js in future just too lazy rn)*/
+.iHfhfx {
+    background-color: rgba(250, 100, 160, 0.5);
+}
+
+ul[class^="DropdownList__ItemsContainer"] {
+    background-color: #16141496;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+}
+a[class^="ProfilesDropdown__SocialLink"]:hover {
+    background-color: rgba(250, 100, 160, 0.5);
+}
+span[class^="DropdownList__Caret"] {
+    background-color: var(--derp-text-main) !important;
+}
+div[class^="QuestionAnswerList__List"] {
+    gap: 10px;
+}
+a[class^="QuestionAnswerList__ItemContainer"] {
+    border-radius: 10px !important;
+    column-gap: 10px;
+    border: 1px solid var(--derp-text-main) !important;
+}

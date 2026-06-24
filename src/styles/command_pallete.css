@@ -1,0 +1,36 @@
+h4[class^="SiteCommandPalettePage__PageContainer"] {
+    color: var(--derp-text-main) !important;
+}
+[class^="SiteCommandPaletteItem__Title"] {
+    color: var(--derp-text-main) !important;
+}
+
+div[class^="SiteCommandPalettePage__PageContainer"] h4 {
+    color: var(--derp-text-main) !important;
+}
+div[class^="SiteCommandPalettePage__PageContainer"] *[class^="command-palette-list-item"] {
+    border-radius: 15px !important;
+    margin-bottom: 2px;
+}
+
+input#command-palette-search-input[type="text"] {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important; /* Forces Chrome/Safari to cooperate */
+}
+.command-palette div[id^="headlessui-dialog-panel-"] {
+    background-image: none !important;
+    background-color: rgba(21, 26, 26, 0.5) !important;
+    backdrop-filter: blur(10px);
+    color: var(--derp-text-main);
+    border-radius: 15px !important;
+}
+
+.command-palette [class*="bg-gray-900"][class*="bg-opacity-80"] {
+    background-color: transparent;
+}
+
+/*allow scroll*/
+html {
+    overflow: visible !important;
+    overflow-y: visible !important;
+}

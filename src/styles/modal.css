@@ -1,0 +1,92 @@
+html {
+    scroll-behavior: smooth;
+}
+
+div[class^="Modal-shared__ModalSharedContainer"] {
+    background-color: transparent;
+}
+
+/*Contributions*/
+div[class^="ContributionsScholars__Container"] {
+    background-image: none;
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    border-radius: 10px 10px 0 0;
+    backdrop-filter: blur(5px);
+}
+
+div[class^="RecentActivity__Container"] {
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+div[class^="LineItem__ItemRow"] {
+    background-color: #16141496;
+    /*box-shadow: 8px 8px 12px black;*/
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border: 0;
+    border-radius: 10px;
+    margin-top: 8px;
+}
+div[class^="LineItem__ItemRow"]:hover {
+    background-color: #161414;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); /*I love u spikerko*/
+}
+
+div[class^="Annotation__Container"] {
+    color: var(--derp-text-main);
+}
+/*wtf bro*/
+div[class^="LineItemList__Container"],
+div[class^="LineItemList__Container"] > div {
+    background: transparent !important;
+}
+
+/* searchbar */
+body[class^="act-embed cont-searches"] {
+    background-color: transparent !important;
+    padding: 20px;
+}
+
+.mini_card {
+    border: 1px solid rgb(125 125 125);
+    border-radius: 10px;
+    background-color: rgba(41, 36, 36, 0.4);
+    backdrop-filter: blur(10px);
+    color: var(--derp-text-main);
+}
+mini-song-card .mini_card {
+    padding: 10px;
+}
+.mini_card path {
+    fill: var(--derp-text-main) !important;
+}
+.mini_card:hover {
+    background-color: #16141496 !important;
+}
+.mini_card-lyric_excerpt span {
+    background-color: rgba(250, 100, 160, 0.5) !important;
+    color: #d6d6d6 !important;
+}
+div[class^="mini_card-thumbnail"] {
+    border-radius: 10px;
+}
+a[class^="full_width_button"] {
+    background-color: transparent !important;
+}
+
+div[class^="thumbnail_grid"] {
+    border: 1px solid rgb(125 125 125);
+    border-radius: 10px;
+    background-color: rgba(41, 36, 36, 0.4) !important;
+    backdrop-filter: blur(10px);
+    color: var(--derp-text-main);
+}
+div[class^="thumbnail_grid-grid_element"] {
+    padding: 5px;
+}
+div[class^="thumbnail_grid-grid_element"]:hover {
+    background-color: #16141496 !important;
+}
+.vertical_album_card:hover {
+    background-color: unset !important;
+}

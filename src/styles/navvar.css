@@ -1,0 +1,214 @@
+/* Globals */
+div[class^="styleAnchors__PageHeaderDropdownMenu"] {
+    border-radius: 10px;
+    background-color: rgba(41, 36, 36, 0.4);
+    backdrop-filter: blur(10px);
+    color: var(--derp-text-main);
+    top: 3rem !important;
+}
+
+div[class^="styleAnchors__PageHeaderDropdownMenu"][class*="PageHeaderDropdown-desktop__Container"]:has(
+        [src*="/inboxes/messages_inbox?embed=true"]
+    ) {
+    width: 40vw !important;
+}
+
+div[class*="styleAnchors__PageHeaderDropdownMenu"][class*="PageHeaderDropdown-desktop__Container"] {
+    width: 35vw !important;
+}
+/* Me */
+
+[class^="PageHeaderMenu__Title"][class*="PageHeaderMenu__Item"]:hover {
+    background-color: rgba(250, 100, 160, 0.7) !important;
+    color: var(--derp-text-main);
+    transition: background-color 0.3s;
+}
+
+div[class^="PageHeaderInbox-desktop__Label"] {
+    display: none !important;
+}
+
+form[class^="StickyNavSearch-desktop__Form"] {
+    background-color: var(--derp-bg-primary);
+    border-radius: 15px;
+}
+
+input[class^="StickyNavSearch-desktop__Input"] {
+    justify-content: center;
+    color: white !important;
+    -webkit-text-fill-color: #ffffff !important; /* Forces Chrome/Safari to cooperate */
+
+    margin-left: 15px;
+    background-color: var(--derp-bg-primary);
+}
+
+div[class^="styleAnchors__PageHeaderDropdownMenu"] div[class^="LineItemList__Container"] {
+    margin: 20px;
+}
+
+div[class^="LineItemDetail__Container"] {
+    background-color: #16141496 !important;
+}
+div[class^="LyricsDiffsSection__Container"] {
+    background-color: transparent !important;
+}
+div[class="Derp__ItemParent"]:has([class^="LineItemDetail__Container"]) [class^="LineItem__ItemRow"] {
+    border-radius: 10px 10px 0 0;
+    border-bottom: none !important;
+}
+div[class="Derp__ItemParent"]:has([class^="LineItemDetail__Container"]) [class^="LineItemDetail__Container"] {
+    border-radius: 0 0 10px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: var(--derp-text-main) !important;
+}
+
+div[class^="ExpandableDiff__Lines"] ins {
+    background-color: #13ff004a !important;
+}
+div[class^="ExpandableDiff__Lines"] del {
+    background-color: #ff00004a !important;
+}
+
+div[class^="DetailSection__SectionWrapper"] {
+    background-color: transparent !important;
+}
+div[class^="DetailSection__SectionWrapper"]:first-child {
+    background-color: transparent !important;
+    margin-top: 10px;
+}
+div[class^="DetailSection-shared"] {
+    background-color: transparent !important;
+}
+a[class^="MiniCard__Link"] {
+    background-color: #16141496 !important;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    padding: 0.5rem;
+}
+a[class^="MiniCard__Link"]:hover {
+    background-color: rgba(250, 100, 160, 0.7) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+div[class*="MiniCard__Thumbnail"] {
+    border-radius: 10px;
+}
+
+div[class^="Referent__FragmentContainer"] {
+    background-color: transparent;
+}
+a[class^="Referent__FragmentHighlight"] {
+    background-color: transparent;
+}
+a[class^="UnreviewedAnnotation__Unreviewed"],
+div[class^="UnreviewedAnnotation__Unreviewed"] {
+    background: transparent !important;
+    border-radius: 4px;
+}
+
+/* Messages */
+
+body[class^="act-messages_inbox"] {
+    background-color: transparent !important;
+}
+div[class^="feed_dropdown-item"] {
+    background-color: transparent !important;
+    margin: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+
+    background-color: #16141496 !important;
+    border-radius: 10px;
+}
+div[class^="feed_dropdown-item"]:hover {
+    background-color: #161414 !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); /*I love u spikerko*/
+}
+/*
+div[class*="styleAnchors__PageHeaderDropdownMenu"][class*="PageHeaderDropdown-desktop__Container"] {
+    width: 35vw !important;
+}*/
+
+.modal_window-content {
+    background-color: transparent !important;
+}
+.modal_window-content p {
+    background-color: rgba(250, 100, 160, 0.5);
+    padding: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 5px;
+}
+
+/*div[class^="modal_window-content"] p::before {
+    content: "";
+    position: absolute;
+
+    top: 0px;
+
+    left: 34px;
+
+    border-style: solid;
+    border-width: 5px 10px 5px 0;
+    border-color: transparent rgba(250, 100, 160, 0.6) transparent transparent;
+
+    display: block;
+    width: 0;
+    z-index: 5;
+}*/
+
+.u-dark_overlay::before {
+    background-color: #16141496 !important;
+}
+.conversation-compose_area {
+    background-color: transparent !important;
+}
+
+textarea[class^="square_input"] {
+    background-color: transparent !important;
+    color: white !important;
+    border-radius: 10px !important;
+    padding: 5px 10px !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+textarea[class^="square_input"]:focus {
+    box-shadow: rgba(250, 100, 160, 0.5) 0 0 0.3em inset !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.square_button {
+    background-color: #161414 !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: var(--derp-text-main) !important;
+    border-radius: 10px !important;
+    padding: 5px 10px !important;
+}
+.square_button:hover {
+    background-color: rgba(250, 100, 160, 0.5) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+span[class*="text_label--purple"] {
+    border-color: none !important;
+    background-color: transparent;
+    border: none;
+}
+div[class="conversation"] span[class*="text_label"]:not([class*="text_label--purple"]) {
+    border-bottom: 1px !important;
+    background-color: rgba(250, 100, 160, 0.5);
+    padding: 3px;
+    border-radius: 4px;
+}
+
+div[class^="MetadataChangesSection__Container"] {
+    background: transparent;
+    padding: 0;
+}
+
+div[class^="LineItem__EventCountBadge"] {
+    border: 1px solid rgb(125 125 125);
+    background-color: rgb(0 0 0 / 40%) !important;
+    color: rgb(255 255 255);
+}
+
+div[class^="StickyNavSearch-desktop__Icon"] path {
+    fill: white !important;
+}

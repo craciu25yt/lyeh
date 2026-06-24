@@ -1,0 +1,279 @@
+/* Inject global theme configurations directly */
+:root[data-derp-theme="dark"] {
+    --derp-bg-primary: #292424;
+    --derp-bg-shadow: #1a1616;
+    --derp-bg-secondary: #362f2f;
+    --derp-bg-thirdy: #2e2828;
+    --derp-accent: #ed4597; /* Custom accent color instead of Genius yellow */
+    --derp-text-main: #f1f2f6;
+    --derp-text-muted: #a4b0be;
+
+    --derp-current-song-accent: #000000; /* fallback */
+    --derp-current-song-accent-secondary: #000000; /* fallback */
+    --artist-banner-url: linear-gradient(
+        180deg,
+        rgba(30, 30, 46, 1) 0%,
+        rgba(49, 50, 68, 1) 50%,
+        rgba(30, 30, 46, 1) 100%
+    );
+    --current-accent: rgb(255, 255, 100);
+}
+
+/* Overwrite the structural layout safely */
+body,
+div[class^="PageLayout__Container"],
+main {
+    background-color: var(--derp-bg-primary) !important;
+    color: var(--derp-text-main) !important;
+    fill: var(--derp-text-main) !important;
+    transition: background-color 1s;
+}
+
+div[class^="Lyrics__Container"] {
+    font-size: 1.15rem !important;
+    letter-spacing: -0.01em !important;
+    line-height: 1.7 !important;
+    color: var(--derp-text-main) !important;
+}
+
+div[class^="Lyrics__Container"] a {
+    color: inherit !important;
+    text-decoration-color: var(--derp-accent) !important;
+    border-bottom: 1px dashed rgba(255, 71, 87, 0.3);
+    transition: all 0.2s ease;
+}
+
+div[class^="Lyrics__Container"] a:hover {
+    background: rgba(255, 71, 87, 0.1);
+    border-bottom: 1px solid var(--derp-accent);
+}
+
+span[class^="ReferentFragment"] {
+    background: var(--derp-bg-secondary);
+    color: var(--derp-text-main) !important;
+}
+
+span[class^="ReferentFragment"]:hover {
+    background: rgba(250, 100, 160, 0.7);
+    border-bottom: 1px solid var(--derp-accent);
+    color: var(--derp-text-main) !important;
+}
+
+*[class^="TextLabel"] {
+    color: var(--derp-text-main) !important;
+}
+
+*[class^="ContributorsCreditSong"] {
+    color: var(--derp-text-main) !important;
+}
+a:not([class^="StickyNavSectionLink__StyledLink"]) {
+    color: var(--derp-text-main) !important;
+    text-decoration: underline rgba(255, 255, 255, 0.5) !important;
+}
+span {
+    color: var(--derp-text-main) !important;
+}
+
+div[class^="SongHeader-desktop__CoverArt"] img {
+    border-radius: 10px;
+}
+div[class^="ContributorSidebar__Container"] {
+    background-color: var(--derp-bg-secondary) !important;
+    padding-right: 14px;
+    border-radius: 15px;
+    box-shadow: 10px 5px 5px var(--derp-bg-shadow);
+}
+
+button[class^="Button__Container-sc"] {
+    color: var(--derp-text-main) !important;
+    border: 1px solid var(--derp-text-main);
+}
+button[class^="Button__Container-sc"]:hover {
+    background-color: rgba(250, 100, 160, 0.5) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+a[class^="Button__Container-sc"] {
+    color: var(--derp-text-main) !important;
+    border: 1px solid var(--derp-text-main);
+}
+a[class^="Button__Container-sc"]:hover {
+    background-color: rgba(250, 100, 160, 0.5) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+button[class^="ContributorActionTextbox"] {
+    color: var(--derp-text-main) !important;
+    border: 1px solid var(--derp-text-main);
+}
+div[class^="ContributorSidebarSection__HeaderButtons"] svg path:first-child {
+    fill: var(--derp-text-main) !important;
+}
+div[class^="ContributorSidebarSection__HeaderButtons"] svg path:last-child {
+    fill: var(--derp-bg-primary) !important;
+}
+/*Pagegrid bad*/
+div[class^="PageGrid-desktop"][class*="StickyToolbar__Container"] {
+    background-color: var(--derp-bg-primary) !important;
+    border-bottom: none;
+}
+button[class^="SmallButton__Container"] {
+    color: var(--derp-text-main) !important;
+    border-color: var(--derp-text-main);
+}
+button[class^="SmallButton__Container"]:hover {
+    background-color: rgba(250, 100, 160, 0.5) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+a[class^="SmallButton__Container"] {
+    color: var(--derp-text-main) !important;
+    border-color: var(--derp-text-main);
+}
+a[class^="SmallButton__Container"]:hover {
+    background-color: rgba(250, 100, 160, 0.5) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+svg[class^="LineItemActionIcon__Icon"][data-action-name="recognized"] path,
+svg[class^="LineItemActionIcon__Icon"][data-action-name="accepted"] path,
+svg[class^="LineItemActionIcon__Icon"][data-action-name="hit_pageview_threshold"] path,
+svg[class^="LineItemActionIcon__Icon"][data-action-name="upvoted"] path {
+    fill: rgb(75 191 56) !important;
+}
+div[class^="LineItemList__Container"] path {
+    fill: rgb(154, 154, 154) !important;
+}
+div[class^="LineItem__IqDifference"] {
+    color: rgb(75 191 56) !important;
+}
+svg[class^="LineItemActionIcon__Icon"][data-action-name="earned"] path {
+    fill: #c7ba18 !important;
+}
+
+span[class^="ContributorActionTextbox"] {
+    color: var(--derp-text-main) !important;
+}
+/*nav[class^="StickyNav"] {
+    background-color: var(--derp-current-song-accent) !important;
+}
+div[data-testid="song-header"][data-testid="song-header"] {
+    background-image: linear-gradient(
+        var(--derp-current-song-accent),
+        var(--derp-current-song-accent-secondary)
+    ) !important;
+    z-index: 4;
+}
+[class^="StickyNavSectionLink__StyledLink"] {
+    color: contrast-color(var(--derp-current-song-accent)) !important;
+} */
+[color="background.iqPoints"] {
+    color: #4bbf38 !important;
+}
+[color="background.negativeNumber"] {
+    color: #f03e26 !important;
+}
+
+div[class^="ContributorsCreditMarkedComplete__CompletedUsernameContainer"] {
+    color: var(--derp-text-main) !important;
+}
+div[class^="TooltipShadow"] {
+    border-radius: 15px;
+    background-color: transparent;
+    position: relative;
+    color: var(--derp-text-main);
+    z-index: 1; /* Establish a stacking context */
+    overflow: hidden; /* Keeps the blurred edges from bleeding out */
+}
+
+/* The background layer */
+div[class^="TooltipShadow"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--artist-banner-url) !important;
+    background-size: cover;
+    background-position: center;
+    border: 0px;
+    filter: blur(2px) brightness(0.5);
+    transform: scale(1.1); /* Slight scale prevents white/transparent borders caused by blur */
+    z-index: -1; /* Pushes it behind the text/links */
+    border-radius: 15px !important;
+    transition: all 1s;
+}
+
+div[class^="ArtistTooltip__Verified"] {
+    color: black;
+    font-size: 0.75rem;
+    background-color: rgb(255, 255, 100);
+    border-radius: 15px !important;
+    text-align: center;
+    margin-right: 30%;
+}
+div[class^="TooltipShadow"]:has([class^="ArtistTooltip__Verified"]) {
+    box-shadow: 1px 1px 20px rgba(255, 255, 100, 0.5) !important;
+}
+
+div[class^="TooltipShadow"]:has([role="moderator"]) {
+    box-shadow: 1px 1px 20px rgba(4, 126, 198, 0.5) !important;
+}
+div[class^="Placeholder__Container"] {
+    background-color: rgba(250, 100, 160, 0.7) !important;
+}
+span[class^="UserBadge__Iq"] {
+    background-color: rgba(255, 255, 100, 0.8) !important;
+    color: black !important;
+    border-radius: 10px;
+    padding: 0.125rem 0.225rem;
+}
+
+button {
+    color: white !important;
+}
+
+div[class^="UserBadge__Role-sc-"] {
+    display: inline-flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 4px 0px;
+    transition: all 0.3s ease-in-out;
+}
+
+span[class^="UserBadge__RoleLabel-sc-"] {
+    max-width: 0;
+    opacity: 0;
+    white-space: nowrap;
+    display: inline-block;
+    transition:
+        max-width 0.3s ease-in-out,
+        opacity 0.2s ease-in-out,
+        margin 0.3s ease-in-out;
+    margin-right: 0;
+}
+
+div[class^="UserBadge__Role-sc-"]:hover span[class^="UserBadge__RoleLabel-sc-"] {
+    max-width: 100px;
+    opacity: 1;
+    margin-right: 6px;
+}
+
+span[class^="RoleIcon__Container-sc-"] {
+    display: flex;
+    align-items: center;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+span[class^="RoleIcon__Container-sc-"] svg {
+    width: 100%;
+    height: 100%;
+}
+div[class^="AlbumTracklist__Track"] {
+    color: var(--derp-text-main);
+}
+
+div[class^="PageGrid-desktop"][class*="SongHeader-desktop__Container"] :is(span, a, button, path) {
+    color: color-contrast(var(--current-accent)) !important;
+    fill: color-contrast(var(--current-accent)) !important;
+}

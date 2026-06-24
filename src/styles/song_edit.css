@@ -1,0 +1,11 @@
+textarea[class^="TextInput-sc"] {
+    color: var(--derp-text-main);
+    border: 1px solid var(--derp-text-main) !important;
+}
+
+/*No dynamic way. have to fix per update bruh. Too lazy to js rn*/
+button[class*="jSZRoS"] {
+    background-color: #56cd4d;
+    color: black !important;
+    border: 1px solid var(--derp-text-main) !important;
+}
