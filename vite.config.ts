@@ -12,6 +12,8 @@ export default defineConfig({
 				grant: ["GM_addStyle", "GM_xmlhttpRequest", "GM_getValue", "GM_setValue", "GM_deleteValue"],
 				connect: ["genius.com", "images.genius.com", "t2.genius.com"],
 				"run-at": "document-start",
+				updateURL: "https://craciu25yt.github.io/lyeh/genie.derp.user.js",
+				downloadURL: "https://craciu25yt.github.io/lyeh/genie.derp.user.js",
 			},
 		}),
 	],
