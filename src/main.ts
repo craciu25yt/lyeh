@@ -7,10 +7,15 @@ import "./styles/navvar.css";
 import "./styles/artist.css";
 import "./styles/faq.css";
 import "./styles/albums.css";
+import "./styles/user.css";
+import "./styles/home.css";
+import "./styles/add_song.css";
 import { getColorSync, getSwatches, getSwatchesSync } from "colorthief";
 
+import { createApp } from "vue";
+import App from "./app.vue";
 //@ts-ignore
-import { GM_xmlhttpRequest, GM_getValue, GM_setValue } from "$";
+import { GM_xmlhttpRequest, GM_getValue, GM_setValue, GM_info, unsafeWindow } from "$";
 
 // Grab the raw function pointer at the absolute top-level module scope
 const privilegedFetch = GM_xmlhttpRequest;
@@ -20,6 +25,9 @@ const covers = new Map<string, string>();
 const coverAccent = new Map<string, Promise<any>>();
 const progressBarRegex = /linear-gradient\(to right,\s*[^)]+\)\s*([\d.]+%)/;
 
+// lil skid. I love u genius devs don't sue me <3
+const COOKIE_NAME = "_genius_release_opt_in_add_song";
+const MAX_AGE = 60 * 60 * 24 * 60;
 class Genie {
 	constructor() {
 		this.init();
@@ -27,6 +35,7 @@ class Genie {
 
 	private init() {
 		console.log("[Genie] Launching 🚀!");
+
 		document.documentElement.dataset.lyehTheme = "dark";
 
 		const url = new URL(window.location.href);
@@ -37,10 +46,68 @@ class Genie {
 			}
 			this.mouseEvents();
 		}
-
+		if (url.pathname.startsWith("/new")) {
+			console.log("al vacio", document.cookie);
+			const cookieExists = new RegExp(COOKIE_NAME).test(document.cookie);
+			if (!cookieExists) {
+				document.cookie = `${COOKIE_NAME}=1; path=/; max-age=${MAX_AGE}; Secure; SameSite=Lax`;
+			}
+		}
 		window.addEventListener("DOMContentLoaded", () => {
 			this.observeDOM();
 			this.extractSongData();
+
+			const container = document.createElement("div");
+			container.id = "lyeh";
+			document.body.appendChild(container);
+			createApp(App).mount(container);
+
+			const cacheVersion = GM_getValue("lyeh:version");
+			const version = GM_info.script.version;
+
+			if (!cacheVersion) {
+				GM_setValue("lyeh:version", version);
+			} else {
+				const cacheParts = cacheVersion.split(".");
+				const cacheMajor = cacheParts[0];
+				const cacheMinor = cacheParts[0];
+				const cachePath = cacheParts[0];
+
+				const versionParts = version.split(".");
+				const major = versionParts[0];
+				const minor = versionParts[0];
+				const path = versionParts[0];
+				console.log(cacheMajor, major);
+
+				// todo: big (now's) noti for major, small noti like windows on minor/path. Also show what changed
+				if (cacheMajor != major) {
+					console.log("version missmatch");
+					window.dispatchEvent(
+						new CustomEvent("lyeh:version-mismatch", {
+							detail: { oldVersion: cacheVersion, newVersion: version },
+						}),
+					);
+					GM_setValue("lyeh:version", version);
+				}
+				if (cacheMinor != minor) {
+					console.log("version missmatch");
+					window.dispatchEvent(
+						new CustomEvent("lyeh:version-mismatch", {
+							detail: { oldVersion: cacheVersion, newVersion: version },
+						}),
+					);
+					GM_setValue("lyeh:version", version);
+				}
+				if (cachePath != path) {
+					console.log("version missmatch");
+					window.dispatchEvent(
+						new CustomEvent("lyeh:version-mismatch", {
+							detail: { oldVersion: cacheVersion, newVersion: version },
+						}),
+					);
+					GM_setValue("lyeh:version", version);
+				}
+			}
 		});
 		if (debug) {
 			window.addEventListener("keypress", (event) => {
@@ -198,19 +265,19 @@ class Genie {
 		const trackingData = (window as any).__PRELOADED_STATE__ || null;
 		if (trackingData) {
 			console.log("Genius Metadata captured:", trackingData);
-			for (const [_, data] of Object.entries(trackingData.entities.artists) as [string, any]) {
+			for (const [_, data] of Object.entries(trackingData.entities.artists || {}) as [string, any]) {
 				if (data.headerImageUrl) {
 					console.log(data.url, data.headerImageUrl);
 					banners.set(data.url, data.headerImageUrl);
 				}
 			}
-			for (const [_, data] of Object.entries(trackingData.entities.users) as [string, any]) {
+			for (const [_, data] of Object.entries(trackingData.entities.user || {}) as [string, any]) {
 				if (data.headerImageUrl) {
 					console.log(data.url, data.headerImageUrl);
 					banners.set(data.url, data.headerImageUrl);
 				}
 			}
-			for (const [_, data] of Object.entries(trackingData.entities.songs) as [string, any]) {
+			for (const [_, data] of Object.entries(trackingData.entities.songs || {}) as [string, any]) {
 				/* lets work with 300x300 instead of 1000x1000 */
 				if (data.songArtImageThumbnailUrl) {
 					covers.set(data.url, data.songArtImageThumbnailUrl);
@@ -218,7 +285,7 @@ class Genie {
 				}
 			}
 
-			for (const [_, data] of Object.entries(trackingData.entities.albums) as [string, any]) {
+			for (const [_, data] of Object.entries(trackingData.entities.albums || {}) as [string, any]) {
 				if (data.coverArtThumbnailUrl) {
 					coverAccent.set(data.url, this.getAccentCache(data.url, data.coverArtThumbnailUrl));
 				}

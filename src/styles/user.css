@@ -1,0 +1,32 @@
+div[class^="standalone_annotation"] {
+    background-color: #16141496;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+a[class^="referent--accent_font referent--line_break"] {
+    background-color: rgba(250, 100, 160, 0.7) !important;
+}
+div[class^="profile_achievements-badge-name"] {
+    color: var(--lyeh-text-main);
+}
+
+div[class^="statistics_panel"] {
+    background-color: transparent;
+}
+div[class^="statistics_panel"] path {
+    fill: var(--lyeh-text-main);
+}
+
+a[class^="profile_contribution"],
+a[class^="referent"] {
+    background-color: transparent !important;
+}
+
+div[class^="note_bubble"] {
+    background-color: var(--accent-muted) !important;
+}
+div[class^="note_bubble"]::before {
+    border-bottom-color: var(--accent-muted) !important;
+}

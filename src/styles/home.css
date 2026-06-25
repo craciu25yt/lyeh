@@ -1,0 +1,50 @@
+div[class^="HomeContent-desktop__Section"] {
+    background-color: transparent !important;
+}
+
+div[class^="HomeContent-desktop__Section"] :is(h2, h3) {
+    text-shadow: unset !important;
+    color: inherit;
+}
+div[class^="EditorialPlacement__Container"]:hover :is(h2, h3) {
+    color: var(--lyeh-accent) !important;
+}
+div[class^="SquareManySelects__Container"] {
+    background-color: #16141496;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+div[class^="SquareManySelects__Option"]:hover {
+    background-color: var(--accent-muted) !important;
+}
+a[class^="PageGrid-desktop"][class*="ChartItem-desktop__Row"]:hover {
+    background-color: #16141496;
+}
+
+/*not squared anymore lmao*/
+button[class^="SquareButton"] {
+    color: var(--lyeh-text-main) !important;
+    border: 1px solid var(--lyeh-text-main);
+    border-radius: 10px;
+}
+button[class^="SquareButton"]:hover {
+    background-color: var(--accent-muted);
+}
+/*not squared anymore lmao*/
+a[class^="SquareButton"] {
+    color: var(--lyeh-text-main) !important;
+    border: 1px solid var(--lyeh-text-main);
+    border-radius: 10px;
+}
+a[class^="SquareButton"]:hover {
+    background-color: var(--accent-muted);
+}
+
+div[class^="EditorialPlacement__Label"]::after {
+    border-bottom-color: white !important;
+}
+
+a[class^="PageGrid-desktop"][class*="CommunityRanking-desktop__Row"]:hover {
+    background-color: var(--accent-muted);
+}

@@ -8,6 +8,7 @@
     --lyeh-text-main: #f1f2f6;
     --lyeh-text-muted: #a4b0be;
 
+    --accent-muted: rgba(250, 100, 160, 0.5);
     --lyeh-current-song-accent: #000000; /* fallback */
     --lyeh-current-song-accent-secondary: #000000; /* fallback */
     --artist-banner-url: linear-gradient(
@@ -276,4 +277,42 @@ div[class^="AlbumTracklist__Track"] {
 div[class^="PageGrid-desktop"][class*="SongHeader-desktop__Container"] :is(span, a, button, path) {
     color: color-contrast(var(--current-accent)) !important;
     fill: color-contrast(var(--current-accent)) !important;
+}
+
+/*div[class^="white_container"] {
+    background-color: #16141496;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+}*/
+div[class^="white_container"] {
+    background-color: transparent;
+}
+
+span[class^="LineItemMessage__NoteBubble"] {
+    background-color: rgba(250, 100, 160, 0.7) !important;
+}
+
+input {
+    caret-color: var(--lyeh-accent);
+}
+
+/* metadata */
+
+div[class^="ScrollableTabs__TabNavContainer"] {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(5px);
+    border-radius: 15px 15px 0 0;
+}
+div[class^="ScrollableTabs__ContentArea"] {
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+}
+h3[class^="ScrollableTabsSection__Title"],
+legend[class^="Field-shared__FieldLabel"] {
+    color: var(--lyeh-text-main);
+}
+
+/* USE NORMAL CLASSES HERE PLS 🙏 THS ON UPDATE WILL DIE*/
+div[class^="css-hfv4dh-singleValue"] {
+    color: var(--lyeh-text-main);
 }

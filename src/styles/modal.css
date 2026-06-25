@@ -50,7 +50,7 @@ body[class^="act-embed cont-searches"] {
 .mini_card {
     border: 1px solid rgb(125 125 125);
     border-radius: 10px;
-    background-color: rgba(41, 36, 36, 0.4);
+    background-color: rgba(41, 36, 36, 0.4) !important;
     backdrop-filter: blur(10px);
     color: var(--lyeh-text-main);
 }

@@ -1,0 +1,62 @@
+div[class^="PageGrid-desktop"][class*="AddSongPage__PageGrid"] {
+    background-color: var(--lyeh-background-main) !important;
+    background-image: none;
+}
+/*this seemsv very unsatble*/
+.css-wkgora-control,
+.css-qabeig-control {
+    border-color: var(--lyeh-text-main) !important;
+    color: var(--lyeh-text-main) !important;
+}
+.css-13q8uhz-placeholder {
+    color: #9a9a9a !important;
+}
+.css-1wy0on6 path {
+    fill: var(--lyeh-text-main) !important;
+}
+.css-13q8uhz-placeholder path {
+    color: #9a9a9a !important;
+    fill: var(--lyeh-text-main) !important;
+}
+input[class^="TextInput"] {
+    border-color: var(--lyeh-text-main) !important;
+    color: var(--lyeh-text-main);
+}
+input[class^="TextInput"]::placeholder {
+    color: #9a9a9a;
+}
+input {
+    color: var(--lyeh-text-main) !important;
+}
+textarea[class^="TextInput"] {
+    border-color: var(--lyeh-text-main) !important;
+    color: var(--lyeh-text-main);
+}
+textarea[class^="TextInput"]::placeholder {
+    color: #9a9a9a;
+}
+
+div[class^="Lyrics__HelperText"],
+div[class^="Field-shared__FieldHelpText"] {
+    color: var(--lyeh-text-main) !important;
+}
+
+div[class^="LyricsTextarea__Container"] {
+    border-color: var(--lyeh-text-main) !important;
+    fill: var(--lyeh-text-main) !important;
+}
+div[class^="LyricsTextarea__Container"] path {
+    fill: var(--lyeh-text-main) !important;
+}
+
+fieldset[class^="DisclosureWidget__Container"],
+div[class^="AddSongForm__AdditionalMetadataContent"] {
+    border-color: var(--lyeh-text-main) !important;
+}
+div[class^="AddSongForm__AdditionalMetadataContent"] :is(legend, path) {
+    color: var(--lyeh-text-main) !important;
+    fill: var(--lyeh-text-main) !important;
+}
+legend[class^="DisclosureWidget__Header"] {
+    background-color: transparent !important;
+}

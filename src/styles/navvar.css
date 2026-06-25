@@ -16,6 +16,9 @@ div[class^="styleAnchors__PageHeaderDropdownMenu"][class*="PageHeaderDropdown-de
 div[class*="styleAnchors__PageHeaderDropdownMenu"][class*="PageHeaderDropdown-desktop__Container"] {
     width: 35vw !important;
 }
+div[aria-label^="User Menu"] ~ div[class*="styleAnchors__PageHeaderDropdownMenu"] {
+    width: 10vw !important;
+}
 /* Me */
 
 [class^="PageHeaderMenu__Title"][class*="PageHeaderMenu__Item"]:hover {
@@ -102,6 +105,11 @@ a[class^="Referent__FragmentHighlight"] {
 }
 a[class^="UnreviewedAnnotation__Unreviewed"],
 div[class^="UnreviewedAnnotation__Unreviewed"] {
+    background: transparent !important;
+    border-radius: 4px;
+}
+
+div[class^="dashed_background_message"] {
     background: transparent !important;
     border-radius: 4px;
 }
@@ -211,4 +219,42 @@ div[class^="LineItem__EventCountBadge"] {
 
 div[class^="StickyNavSearch-desktop__Icon"] path {
     fill: white !important;
+}
+
+/* iq oportunity */
+
+body[class^="act-iq_inbox cont-inboxes snarly"] {
+    background-color: transparent !important;
+}
+div[class^="contribution_opportunity"] {
+    border-radius: 10px;
+    background-color: #16141430 !important;
+    backdrop-filter: blur(10px);
+    box-shadow: none;
+}
+input[class^="square_input"] {
+    background-color: transparent !important;
+}
+input[class^="square_input"] {
+    background-color: transparent !important;
+}
+
+[class^="tags_input"] {
+    background-color: transparent !important; /* Your desired background color */
+}
+
+/* temp fix to iq in middle. I'm sleepy ok*/
+span[class^="square_item_and_iq"] span[class^="square_button"] {
+    background: rgb(20 20 20) !important;
+    z-index: 10;
+}
+span[class^="square_item_and_iq"] button[class^="square_button"] {
+    background: rgb(20 20 20) !important;
+    z-index: 10;
+}
+span[class^="square_item_and_iq"] span[class^="square_button"]:hover {
+    background: var(--lyeh-accent) !important;
+}
+span[class^="square_item_and_iq"] button[class^="square_button"]:hover {
+    background: var(--lyeh-accent) !important;
 }
