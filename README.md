@@ -9,3 +9,8 @@ Lyeh (or Genie 🧞) is a project that aims to improve the overall user experien
 ## How to install?
 To run Lyeh you need TamperMonkey, ViolentMonkey, or any fork of it.
 Then you simply click [here](https://craciu25yt.github.io/lyeh/genie.user.js) to add it!
+
+
+## Preview 
+https://github.com/user-attachments/assets/e1c8bbe7-1281-4037-9f0d-5f6d312a583d
+
