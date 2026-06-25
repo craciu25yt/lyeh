@@ -1,0 +1,19 @@
+div[class^="SectionTitle__Title-sc"] {
+    color: var(--lyeh-text-main);
+}
+div[class^="ExpandableListItem__Container"] {
+    border-color: var(--lyeh-text-main);
+}
+div[class^="ExpandableListItem__Title"] {
+    color: var(--lyeh-text-main);
+    background-color: transparent;
+}
+div[class^="AlbumCredits__Columns"] div {
+    color: var(--lyeh-text-main) !important;
+}
+div[class^="SongCredits__Columns"] div {
+    color: var(--lyeh-text-main) !important;
+}
+a[class^="SongTags__Tag"] {
+    border-color: var(--lyeh-text-main) !important;
+}

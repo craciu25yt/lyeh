@@ -29,7 +29,12 @@ main {
     fill: var(--lyeh-text-main) !important;
     transition: background-color 1s;
 }
-
+path {
+    fill: var(--lyeh-text-main);
+}
+div[class^="StickyNavLoggedIn__Container"] path {
+    fill: color-contrast(var(--current-accent));
+}
 div[class^="Lyrics__Container"] {
     font-size: 1.15rem !important;
     letter-spacing: -0.01em !important;
@@ -38,7 +43,6 @@ div[class^="Lyrics__Container"] {
 }
 
 div[class^="Lyrics__Container"] a {
-    color: inherit !important;
     text-decoration-color: var(--lyeh-accent) !important;
     border-bottom: 1px dashed rgba(255, 71, 87, 0.3);
     transition: all 0.2s ease;
@@ -296,6 +300,10 @@ input {
     caret-color: var(--lyeh-accent);
 }
 
+::selection {
+    color: white;
+    background-color: rgba(250, 100, 160, 0.7);
+}
 /* metadata */
 
 div[class^="ScrollableTabs__TabNavContainer"] {
@@ -315,4 +323,33 @@ legend[class^="Field-shared__FieldLabel"] {
 /* USE NORMAL CLASSES HERE PLS 🙏 THS ON UPDATE WILL DIE*/
 div[class^="css-hfv4dh-singleValue"] {
     color: var(--lyeh-text-main);
+}
+
+/* todo: order this 😭*/
+div[class^="LyricsHighlightTooltip__Content"] {
+    background-color: #16141496;
+    /*box-shadow: 8px 8px 12px black;*/
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px);
+    border: 0;
+    border-radius: 10px;
+    color: var(--lyeh-text-main);
+}
+div[class^="LyricsHighlightTooltip__Content"]:hover {
+    background-color: var(--accent-muted) !important;
+}
+button[class^="LyricsHighlightTooltip__Container"]::before {
+    display: none;
+}
+div[class^="LyricsHighlightTooltip__Content"]::before:hover {
+    background-color: var(--accent-muted) !important;
+}
+span[class^="LyricsHighlightTooltip__IQ"] {
+    color: #40ff21 !important;
+}
+a[class^="LyricsHeader__TranslationLink"] {
+    background: transparent;
+}
+a[class^="LyricsHeader__TranslationLink"]:hover {
+    background-color: var(--accent-muted) !important;
 }

@@ -24,7 +24,7 @@ span[class^="LabelWithIcon__Container"] path {
 }
 
 button[class^="DropdownList__LabeledButton"] {
-    border: 1px solid var(--lyeh-text-main);
+    border-color: var(--lyeh-text-main);
 }
 button[class^="DropdownList__LabeledButton"]:hover {
     background-color: rgba(250, 100, 160, 0.5) !important;
@@ -76,7 +76,7 @@ h3[class^="VerifiedBadge__VerifiedBadgeContainer-sc"] svg {
     fill: contrast-color(var(--current-accent));
 }
 h3[class^="VerifiedBadge__VerifiedBadgeContainer-sc"] path {
-    fill: contrast-color(contrast-color(var(--current-accent)));
+    fill: contrast-color(contrast-color(var(--current-accent))) !important;
 }
 
 div[class^="ArtistAvatar__Container"] {
@@ -113,6 +113,7 @@ ul[class^="DropdownList__ItemsContainer"] {
     background-color: #16141496;
     border: 1px solid rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(10px);
+    border-radius: 10px;
 }
 a[class^="ProfilesDropdown__SocialLink"]:hover {
     background-color: rgba(250, 100, 160, 0.5);

@@ -46,6 +46,14 @@ class Genie {
 			}
 			this.mouseEvents();
 		}
+		//todo: investigate enforce via cookie
+		if (url.pathname.startsWith("/album/")) {
+			if (url.searchParams.get("react") != "1") {
+				url.searchParams.set("react", "1");
+				window.location.replace(url.toString());
+			}
+			this.mouseEvents();
+		}
 		if (url.pathname.startsWith("/new")) {
 			console.log("al vacio", document.cookie);
 			const cookieExists = new RegExp(COOKIE_NAME).test(document.cookie);
