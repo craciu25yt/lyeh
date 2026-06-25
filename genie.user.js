@@ -5561,19 +5561,15 @@ self.onmessage = function (e) {
 						continue;
 					}
 					if (node.matches(`[class^="Modal-shared__ModalSharedContainer"`)) {
-						const progressBars = document.querySelectorAll(`li[class*="ContributorList__ListItem"]`);
+						const progressBars = node.querySelectorAll(`li[class*="ContributorList__ListItem"]`);
 						for (const progress of progressBars) {
-							const Class = progress.className.split(" ")[1];
-							if (!Class) {
-								console.warn("xd?");
-								continue;
-							}
-							const barElem = node.getElementsByClassName(Class)[0];
-							console.log(barElem, barElem.style);
-							const regex = barElem.style.background.match(progressBarRegex);
-							console.log("jeje", regex, progress);
-							if (!regex) continue;
-							barElem.style.background = `linear-gradient(to right, white ${regex[0]}, transparent 0px)`;
+							let barElem = progress.querySelector(`[class*="ProgressBar__Bar"], [class*="ProgressBar"]`);
+							if (!barElem) barElem = progress.querySelector("[style*=\n*='linear-gradient']");
+							if (!barElem) continue;
+							const match = (barElem.style.background || "").match(progressBarRegex);
+							if (!match) continue;
+							const percent = match[1];
+							barElem.style.background = `linear-gradient(to right, white ${percent}, transparent 0px)`;
 						}
 					}
 					if (node.querySelector("[class*=\"SongHeader\"]")) this.transformHeader(node);
