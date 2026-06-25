@@ -12,5 +12,5 @@ Then you simply click [here](https://craciu25yt.github.io/lyeh/genie.user.js) to
 
 
 ## Preview 
-https://github.com/user-attachments/assets/e1c8bbe7-1281-4037-9f0d-5f6d312a583d
+https://github.com/user-attachments/assets/c93ba9b7-adee-4753-8725-516c803908a7
 
