@@ -1,7 +1,8 @@
-nav[class^="StickyNav-desktop__Left"] span {
-    color: color-contrast(var(--current-accent)) !important;
+nav[class^="StickyNav-desktop__Container"] path {
+    fill: color-contrast(var(--current-accent));
 }
 
+/* iq */
 nav[class^="StickyNav-desktop__Container"] div[class^="PageHeaderMenu__Container"] span {
     color: color-contrast(var(--current-accent)) !important;
 }

@@ -28,13 +28,71 @@ const progressBarRegex = /linear-gradient\(to right,\s*[^)]+\)\s*([\d.]+%)/;
 // lil skid. I love u genius devs don't sue me <3
 const COOKIE_NAME = "_genius_release_opt_in_add_song";
 const MAX_AGE = 60 * 60 * 24 * 60;
+
+let state = "injecting";
 class Genie {
 	constructor() {
 		this.init();
 	}
 
 	private init() {
-		console.log("[Genie] Launching 🚀!");
+		console.realLog = console.log;
+		let geniusLogger = console.realLog;
+		Object.defineProperty(console, "log", {
+			get: () => {
+				const css =
+					"background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
+				return console.realLog.bind(console, "%cLyeh", css);
+			},
+			set: (newValue) => {
+				geniusLogger = newValue;
+			},
+		});
+
+		Object.defineProperty(console, "vLog", {
+			get: () => {
+				const vue =
+					"background-color: #42b883; color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
+				const lyeh =
+					"background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
+				return console.realLog.bind(console, "%cLyeh%c %cVue", lyeh, "", vue);
+			},
+		});
+
+		console.log("Launching 🚀!");
+		state = "launching";
+		window.addEventListener("error", (err) => {
+			console.log("error unu", document.readyState);
+			if (document.readyState == "loading") {
+				window.addEventListener("DOMContentLoaded", () => {
+					this.mountVue();
+
+					window.dispatchEvent(
+						new CustomEvent("lyeh:error", {
+							detail: { err, state },
+						}),
+					);
+				});
+			} else {
+				window.dispatchEvent(
+					new CustomEvent("lyeh:error", {
+						detail: { err, state },
+					}),
+				);
+			}
+		});
+
+		// find a way to optimize apple's injection
+		//if (window.top !== window.self) {
+		//	console.log("iframe detected, exitting out");
+		//	if (document.readyState == "loading") {
+		//		window.addEventListener("DOMContentLoaded", () => {
+		//			return;
+		//		});
+		//	} else {
+		//		return;
+		//	}
+		//}
 
 		document.documentElement.dataset.lyehTheme = "dark";
 
@@ -61,63 +119,12 @@ class Genie {
 				document.cookie = `${COOKIE_NAME}=1; path=/; max-age=${MAX_AGE}; Secure; SameSite=Lax`;
 			}
 		}
-		window.addEventListener("DOMContentLoaded", () => {
-			this.observeDOM();
-			this.extractSongData();
 
-			const container = document.createElement("div");
-			container.id = "lyeh";
-			document.body.appendChild(container);
-			createApp(App).mount(container);
-
-			const cacheVersion = GM_getValue("lyeh:version");
-			const version = GM_info.script.version;
-
-			console.log("VERSIOOON", version, cacheVersion);
-			if (!cacheVersion) {
-				GM_setValue("lyeh:version", version);
-			} else {
-				const cacheParts = cacheVersion.split(".");
-				const cacheMajor = cacheParts[0];
-				const cacheMinor = cacheParts[0];
-				const cachePath = cacheParts[0];
-
-				const versionParts = version.split(".");
-				const major = versionParts[0];
-				const minor = versionParts[0];
-				const path = versionParts[0];
-				console.log(cacheMajor, major);
-
-				// todo: big (now's) noti for major, small noti like windows on minor/path. Also show what changed
-				if (cacheMajor != major) {
-					console.log("version missmatch");
-					window.dispatchEvent(
-						new CustomEvent("lyeh:version-mismatch", {
-							detail: { oldVersion: cacheVersion, newVersion: version },
-						}),
-					);
-					GM_setValue("lyeh:version", version);
-				}
-				if (cacheMinor != minor) {
-					console.log("version missmatch");
-					window.dispatchEvent(
-						new CustomEvent("lyeh:version-mismatch", {
-							detail: { oldVersion: cacheVersion, newVersion: version },
-						}),
-					);
-					GM_setValue("lyeh:version", version);
-				}
-				if (cachePath != path) {
-					console.log("version missmatch");
-					window.dispatchEvent(
-						new CustomEvent("lyeh:version-mismatch", {
-							detail: { oldVersion: cacheVersion, newVersion: version },
-						}),
-					);
-					GM_setValue("lyeh:version", version);
-				}
-			}
-		});
+		if (document.readyState === "loading") {
+			window.addEventListener("DOMContentLoaded", () => this.startup());
+		} else {
+			this.startup();
+		}
 		if (debug) {
 			window.addEventListener("keypress", (event) => {
 				console.log(event.ctrlKey, event.key);
@@ -142,11 +149,23 @@ class Genie {
 			//}
 			if (typeof url === "string" && url.includes("/api/inboxes/main_activity_inbox/line_items/")) {
 			}
-			console.log(response);
+			//console.log(response);
 			return response;
 		};
+		state = "pre-starting";
 	}
+	private isMounted = false;
+	private mountVue() {
+		if (this.isMounted) return;
 
+		let container = document.getElementById("lyeh");
+		if (!container) {
+			container = document.createElement("div");
+			container.id = "lyeh";
+			document.body.appendChild(container);
+			createApp(App).mount(container);
+		}
+	}
 	private observeDOM() {
 		const observer = new MutationObserver(async (mutations) => {
 			// const img = document.querySelector('[class*="SizedImage__Image"]') as HTMLImageElement;
@@ -205,7 +224,6 @@ class Genie {
 					const referents = node.querySelectorAll(`[class^="Referent__FragmentContainer"]`);
 					if (referents.length != 0) {
 						for (const elem of referents) {
-							console.log();
 						}
 					}
 					if (node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`)) {
@@ -262,15 +280,69 @@ class Genie {
 
 		observer.observe(document.body, { childList: true, subtree: true });
 	}
+	private startup() {
+		state = "starting";
 
+		this.observeDOM();
+		this.extractSongData();
+
+		this.mountVue();
+
+		const cacheVersion = GM_getValue("lyeh:version");
+		const version = GM_info.script.version;
+
+		console.log("VERSIOOON", version, cacheVersion);
+		if (!cacheVersion) {
+			GM_setValue("lyeh:version", version);
+		} else {
+			const cacheParts = cacheVersion.split(".");
+			const cacheMajor = cacheParts[0];
+			const cacheMinor = cacheParts[1];
+			const cachePath = cacheParts[2];
+
+			const versionParts = version.split(".");
+			const major = versionParts[0];
+			const minor = versionParts[1];
+			const path = versionParts[2];
+			console.log(cacheMajor, major);
+
+			// todo: big (now's) noti for major, small noti like windows on minor/path. Also show what changed
+			if (cacheMajor != major) {
+				console.log("version missmatch");
+				window.dispatchEvent(
+					new CustomEvent("lyeh:version-mismatch", {
+						detail: { oldVersion: cacheVersion, newVersion: version },
+					}),
+				);
+				GM_setValue("lyeh:version", version);
+			}
+			if (cacheMinor != minor) {
+				console.log("version missmatch");
+				window.dispatchEvent(
+					new CustomEvent("lyeh:version-mismatch", {
+						detail: { oldVersion: cacheVersion, newVersion: version },
+					}),
+				);
+				GM_setValue("lyeh:version", version);
+			}
+			if (cachePath != path) {
+				console.log("version missmatch");
+				window.dispatchEvent(
+					new CustomEvent("lyeh:version-mismatch", {
+						detail: { oldVersion: cacheVersion, newVersion: version },
+					}),
+				);
+				GM_setValue("lyeh:version", version);
+			}
+		}
+		state = "running";
+	}
 	private transformHeader(headerElement: HTMLElement) {
 		// Add custom Bleh classes instead of breaking React structure
 		headerElement.classList.add("bleh-custom-header");
 	}
 
 	private extractSongData() {
-		// Genius embeds raw page data inside a window variable or script tag
-		// You can intercept this to get clean JSON data for your UI
 		const trackingData = (window as any).__PRELOADED_STATE__ || null;
 		if (trackingData) {
 			console.log("Genius Metadata captured:", trackingData);
@@ -397,3 +469,10 @@ class Genie {
 }
 
 new Genie();
+
+declare global {
+	interface Console {
+		realLog(...content: any[]): void;
+		vLog(...content: any[]): void;
+	}
+}

@@ -11,8 +11,11 @@ body[ng-app="genius.apple_music_player"] {
     padding: 0;
 }
 div[class="apple_music_player-player"] {
-    background-color: var(--lyeh-bg-secondary);
+    background-color: rgba(21, 16, 16, 0.5);
     border-radius: 10px;
+    backdrop-filter: blur(15px);
+    width: 1900px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
 
     padding: 5px;
 }
@@ -58,4 +61,11 @@ div[class^="apple_music_player-player-seekbar-dashed"] {
 }
 .apple_music_player-seekbar-scrubber-circle {
     background-color: var(--lyeh-text-main) !important; /* Replace with your desired color */
+}
+
+div[class^="AppleMusicPlayer-desktop__IframeContainer"] {
+    width: 120%;
+    position: relative !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
 }

@@ -10,8 +10,9 @@ export default defineConfig(({ command }) => ({
 				name: "Genie",
 				namespace: "npm/lyeh",
 				// I swear I hate live server
-				version: command === "build" ? pkg.version : "1.0.0",
+				version: "1.1.0",
 				match: ["https://genius.com/*"],
+				exclude: ["*://assets.genius.com/javascripts/compiled/apple_music*"],
 				grant: [
 					"GM_addStyle",
 					"GM_xmlhttpRequest",
@@ -23,10 +24,8 @@ export default defineConfig(({ command }) => ({
 				connect: ["genius.com", "images.genius.com", "t2.genius.com"],
 				"run-at": "document-start",
 				// lost 30 minutes because of this
-				...(command === "build" && {
-					updateURL: "https://craciu25yt.github.io/lyeh/genie.user.js",
-					downloadURL: "https://craciu25yt.github.io/lyeh/genie.user.js",
-				}),
+				updateURL: "https://craciu25yt.github.io/lyeh/genie.user.js",
+				downloadURL: "https://craciu25yt.github.io/lyeh/genie.user.js",
 			},
 		}),
 		vue(),

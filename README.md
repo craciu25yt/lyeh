@@ -11,6 +11,22 @@ To run Lyeh you need TamperMonkey, ViolentMonkey, or any fork of it.
 Then you simply click [here](https://craciu25yt.github.io/lyeh/genie.user.js) to add it!
 
 
+> [!WARNING]
+> If you have any issues (such as auto-updater with the old url), please clear the executor's cache. For example in ViolentMonkey is:
+> Extension settings -> Settings Vacuum Database
+
 ## Preview 
 https://github.com/user-attachments/assets/c93ba9b7-adee-4753-8725-516c803908a7
 
+
+
+## How to build
+
+Requirements: any js executor, npm & git
+
+1. Clone the repo with `git clone https://github.com/craciu25yt/lyeh.git && cd lyeh`
+2. Download the dependencies `npm ci`
+3. Build the project `npm run build` 
+4. And just go to `./dist/` to see the build!
+
+If you want to run the live server just run `npm run dev`. An automatic popup will show to install to your preferred user script interpreter
