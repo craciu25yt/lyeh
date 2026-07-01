@@ -2,8 +2,8 @@
 // @name         Genie
 // @namespace    npm/lyeh
 // @version      1.0.1
-// @downloadURL  https://craciu25yt.github.io/lyeh/genie.derp.user.js
-// @updateURL    https://craciu25yt.github.io/lyeh/genie.derp.user.js
+// @downloadURL  https://craciu25yt.github.io/lyeh/genie.user.js
+// @updateURL    https://craciu25yt.github.io/lyeh/genie.user.js
 // @match        https://genius.com/*
 // @connect      genius.com
 // @connect      images.genius.com
