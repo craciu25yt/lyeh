@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name         Genie
 // @namespace    npm/lyeh
-// @version      1.0.1
+// @version      1.1.0
 // @downloadURL  https://craciu25yt.github.io/lyeh/genie.user.js
 // @updateURL    https://craciu25yt.github.io/lyeh/genie.user.js
 // @match        https://genius.com/*
+// @exclude      *://assets.genius.com/javascripts/compiled/apple_music*
 // @connect      genius.com
 // @connect      images.genius.com
 // @connect      t2.genius.com
@@ -29,15 +30,15 @@
 			else (document.head || document.documentElement).appendChild(document.createElement("style")).append(c);
 		})(t);
 	};
-	_css(" .overlay[data-v-1fcf85f7]{z-index:99999;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);background:#0006;justify-content:center;align-items:center;display:flex;position:fixed;inset:0}.box[data-v-1fcf85f7]{-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);text-align:center;background:#ffffff14;border:1px solid #ffffff26;border-radius:24px;min-width:320px;padding:48px 64px;position:relative;box-shadow:0 8px 64px #00000080,inset 0 1px #ffffff1a}.close[data-v-1fcf85f7]{color:#ffffff80;cursor:pointer;background:0 0;border:none;padding:0;font-size:28px;line-height:1;position:absolute;top:12px;right:16px}.close[data-v-1fcf85f7]:hover{color:#fff}.title[data-v-1fcf85f7]{color:#fff;letter-spacing:-.02em;margin:0 0 16px;font-size:28px;font-weight:700}.version[data-v-1fcf85f7]{color:#fffc;justify-content:center;align-items:center;gap:12px;margin:0;font-size:18px;display:flex}.old[data-v-1fcf85f7]{opacity:.5;text-decoration:line-through}.arrow[data-v-1fcf85f7]{opacity:.6;font-size:22px}.new[data-v-1fcf85f7]{color:#fff;font-weight:600}\n/*$vite$:1*/ ");
+	_css(" .overlay[data-v-2838bb71]{z-index:99999;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);background:#0006;justify-content:center;align-items:center;display:flex;position:fixed;inset:0}.box[data-v-2838bb71]{-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);text-align:center;background:#ffffff14;border:1px solid #ffffff26;border-radius:24px;min-width:320px;padding:48px 64px;position:relative;box-shadow:0 8px 64px #00000080,inset 0 1px #ffffff1a}.close[data-v-2838bb71]{color:#ffffff80;cursor:pointer;background:0 0;border:none;padding:0;font-size:28px;line-height:1;position:absolute;top:12px;right:16px}.close[data-v-2838bb71]:hover{color:#fff}.title[data-v-2838bb71]{color:#fff;letter-spacing:-.02em;margin:0 0 16px;font-size:28px;font-weight:700}.version[data-v-2838bb71]{color:#fffc;justify-content:center;align-items:center;gap:12px;margin:0;font-size:18px;display:flex}.old[data-v-2838bb71]{opacity:.5;text-decoration:line-through}.arrow[data-v-2838bb71]{opacity:.6;font-size:22px}.new[data-v-2838bb71]{color:#fff;font-weight:600}[data-v-1684d7cb]::selection{color:#fff;background-color:#fa64a0b3}.overlay[data-v-1684d7cb]{z-index:99999;color:#f1f2f6;background:#0003;justify-content:center;align-items:center;display:flex;position:fixed;inset:0}.overlay[data-v-1684d7cb]:before{content:\"\";z-index:-1;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);will-change:backdrop-filter;position:absolute;inset:0}.box[data-v-1684d7cb]{-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);background:#ffffff08;border:1px solid #ffffff26;border-radius:24px;min-width:320px;padding:48px 64px;position:relative;box-shadow:0 8px 64px #00000080,inset 0 1px #ffffff1a}.close[data-v-1684d7cb]{color:#ffffff80;cursor:pointer;background:0 0;border:none;padding:0;font-size:28px;line-height:1;position:absolute;top:12px;right:16px}.close[data-v-1684d7cb]:hover{color:#fff}.title[data-v-1684d7cb]{text-align:center;margin:0 0 16px;font-size:28px;font-weight:700}.error-box[data-v-1684d7cb]{color:#fff;white-space:pre;background-color:#00000080;border:10px;border-radius:10px;padding:15px}.footer[data-v-1684d7cb]{color:#c2c2c2;text-shadow:1px 1px #000;margin-top:10px}a[data-v-1684d7cb]{color:#fff!important}\n/*$vite$:1*/ ");
 	_css(":root[data-lyeh-theme=dark]{--lyeh-bg-primary:#292424;--lyeh-bg-shadow:#1a1616;--lyeh-bg-secondary:#362f2f;--lyeh-bg-thirdy:#2e2828;--lyeh-accent:#ed4597;--lyeh-text-main:#f1f2f6;--lyeh-text-muted:#a4b0be;--accent-muted:#fa64a080;--lyeh-current-song-accent:#000;--lyeh-current-song-accent-secondary:#000;--artist-banner-url:linear-gradient(180deg, #1e1e2e 0%, #313244 50%, #1e1e2e 100%);--current-accent:#ffff64}body,div[class^=PageLayout__Container],main{transition:background-color 1s;background-color:var(--lyeh-bg-primary)!important;color:var(--lyeh-text-main)!important;fill:var(--lyeh-text-main)!important}path{fill:var(--lyeh-text-main)}div[class^=StickyNavLoggedIn__Container] path{fill:color-contrast(var(--current-accent))}div[class^=Lyrics__Container]{letter-spacing:-.01em!important;color:var(--lyeh-text-main)!important;font-size:1.15rem!important;line-height:1.7!important}div[class^=Lyrics__Container] a{border-bottom:1px dashed #ff47574d;transition:all .2s;-webkit-text-decoration-color:var(--lyeh-accent)!important;text-decoration-color:var(--lyeh-accent)!important}div[class^=Lyrics__Container] a:hover{border-bottom:1px solid var(--lyeh-accent);background:#ff47571a}span[class^=ReferentFragment]{background:var(--lyeh-bg-secondary);color:var(--lyeh-text-main)!important}span[class^=ReferentFragment]:hover{border-bottom:1px solid var(--lyeh-accent);background:#fa64a0b3;color:var(--lyeh-text-main)!important}[class^=TextLabel],[class^=ContributorsCreditSong]{color:var(--lyeh-text-main)!important}a:not([class^=StickyNavSectionLink__StyledLink]){color:var(--lyeh-text-main)!important;-webkit-text-decoration:underline #ffffff80!important;text-decoration:underline #ffffff80!important}span{color:var(--lyeh-text-main)!important}div[class^=SongHeader-desktop__CoverArt] img{border-radius:10px}aside[class^=ContributorSidebar__Container]{box-shadow:10px 5px 5px var(--lyeh-bg-shadow);border-radius:15px;padding-right:14px;background-color:var(--lyeh-bg-secondary)!important}div[class^=ContributorSidebarSection__Header],div[class^=ContributorSidebarMetadata]{color:var(--lyeh-text-main)}button[class^=Button__Container-sc]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}button[class^=Button__Container-sc]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}a[class^=Button__Container-sc]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}a[class^=Button__Container-sc]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}button[class^=ContributorActionTextbox]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}div[class^=ContributorSidebarSection__HeaderButtons] svg path:first-child{fill:var(--lyeh-text-main)!important}div[class^=ContributorSidebarSection__HeaderButtons] svg path:last-child{fill:var(--lyeh-bg-primary)!important}div[class^=PageGrid-desktop][class*=StickyToolbar__Container]{border-bottom:none;background-color:var(--lyeh-bg-primary)!important}button[class^=SmallButton__Container]{border-color:var(--lyeh-text-main);color:var(--lyeh-text-main)!important}button[class^=SmallButton__Container]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}a[class^=SmallButton__Container]{border-color:var(--lyeh-text-main);color:var(--lyeh-text-main)!important}a[class^=SmallButton__Container]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}svg[class^=LineItemActionIcon__Icon][data-action-name=recognized] path,svg[class^=LineItemActionIcon__Icon][data-action-name=accepted] path,svg[class^=LineItemActionIcon__Icon][data-action-name=hit_pageview_threshold] path,svg[class^=LineItemActionIcon__Icon][data-action-name=upvoted] path{fill:#4bbf38!important}div[class^=LineItemList__Container] path{fill:#9a9a9a!important}div[class^=LineItem__IqDifference]{color:#4bbf38!important}svg[class^=LineItemActionIcon__Icon][data-action-name=earned] path{fill:#c7ba18!important}span[class^=ContributorActionTextbox]{color:var(--lyeh-text-main)!important}[color=background\\.iqPoints]{color:#4bbf38!important}[color=background\\.negativeNumber]{color:#f03e26!important}div[class^=ContributorsCreditMarkedComplete__CompletedUsernameContainer]{color:var(--lyeh-text-main)!important}div[class^=TooltipShadow]{color:var(--lyeh-text-main);z-index:1;background-color:#0000;border-radius:15px;position:relative;overflow:hidden}div[class^=TooltipShadow]:before{content:\"\";filter:blur(2px)brightness(.5);z-index:-1;background-position:50%;background-size:cover;border:0;transition:all 1s;position:absolute;inset:0;transform:scale(1.1);background-image:var(--artist-banner-url)!important;border-radius:15px!important}div[class^=ArtistTooltip__Verified]{color:#000;text-align:center;background-color:#ffff64;margin-right:30%;font-size:.75rem;border-radius:15px!important}div[class^=TooltipShadow]:has([class^=ArtistTooltip__Verified]){box-shadow:1px 1px 20px #ffff6480!important}div[class^=TooltipShadow]:has([role=moderator]){box-shadow:1px 1px 20px #047ec680!important}div[class^=Placeholder__Container]{background-color:#fa64a0b3!important}span[class^=UserBadge__Iq]{border-radius:10px;padding:.125rem .225rem;color:#000!important;background-color:#ffff64cc!important}button{color:#fff!important}div[class^=UserBadge__Role-sc-]{align-items:center;padding:4px 0;transition:all .3s ease-in-out;display:inline-flex;overflow:hidden}span[class^=UserBadge__RoleLabel-sc-]{opacity:0;white-space:nowrap;max-width:0;margin-right:0;transition:max-width .3s ease-in-out,opacity .2s ease-in-out,margin .3s ease-in-out;display:inline-block}div[class^=UserBadge__Role-sc-]:hover span[class^=UserBadge__RoleLabel-sc-]{opacity:1;max-width:100px;margin-right:6px}span[class^=RoleIcon__Container-sc-]{flex-shrink:0;align-items:center;width:14px;height:14px;display:flex}span[class^=RoleIcon__Container-sc-] svg{width:100%;height:100%}div[class^=AlbumTracklist__Track]{color:var(--lyeh-text-main)}div[class^=PageGrid-desktop][class*=SongHeader-desktop__Container] :is(span,a,button,path){color:color-contrast(var(--current-accent))!important;fill:color-contrast(var(--current-accent))!important}div[class^=white_container]{background-color:#0000}span[class^=LineItemMessage__NoteBubble]{background-color:#fa64a0b3!important}input{caret-color:var(--lyeh-accent)}::selection{color:#fff;background-color:#fa64a0b3}div[class^=ScrollableTabs__TabNavContainer]{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);border-radius:15px 15px 0 0;background-color:#0000004d!important}div[class^=ScrollableTabs__ContentArea]{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);background-color:#0000004d}h3[class^=ScrollableTabsSection__Title],legend[class^=Field-shared__FieldLabel],div[class^=css-hfv4dh-singleValue]{color:var(--lyeh-text-main)}div[class^=LyricsHighlightTooltip__Content]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);background-color:#16141496;border:0;border-radius:10px;border:1px solid #fff3!important}div[class^=LyricsHighlightTooltip__Content]:hover{background-color:var(--accent-muted)!important}button[class^=LyricsHighlightTooltip__Container]:before{display:none}div[class^=LyricsHighlightTooltip__Content]:before:hover{background-color:var(--accent-muted)!important}span[class^=LyricsHighlightTooltip__IQ]{color:#40ff21!important}a[class^=LyricsHeader__TranslationLink]{background:0 0}a[class^=LyricsHeader__TranslationLink]:hover{background-color:var(--accent-muted)!important}div[class^=VotesModal__Container]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);background-color:#29242466;border-radius:10px}");
 	_css("html{scroll-behavior:smooth}div[class^=Modal-shared__ModalSharedContainer]{background-color:#0000}div[class^=ContributionsScholars__Container]{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);background-image:none;border-radius:10px 10px 0 0;background-color:#000000b3!important}div[class^=RecentActivity__Container]{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);background-color:#0000001a}div[class^=LineItem__ItemRow]{background-color:#16141496;border:0;border-radius:10px;margin-top:8px;border:1px solid #fff3!important}div[class^=LineItem__ItemRow]:hover{background-color:#161414;transition:all .2s cubic-bezier(.4,0,.2,1)}div[class^=Annotation__Container]{color:var(--lyeh-text-main)}div[class^=LineItemList__Container],div[class^=LineItemList__Container]>div{background:0 0!important}body[class^=act-embed\\ cont-searches]{padding:20px;background-color:#0000!important}.mini_card{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);border:1px solid #7d7d7d;border-radius:10px;background-color:#29242466!important}mini-song-card .mini_card{padding:10px}.mini_card path{fill:var(--lyeh-text-main)!important}.mini_card:hover{background-color:#16141496!important}.mini_card-lyric_excerpt span{color:#d6d6d6!important;background-color:#fa64a080!important}div[class^=mini_card-thumbnail]{border-radius:10px}a[class^=full_width_button]{background-color:#0000!important}div[class^=thumbnail_grid]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);border:1px solid #7d7d7d;border-radius:10px;background-color:#29242466!important}div[class^=thumbnail_grid-grid_element]{padding:5px}div[class^=thumbnail_grid-grid_element]:hover{background-color:#16141496!important}.vertical_album_card:hover{background-color:unset!important}");
 	_css("h4[class^=SiteCommandPalettePage__PageContainer],[class^=SiteCommandPaletteItem__Title],div[class^=SiteCommandPalettePage__PageContainer] h4{color:var(--lyeh-text-main)!important}div[class^=SiteCommandPalettePage__PageContainer] [class^=command-palette-list-item]{margin-bottom:2px;border-radius:15px!important}input#command-palette-search-input[type=text]{color:#fff!important;-webkit-text-fill-color:#fff!important}.command-palette div[id^=headlessui-dialog-panel-]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);background-color:#151a1a80!important;background-image:none!important;border-radius:15px!important}.command-palette [class*=bg-gray-900][class*=bg-opacity-80]{background-color:#0000}html{overflow:visible!important}");
-	_css("div[class^=apple_music_player-container]{background-color:#0000;border:0!important}body[ng-app=genius\\.apple_music_player]{border-radius:10px;padding:0;display:block;background-color:#0000!important}div[class=apple_music_player-player]{background-color:var(--lyeh-bg-secondary);border-radius:10px;padding:5px}div[class^=apple_music_player-player-info]{flex-direction:column;justify-content:center;display:flex}div[class^=apple_music_player-player-info-title]{padding:0 0 0 5px;font-size:1rem;line-height:1.2;margin:0!important}div[class^=apple_music_player-player-info-artist]{padding:0 0 0 5px;font-size:.8rem;line-height:1.2;margin:0!important}div[class^=apple_music_player-player-song_art]{justify-content:center;align-items:center;width:60px;height:60px;display:flex;position:static}div[class^=apple_music_player-seekbar]:before{background-color:var(--lyeh-text-main)}div[class^=apple_music_player-player-seekbar-dashed]{border-bottom:2px dashed var(--lyeh-text-main)}.cover_art-image{border-radius:5px}.cover_art{background-color:#0000!important}.apple_music_player-seekbar-scrubber-circle{background-color:var(--lyeh-text-main)!important}");
+	_css("div[class^=apple_music_player-container]{background-color:#0000;border:0!important}body[ng-app=genius\\.apple_music_player]{border-radius:10px;padding:0;display:block;background-color:#0000!important}div[class=apple_music_player-player]{-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);background-color:#15101080;border:1px solid #ffffff26;border-radius:10px;width:1900px;padding:5px}div[class^=apple_music_player-player-info]{flex-direction:column;justify-content:center;display:flex}div[class^=apple_music_player-player-info-title]{padding:0 0 0 5px;font-size:1rem;line-height:1.2;margin:0!important}div[class^=apple_music_player-player-info-artist]{padding:0 0 0 5px;font-size:.8rem;line-height:1.2;margin:0!important}div[class^=apple_music_player-player-song_art]{justify-content:center;align-items:center;width:60px;height:60px;display:flex;position:static}div[class^=apple_music_player-seekbar]:before{background-color:var(--lyeh-text-main)}div[class^=apple_music_player-player-seekbar-dashed]{border-bottom:2px dashed var(--lyeh-text-main)}.cover_art-image{border-radius:5px}.cover_art{background-color:#0000!important}.apple_music_player-seekbar-scrubber-circle{background-color:var(--lyeh-text-main)!important}div[class^=AppleMusicPlayer-desktop__IframeContainer]{width:120%;position:relative!important;left:50%!important;transform:translate(-50%)!important}");
 	_css("textarea[class^=TextInput-sc]{color:var(--lyeh-text-main);border:1px solid var(--lyeh-text-main)!important}button[class*=jSZRoS]{background-color:#56cd4d;color:#000!important;border:1px solid var(--lyeh-text-main)!important}");
 	_css("div[class^=styleAnchors__PageHeaderDropdownMenu]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);background-color:#29242466;border-radius:10px;top:3rem!important}div[class^=styleAnchors__PageHeaderDropdownMenu][class*=PageHeaderDropdown-desktop__Container]:has([src*=\"/inboxes/messages_inbox?embed=true\"]){width:40vw!important}div[class*=styleAnchors__PageHeaderDropdownMenu][class*=PageHeaderDropdown-desktop__Container]{width:35vw!important}div[aria-label^=User\\ Menu]~div[class*=styleAnchors__PageHeaderDropdownMenu]{width:10vw!important}[class^=PageHeaderMenu__Title][class*=PageHeaderMenu__Item]:hover{color:var(--lyeh-text-main);transition:background-color .3s;background-color:#fa64a0b3!important}div[class^=PageHeaderInbox-desktop__Label]{display:none!important}form[class^=StickyNavSearch-desktop__Form]{background-color:var(--lyeh-bg-primary);border-radius:15px}input[class^=StickyNavSearch-desktop__Input]{background-color:var(--lyeh-bg-primary);justify-content:center;margin-left:15px;color:#fff!important;-webkit-text-fill-color:#fff!important}div[class^=styleAnchors__PageHeaderDropdownMenu] div[class^=LineItemList__Container]{margin:20px}div[class^=LineItemDetail__Container]{background-color:#16141496!important}div[class^=LyricsDiffsSection__Container]{background-color:#0000!important}div[class=lyeh__ItemParent]:has([class^=LineItemDetail__Container]) [class^=LineItem__ItemRow]{border-radius:10px 10px 0 0;border-bottom:none!important}div[class=lyeh__ItemParent]:has([class^=LineItemDetail__Container]) [class^=LineItemDetail__Container]{border-radius:0 0 10px 10px;color:var(--lyeh-text-main)!important;border:1px solid #fff3!important}div[class^=ExpandableDiff__Lines] ins{background-color:#13ff004a!important}div[class^=ExpandableDiff__Lines] del{background-color:#ff00004a!important}div[class^=DetailSection__SectionWrapper]{background-color:#0000!important}div[class^=DetailSection__SectionWrapper]:first-child{margin-top:10px;background-color:#0000!important}div[class^=DetailSection-shared]{background-color:#0000!important}a[class^=MiniCard__Link]{border:1px solid #fff9;border-radius:10px;padding:.5rem;background-color:#16141496!important}a[class^=MiniCard__Link]:hover{transition:all .2s cubic-bezier(.4,0,.2,1);background-color:#fa64a0b3!important}div[class*=MiniCard__Thumbnail]{border-radius:10px}div[class^=Referent__FragmentContainer],a[class^=Referent__FragmentHighlight]{background-color:#0000}a[class^=UnreviewedAnnotation__Unreviewed],div[class^=UnreviewedAnnotation__Unreviewed],div[class^=dashed_background_message]{border-radius:4px;background:0 0!important}body[class^=act-messages_inbox]{background-color:#0000!important}div[class^=feed_dropdown-item]{border-radius:10px;margin:10px;background-color:#16141496!important;border:1px solid #fff3!important}div[class^=feed_dropdown-item]:hover{transition:all .2s cubic-bezier(.4,0,.2,1);background-color:#161414!important}.modal_window-content{background-color:#0000!important}.modal_window-content p{background-color:#fa64a080;border-radius:5px;padding:5px;border:1px solid #ffffff4d!important}.u-dark_overlay:before{background-color:#16141496!important}.conversation-compose_area{background-color:#0000!important}textarea[class^=square_input]{color:#fff!important;background-color:#0000!important;border:1px solid #ffffff4d!important;border-radius:10px!important;padding:5px 10px!important}textarea[class^=square_input]:focus{transition:all .2s cubic-bezier(.4,0,.2,1);box-shadow:inset 0 0 .3em #fa64a080!important}.square_button{color:var(--lyeh-text-main)!important;background-color:#161414!important;border:1px solid #ffffff4d!important;border-radius:10px!important;padding:5px 10px!important}.square_button:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}span[class*=text_label--purple]{background-color:#0000;border:none;border-color:none!important}div[class=conversation] span[class*=text_label]:not([class*=text_label--purple]){background-color:#fa64a080;border-radius:4px;padding:3px;border-bottom:1px!important}div[class^=MetadataChangesSection__Container]{background:0 0;padding:0}div[class^=LineItem__EventCountBadge]{color:#fff;border:1px solid #7d7d7d;background-color:#0006!important}div[class^=StickyNavSearch-desktop__Icon] path{fill:#fff!important}body[class^=\"act-iq_inbox cont-inboxes snarly\"]{background-color:#0000!important}div[class^=contribution_opportunity]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:none;border-radius:10px;background-color:#16141430!important}input[class^=square_input],[class^=tags_input]{background-color:#0000!important}span[class^=square_item_and_iq] span[class^=square_button],span[class^=square_item_and_iq] button[class^=square_button]{z-index:10;background:#141414!important}span[class^=square_item_and_iq] span[class^=square_button]:hover,span[class^=square_item_and_iq] button[class^=square_button]:hover{background:var(--lyeh-accent)!important}");
 	_css("h2{color:var(--lyeh-text-main)!important}nav[class^=StickyNav-desktop__Container]:has(~div[class^=Profile__Container]){background-color:var(--current-accent);transition:all .5s cubic-bezier(.4,0,.2,1)!important}nav[class^=StickyNav-desktop__Container]:has(~div[class^=Profile__Container]) :is(a,span,path){fill:contrast-color(var(--current-accent));color:contrast-color(var(--current-accent));text-decoration:none!important;transition:all .5s cubic-bezier(.4,0,.2,1)!important}nav[class^=StickyNav-desktop__Container]:has(~div[class^=Profile__Container]) div[class^=PageHeaderMenu__Iq]{color:contrast-color(var(--current-accent))!important}main[class*=ProfileContent-desktop__PageGrid] path{fill:var(--lyeh-text-main)!important}div[class^=DiscographyItem__Info]{color:var(--lyeh-text-main)!important}span[class^=LabelWithIcon__Container] path{fill:var(--lyeh-text-main)!important}button[class^=DropdownList__LabeledButton]{border-color:var(--lyeh-text-main)}button[class^=DropdownList__LabeledButton]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}button[class^=VotingActions__Button][aria-pressed=true] svg[class^=VotingActions__ThumbsUp] path{fill:#4bbf38!important}button[class^=VotingActions__Button][aria-pressed=true] svg[class^=VotingActions__ThumbsDown] path{fill:#bf4538!important}a[class^=DiscographyItem__Container]{border-radius:10px;padding:3px}a[class^=DiscographyItem__Container]:hover{background-color:#16141496;border:1px solid #fff9;scale:1.1;transition:all .4s cubic-bezier(.4,0,.2,1)!important}div[class^=SizedImage__Container]{border-radius:8px}div[class^=PopularSongs__Container],div[class^=PopularAlbums__Container]{border:1px solid #fff9;border-radius:10px;background-color:#16141496!important}button[class*=ProfileContent-desktop__FeaturedButton]{background-color:#0000}h3[class^=VerifiedBadge__VerifiedBadgeContainer-sc]{background-color:var(--current-accent);color:#000;fill:#fff;border-radius:10px;padding:2px 6px;color:contrast-color(var(--current-accent))!important;transition:all .5s cubic-bezier(.4,0,.2,1)!important}h3[class^=VerifiedBadge__VerifiedBadgeContainer-sc] svg{fill:contrast-color(var(--current-accent));transition:all .4s cubic-bezier(.4,0,.2,1)!important}h3[class^=VerifiedBadge__VerifiedBadgeContainer-sc] path{fill:contrast-color(contrast-color(var(--current-accent)))!important}div[class^=ArtistAvatar__Container]{border-color:var(--current-accent);transition:all .5s cubic-bezier(.4,0,.2,1)!important}ul[class^=DiscographyItemList]{gap:1rem;overflow:visible}a[class*=OptOutButton__Container-sc]{display:none}hr[class^=ProfileContent-desktop__Divider]{border-color:#fff3}div[class^=CollaboratorEntry__Container],li[class^=IqEarnersList__List]{border-color:#fff3!important}.iHfhfx{background-color:#fa64a080}ul[class^=DropdownList__ItemsContainer]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);background-color:#16141496;border:1px solid #fff9;border-radius:10px}a[class^=ProfilesDropdown__SocialLink]:hover{background-color:#fa64a080}span[class^=DropdownList__Caret]{background-color:var(--lyeh-text-main)!important}div[class^=QuestionAnswerList__List]{gap:10px}a[class^=QuestionAnswerList__ItemContainer]{column-gap:10px;border:1px solid var(--lyeh-text-main)!important;border-radius:10px!important}");
-	_css("nav[class^=StickyNav-desktop__Left] span,nav[class^=StickyNav-desktop__Container] div[class^=PageHeaderMenu__Container] span{color:color-contrast(var(--current-accent))!important}div[class^=Question__Attribution],div[class^=Contributors__LabelContainerRow]{color:var(--lyeh-text-main)}div[class^=Answer-desktop__Card]{border-radius:10px}");
+	_css("nav[class^=StickyNav-desktop__Container] path{fill:color-contrast(var(--current-accent))}nav[class^=StickyNav-desktop__Container] div[class^=PageHeaderMenu__Container] span{color:color-contrast(var(--current-accent))!important}div[class^=Question__Attribution],div[class^=Contributors__LabelContainerRow]{color:var(--lyeh-text-main)}div[class^=Answer-desktop__Card]{border-radius:10px}");
 	_css("div[class^=SectionTitle__Title-sc]{color:var(--lyeh-text-main)}div[class^=ExpandableListItem__Container]{border-color:var(--lyeh-text-main)}div[class^=ExpandableListItem__Title]{color:var(--lyeh-text-main);background-color:#0000}div[class^=AlbumCredits__Columns] div,div[class^=SongCredits__Columns] div{color:var(--lyeh-text-main)!important}a[class^=SongTags__Tag]{border-color:var(--lyeh-text-main)!important}");
 	_css("div[class^=standalone_annotation]{background-color:#16141496;border:1px solid #fff9;border-radius:10px;padding:10px}a[class^=referent--accent_font\\ referent--line_break]{background-color:#fa64a0b3!important}div[class^=profile_achievements-badge-name]{color:var(--lyeh-text-main)}div[class^=statistics_panel]{background-color:#0000}div[class^=statistics_panel] path{fill:var(--lyeh-text-main)}a[class^=profile_contribution],a[class^=referent]{background-color:#0000!important}div[class^=note_bubble]{background-color:var(--accent-muted)!important}div[class^=note_bubble]:before{border-bottom-color:var(--accent-muted)!important}");
 	_css("div[class^=HomeContent-desktop__Section]{background-color:#0000!important}div[class^=HomeContent-desktop__Section] :is(h2,h3){color:inherit;text-shadow:unset!important}div[class^=EditorialPlacement__Container]:hover :is(h2,h3){color:var(--lyeh-accent)!important}div[class^=SquareManySelects__Container]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);background-color:#16141496;border:1px solid #fff9;border-radius:10px}div[class^=SquareManySelects__Option]:hover{background-color:var(--accent-muted)!important}a[class^=PageGrid-desktop][class*=ChartItem-desktop__Row]:hover{background-color:#16141496}button[class^=SquareButton]{border:1px solid var(--lyeh-text-main);border-radius:10px;color:var(--lyeh-text-main)!important}button[class^=SquareButton]:hover{background-color:var(--accent-muted)}a[class^=SquareButton]{border:1px solid var(--lyeh-text-main);border-radius:10px;color:var(--lyeh-text-main)!important}a[class^=SquareButton]:hover{background-color:var(--accent-muted)}div[class^=EditorialPlacement__Label]:after{border-bottom-color:#fff!important}a[class^=PageGrid-desktop][class*=CommunityRanking-desktop__Row]:hover{background-color:var(--accent-muted)}");
@@ -5374,9 +5375,9 @@ self.onmessage = function (e) {
 		if (isString(container)) return document.querySelector(container);
 		return container;
 	}
-	var _hoisted_1 = { class: "box" };
-	var _hoisted_2 = { class: "version" };
-	var _hoisted_3 = { class: "old" };
+	var _hoisted_1$1 = { class: "box" };
+	var _hoisted_2$1 = { class: "version" };
+	var _hoisted_3$1 = { class: "old" };
 	var _hoisted_4 = { class: "new" };
 	var update_vue_vue_type_script_setup_true_lang_default = defineComponent({
 		__name: "update",
@@ -5385,7 +5386,6 @@ self.onmessage = function (e) {
 			const oldVersion = ref("");
 			const newVersion = ref("");
 			function handler(e) {
-				console.log("pene");
 				oldVersion.value = e.detail.oldVersion;
 				newVersion.value = e.detail.newVersion;
 				visible.value = true;
@@ -5404,14 +5404,14 @@ self.onmessage = function (e) {
 					key: 0,
 					class: "overlay",
 					onClick: withModifiers(dismiss, ["self"])
-				}, [createBaseVNode("div", _hoisted_1, [
+				}, [createBaseVNode("div", _hoisted_1$1, [
 					createBaseVNode("button", {
 						class: "close",
 						onClick: dismiss
 					}, "×"),
 					_cache[1] || (_cache[1] = createBaseVNode("h2", { class: "title" }, "Lyeh — Updated", -1)),
-					createBaseVNode("p", _hoisted_2, [
-						createBaseVNode("span", _hoisted_3, toDisplayString(oldVersion.value), 1),
+					createBaseVNode("p", _hoisted_2$1, [
+						createBaseVNode("span", _hoisted_3$1, toDisplayString(oldVersion.value), 1),
 						_cache[0] || (_cache[0] = createBaseVNode("span", { class: "arrow" }, "→", -1)),
 						createBaseVNode("span", _hoisted_4, toDisplayString(newVersion.value), 1)
 					])
@@ -5424,12 +5424,58 @@ self.onmessage = function (e) {
 		for (const [key, val] of props) target[key] = val;
 		return target;
 	};
-	var update_default = _plugin_vue_export_helper_default(update_vue_vue_type_script_setup_true_lang_default, [["__scopeId", "data-v-1fcf85f7"]]);
+	var update_default = _plugin_vue_export_helper_default(update_vue_vue_type_script_setup_true_lang_default, [["__scopeId", "data-v-2838bb71"]]);
+	var _hoisted_1 = { class: "box" };
+	var _hoisted_2 = { class: "title" };
+	var _hoisted_3 = { class: "error-box" };
+	var error_default = _plugin_vue_export_helper_default(defineComponent({
+		__name: "error",
+		setup(__props) {
+			const visible = ref(false);
+			const error = ref("");
+			const state = ref("");
+			function handler(e) {
+				console.vLog("Error received", e);
+				error.value = e.detail.err.error.stack;
+				state.value = e.detail.state;
+				visible.value = true;
+			}
+			function dismiss() {
+				visible.value = false;
+			}
+			onMounted(() => {
+				window.addEventListener("lyeh:error", handler);
+			});
+			onUnmounted(() => {
+				window.removeEventListener("lyeh:error", handler);
+			});
+			return (_ctx, _cache) => {
+				return visible.value ? (openBlock(), createElementBlock("div", {
+					key: 0,
+					class: "overlay",
+					onClick: withModifiers(dismiss, ["self"])
+				}, [createBaseVNode("div", _hoisted_1, [
+					createBaseVNode("button", {
+						class: "close",
+						onClick: dismiss
+					}, "×"),
+					createBaseVNode("h2", _hoisted_2, "Lyeh encountered an error while " + toDisplayString(state.value), 1),
+					createBaseVNode("div", _hoisted_3, [createBaseVNode("span", null, toDisplayString(error.value), 1)]),
+					_cache[0] || (_cache[0] = createBaseVNode("text", { class: "footer" }, [createTextVNode("If the issue persists, please "), createBaseVNode("a", {
+						href: "https://github.com/craciu25yt/lyeh/issues",
+						target: "_blank",
+						"\"": ""
+					}, "report it")], -1))
+				])])) : createCommentVNode("", true);
+			};
+		}
+	}), [["__scopeId", "data-v-1684d7cb"]]);
 	var app_default = defineComponent({
 		__name: "app",
 		setup(__props) {
+			console.vLog("Initializing vue");
 			return (_ctx, _cache) => {
-				return openBlock(), createBlock(update_default);
+				return openBlock(), createElementBlock(Fragment, null, [createVNode(update_default), createVNode(error_default)], 64);
 			};
 		}
 	});
@@ -5443,12 +5489,39 @@ self.onmessage = function (e) {
 	var progressBarRegex = /linear-gradient\(to right,\s*[^)]+\)\s*([\d.]+%)/;
 	var COOKIE_NAME = "_genius_release_opt_in_add_song";
 	var MAX_AGE = 3600 * 24 * 60;
+	var state = "injecting";
 	var Genie = class {
 		constructor() {
 			this.init();
 		}
 		init() {
-			console.log("[Genie] Launching 🚀!");
+			console.realLog = console.log;
+			console.realLog;
+			Object.defineProperty(console, "log", {
+				get: () => {
+					return console.realLog.bind(console, "%cLyeh", "background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px");
+				},
+				set: (newValue) => {}
+			});
+			Object.defineProperty(console, "vLog", { get: () => {
+				return console.realLog.bind(console, "%cLyeh%c %cVue", "background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px", "", "background-color: #42b883; color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px");
+			} });
+			console.log("Launching 🚀!");
+			state = "launching";
+			window.addEventListener("error", (err) => {
+				console.log("error unu", document.readyState);
+				if (document.readyState == "loading") window.addEventListener("DOMContentLoaded", () => {
+					this.mountVue();
+					window.dispatchEvent(new CustomEvent("lyeh:error", { detail: {
+						err,
+						state
+					} }));
+				});
+				else window.dispatchEvent(new CustomEvent("lyeh:error", { detail: {
+					err,
+					state
+				} }));
+			});
 			document.documentElement.dataset.lyehTheme = "dark";
 			const url = new URL(window.location.href);
 			if (url.pathname.startsWith("/artists/")) {
@@ -5469,53 +5542,8 @@ self.onmessage = function (e) {
 				console.log("al vacio", document.cookie);
 				if (!new RegExp(COOKIE_NAME).test(document.cookie)) document.cookie = `${COOKIE_NAME}=1; path=/; max-age=${MAX_AGE}; Secure; SameSite=Lax`;
 			}
-			window.addEventListener("DOMContentLoaded", () => {
-				this.observeDOM();
-				this.extractSongData();
-				const container = document.createElement("div");
-				container.id = "lyeh";
-				document.body.appendChild(container);
-				createApp(app_default).mount(container);
-				const cacheVersion = _GM_getValue("lyeh:version");
-				const version = _GM_info.script.version;
-				console.log("VERSIOOON", version, cacheVersion);
-				if (!cacheVersion) _GM_setValue("lyeh:version", version);
-				else {
-					const cacheParts = cacheVersion.split(".");
-					const cacheMajor = cacheParts[0];
-					const cacheMinor = cacheParts[0];
-					const cachePath = cacheParts[0];
-					const versionParts = version.split(".");
-					const major = versionParts[0];
-					const minor = versionParts[0];
-					const path = versionParts[0];
-					console.log(cacheMajor, major);
-					if (cacheMajor != major) {
-						console.log("version missmatch");
-						window.dispatchEvent(new CustomEvent("lyeh:version-mismatch", { detail: {
-							oldVersion: cacheVersion,
-							newVersion: version
-						} }));
-						_GM_setValue("lyeh:version", version);
-					}
-					if (cacheMinor != minor) {
-						console.log("version missmatch");
-						window.dispatchEvent(new CustomEvent("lyeh:version-mismatch", { detail: {
-							oldVersion: cacheVersion,
-							newVersion: version
-						} }));
-						_GM_setValue("lyeh:version", version);
-					}
-					if (cachePath != path) {
-						console.log("version missmatch");
-						window.dispatchEvent(new CustomEvent("lyeh:version-mismatch", { detail: {
-							oldVersion: cacheVersion,
-							newVersion: version
-						} }));
-						_GM_setValue("lyeh:version", version);
-					}
-				}
-			});
+			if (document.readyState === "loading") window.addEventListener("DOMContentLoaded", () => this.startup());
+			else this.startup();
 			window.addEventListener("keypress", (event) => {
 				console.log(event.ctrlKey, event.key);
 				if (event.ctrlKey && event.key == "") debugger;
@@ -5525,9 +5553,20 @@ self.onmessage = function (e) {
 				const response = originalFetch.apply(this, args);
 				const url = args[0];
 				if (typeof url === "string" && url.includes("/api/inboxes/main_activity_inbox/line_items/")) {}
-				console.log(response);
 				return response;
 			};
+			state = "pre-starting";
+		}
+		isMounted = false;
+		mountVue() {
+			if (this.isMounted) return;
+			let container = document.getElementById("lyeh");
+			if (!container) {
+				container = document.createElement("div");
+				container.id = "lyeh";
+				document.body.appendChild(container);
+				createApp(app_default).mount(container);
+			}
 		}
 		observeDOM() {
 			new MutationObserver(async (mutations) => {
@@ -5539,7 +5578,7 @@ self.onmessage = function (e) {
 						document.documentElement.style.setProperty("--current-accent", window.getComputedStyle(navvar).backgroundColor);
 					}
 					const referents = node.querySelectorAll(`[class^="Referent__FragmentContainer"]`);
-					if (referents.length != 0) for (const elem of referents) console.log();
+					if (referents.length != 0) for (const elem of referents);
 					if (node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`)) {
 						const targets = node.querySelectorAll("[class^=\"LineItem__ItemRow\"]");
 						for (const target of targets) target.parentElement.classList.add("lyeh__ItemParent");
@@ -5583,6 +5622,52 @@ self.onmessage = function (e) {
 				childList: true,
 				subtree: true
 			});
+		}
+		startup() {
+			state = "starting";
+			this.observeDOM();
+			this.extractSongData();
+			this.mountVue();
+			const cacheVersion = _GM_getValue("lyeh:version");
+			const version = _GM_info.script.version;
+			console.log("VERSIOOON", version, cacheVersion);
+			if (!cacheVersion) _GM_setValue("lyeh:version", version);
+			else {
+				const cacheParts = cacheVersion.split(".");
+				const cacheMajor = cacheParts[0];
+				const cacheMinor = cacheParts[1];
+				const cachePath = cacheParts[2];
+				const versionParts = version.split(".");
+				const major = versionParts[0];
+				const minor = versionParts[1];
+				const path = versionParts[2];
+				console.log(cacheMajor, major);
+				if (cacheMajor != major) {
+					console.log("version missmatch");
+					window.dispatchEvent(new CustomEvent("lyeh:version-mismatch", { detail: {
+						oldVersion: cacheVersion,
+						newVersion: version
+					} }));
+					_GM_setValue("lyeh:version", version);
+				}
+				if (cacheMinor != minor) {
+					console.log("version missmatch");
+					window.dispatchEvent(new CustomEvent("lyeh:version-mismatch", { detail: {
+						oldVersion: cacheVersion,
+						newVersion: version
+					} }));
+					_GM_setValue("lyeh:version", version);
+				}
+				if (cachePath != path) {
+					console.log("version missmatch");
+					window.dispatchEvent(new CustomEvent("lyeh:version-mismatch", { detail: {
+						oldVersion: cacheVersion,
+						newVersion: version
+					} }));
+					_GM_setValue("lyeh:version", version);
+				}
+			}
+			state = "running";
 		}
 		transformHeader(headerElement) {
 			headerElement.classList.add("bleh-custom-header");
