@@ -9,10 +9,10 @@ nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
 
     fill: contrast-color(var(--current-accent));
-    color: contrast-color(var(--current-accent)) !important;
+    color: contrast-color(var(--current-accent));
     text-decoration: none !important;
 }
-nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"]) span[class^="TextLabel-sc"] {
+nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"]) div[class^="PageHeaderMenu__Iq"] {
     color: contrast-color(var(--current-accent)) !important;
 }
 
