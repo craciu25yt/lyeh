@@ -5,13 +5,17 @@ nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"
     background-color: var(--current-accent);
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
-nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"]) :is(svg, a, span) {
+nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"]) :is(a, span, path) {
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
 
     fill: contrast-color(var(--current-accent));
     color: contrast-color(var(--current-accent)) !important;
     text-decoration: none !important;
 }
+nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"]) span[class^="TextLabel-sc"] {
+    color: contrast-color(var(--current-accent)) !important;
+}
+
 main[class*="ProfileContent-desktop__PageGrid"] path {
     fill: var(--lyeh-text-main) !important;
 }

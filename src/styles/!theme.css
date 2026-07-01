@@ -82,11 +82,17 @@ span {
 div[class^="SongHeader-desktop__CoverArt"] img {
     border-radius: 10px;
 }
-div[class^="ContributorSidebar__Container"] {
+aside[class^="ContributorSidebar__Container"] {
     background-color: var(--lyeh-bg-secondary) !important;
     padding-right: 14px;
     border-radius: 15px;
     box-shadow: 10px 5px 5px var(--lyeh-bg-shadow);
+}
+div[class^="ContributorSidebarSection__Header"] {
+    color: var(--lyeh-text-main);
+}
+div[class^="ContributorSidebarMetadata"] {
+    color: var(--lyeh-text-main);
 }
 
 button[class^="Button__Container-sc"] {
@@ -353,3 +359,19 @@ a[class^="LyricsHeader__TranslationLink"] {
 a[class^="LyricsHeader__TranslationLink"]:hover {
     background-color: var(--accent-muted) !important;
 }
+
+div[class^="VotesModal__Container"] {
+    border-radius: 10px;
+    background-color: rgba(41, 36, 36, 0.4);
+    backdrop-filter: blur(10px);
+}
+
+/*
+Popup:
+border-radius: 10px;
+background-color: rgba(41, 36, 36, 0.4);
+backdrop-filter: blur(10px);
+
+layer:
+#16141496
+*/

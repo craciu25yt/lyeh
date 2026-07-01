@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import monkey from "vite-plugin-monkey";
 import vue from "@vitejs/plugin-vue";
+import pkg from "./package.json";
 export default defineConfig(({ command }) => ({
 	plugins: [
 		monkey({
@@ -8,7 +9,8 @@ export default defineConfig(({ command }) => ({
 			userscript: {
 				name: "Genie",
 				namespace: "npm/lyeh",
-				version: "1.0.0",
+				// I swear I hate live server
+				version: command === "build" ? pkg.version : "1.0.0",
 				match: ["https://genius.com/*"],
 				grant: [
 					"GM_addStyle",

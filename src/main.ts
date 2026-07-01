@@ -73,6 +73,7 @@ class Genie {
 			const cacheVersion = GM_getValue("lyeh:version");
 			const version = GM_info.script.version;
 
+			console.log("VERSIOOON", version, cacheVersion);
 			if (!cacheVersion) {
 				GM_setValue("lyeh:version", version);
 			} else {
