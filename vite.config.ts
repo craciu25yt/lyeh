@@ -24,8 +24,8 @@ export default defineConfig(({ command }) => ({
 				"run-at": "document-start",
 				// lost 30 minutes because of this
 				...(command === "build" && {
-					updateURL: "https://craciu25yt.github.io/lyeh/genie.derp.user.js",
-					downloadURL: "https://craciu25yt.github.io/lyeh/genie.derp.user.js",
+					updateURL: "https://craciu25yt.github.io/lyeh/genie.user.js",
+					downloadURL: "https://craciu25yt.github.io/lyeh/genie.user.js",
 				}),
 			},
 		}),
