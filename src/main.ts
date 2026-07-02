@@ -25,6 +25,7 @@ const covers = new Map<string, string>();
 const coverAccent = new Map<string, Promise<any>>();
 const progressBarRegex = /linear-gradient\(to right,\s*[^)]+\)\s*([\d.]+%)/;
 
+import { settingsSchema } from "./components/settings";
 // lil skid. I love u genius devs don't sue me <3
 const COOKIE_NAME = "_genius_release_opt_in_add_song";
 const MAX_AGE = 60 * 60 * 24 * 60;
@@ -93,6 +94,19 @@ class Genie {
 		//		return;
 		//	}
 		//}
+		console.log("Loading settings...");
+		for (const category of settingsSchema) {
+			for (const setting of category.items) {
+				console.log(setting);
+				const value = GM_getValue(`lyeh:settings:${setting.id}`);
+				console.log(`--settings-${setting.id}`);
+				document.documentElement.style.setProperty(
+					`--settings-${setting.id}`,
+					value ? JSON.parse(value) : setting.default,
+				);
+			}
+		}
+		console.log("Settings loaded!");
 
 		document.documentElement.dataset.lyehTheme = "dark";
 
@@ -212,10 +226,23 @@ class Genie {
 			for (const mutation of mutations) {
 				for (const node of mutation.addedNodes) {
 					if (!(node instanceof HTMLElement)) continue;
+
+					const menu = node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`);
+					if (menu) {
+						const placeholder = document.createElement("button");
+						placeholder.className = "PageHeaderMenu__Title-sc-jiji PageHeaderMenu__Item-sc-holi gzRYgj";
+						placeholder.style.padding = "0.75 rem";
+						placeholder.innerText = "Lyeh Settings";
+						placeholder.onclick = () => {
+							window.dispatchEvent(new CustomEvent("lyeh:settings"));
+						};
+
+						// last = sign out
+						node.insertBefore(placeholder, node.lastElementChild);
+					}
+
 					const navvar = document.querySelector(`[class^="StickyNav-desktop__Container"]`);
 					if (navvar) {
-						console.log(window.getComputedStyle(navvar).backgroundColor);
-
 						document.documentElement.style.setProperty(
 							"--current-accent",
 							window.getComputedStyle(navvar).backgroundColor,

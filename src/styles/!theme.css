@@ -18,6 +18,7 @@
         rgba(30, 30, 46, 1) 100%
     );
     --current-accent: rgb(255, 255, 100);
+    --settings-player-width: 40vh;
 }
 
 /* Overwrite the structural layout safely */

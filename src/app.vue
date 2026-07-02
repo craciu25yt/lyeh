@@ -1,11 +1,13 @@
 <template>
-    <update></update>
     <error></error>
+    <update></update>
+    <settings></settings>
 </template>
 
 <script setup lang="ts">
-import update from "./components/update.vue";
 import error from "./components/error.vue";
+import update from "./components/update.vue";
+import settings from "./components/settings.vue";
 
 console.vLog("Initializing vue");
 </script>
