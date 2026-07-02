@@ -95,6 +95,9 @@ ul[class^="DiscographyItemList"] {
 a[class*="OptOutButton__Container-sc"] {
     display: none;
 }
+button[class*="OptOutButtonWithFeedbackModal__SmallButton-sc"] {
+    display: none;
+}
 
 hr[class^="ProfileContent-desktop__Divider"] {
     border-color: rgb(255 255 255 / 20%);

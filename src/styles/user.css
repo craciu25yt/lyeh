@@ -69,3 +69,28 @@ profile-user-pane .white_container {
 .header-action-label {
     display: none;
 }
+
+.feed_dropdown {
+    border-radius: 10px !important;
+    background-color: rgba(41, 36, 36, 0.4) !important;
+    backdrop-filter: blur(10px);
+    color: var(--lyeh-text-main) !important;
+    top: 3rem !important;
+}
+
+.inbox_line_item_detail {
+    background-color: transparent;
+}
+
+.gray_container {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    border-radius: 10px;
+}
+
+.tooltip {
+    border-radius: 10px;
+    background-color: rgba(41, 36, 36, 0.4) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(10px);
+}

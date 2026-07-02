@@ -380,6 +380,9 @@ backdrop-filter: blur(10px);
 
 layer:
 #16141496
+
+border: 1px solid rgba(255, 255, 255, 0.15);
+
 */
 
 li[class^="ContributorList__ListItem"] {
