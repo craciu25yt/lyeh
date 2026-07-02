@@ -1,8 +1,8 @@
-div[class^="standalone_annotation"] {
-    background-color: #16141496;
+.standalone_annotation {
+    background-color: #16141496 !important;
     border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 10px;
-    padding: 10px;
+    padding: 20px;
 }
 
 a[class^="referent--accent_font referent--line_break"] {
@@ -19,7 +19,12 @@ div[class^="statistics_panel"] path {
     fill: var(--lyeh-text-main);
 }
 
-a[class^="profile_contribution"],
+a[class^="profile_contribution"] {
+    background-color: #16141496 !important;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    padding: 20px;
+}
 a[class^="referent"] {
     background-color: transparent !important;
 }
@@ -29,4 +34,34 @@ div[class^="note_bubble"] {
 }
 div[class^="note_bubble"]::before {
     border-bottom-color: var(--accent-muted) !important;
+}
+
+profile-user-pane .white_container {
+    background-color: #16141496 !important;
+    border-radius: 10px;
+}
+
+[ng-show="!$ctrl.show_artist_pane"] [class*="column_layout-column_span--secondary"] {
+    /*background-color: red;*/
+    width: 40%;
+}
+[ng-show="!$ctrl.show_artist_pane"] [class*="column_layout-column_span--primary"] {
+    width: 100%;
+}
+
+.column_layout[ng-show="!$ctrl.show_artist_pane"] {
+    /*background-color: blue;*/
+    max-width: 1200px;
+    padding: 0;
+}
+.profile_header .column_layout {
+    margin: none !important;
+    width: none !important;
+    max-width: 1160px;
+}
+.profile_identity-iq {
+    background-color: rgba(255, 255, 100, 0.8) !important;
+    color: black !important;
+    border-radius: 10px;
+    padding: 0.125rem 0.225rem !important;
 }

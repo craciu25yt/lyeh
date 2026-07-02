@@ -23,6 +23,8 @@
 								<label :for="item.id" class="setting-label" :data-disabled="item.disabled || null">{{ item.label }}</label>
 
 								<text :for="item.description" class="setting-description" :data-disabled="item.disabled || null"> {{ item.description }}</text>
+								<!-- bottom slider -->
+
 								<div v-if="item.type == 'slider_bottom'" class="setting-input-wrapper" :data-disabled="item.disabled || null">
 									<input
 										:id="item.id"
@@ -52,7 +54,11 @@
 									</button>
 								</div>
 							</div>
+							<!-- wrapper -->
+
 							<div class="setting-input-wrapper" :data-disabled="item.disabled || null">
+								<button v-if="item.type == 'button'" class="button" @click="clearCache()">{{ item.label }}</button>
+
 								<label v-if="item.type == 'boolean'" class="switch">
 									<input
 										:id="item.id"
@@ -79,7 +85,7 @@
 									:step="item.step"
 								/>
 								<div class="slider-footer" v-if="item.type == 'slider'">
-									<span class="slider-value">{{ settingsState[item.id] }}</span>
+									<span class="slider-value">{{ item.format ? item.format.replace("$!", settingsState[item.id]) : settingsState[item.id] }}</span>
 									<button
 										class="slider-reset"
 										v-if="settingsState[item.id] != item.default"
@@ -105,15 +111,18 @@
 import { ref, onMounted, onUnmounted, reactive } from "vue";
 import { settingsSchema } from "./settings";
 
-import { GM_getValue, GM_setValue } from "$";
+import { GM_deleteValue, GM_deleteValues, GM_getValue, GM_getValues, GM_listValues, GM_setValue } from "$";
 
 const visible = ref(false);
 
 function saveSetting(key: string, value: any, format: string | undefined = undefined) {
+	console.log(value);
 	if (format) {
 		value = format.replace("$!", value);
 	}
-	GM_setValue(`lyeh:settings :${key}`, JSON.stringify(value));
+	console.log(value);
+
+	GM_setValue(`lyeh:settings:${key}`, JSON.stringify(value));
 	document.documentElement.style.setProperty(`--settings-${key}`, value);
 }
 
@@ -135,6 +144,22 @@ const settingsState = reactive<Record<string, any>>(
 );
 console.log(settingsState);
 
+function clearCache() {
+	console.vLog("Clearing cache...");
+	const allStorage = GM_getValues(GM_listValues());
+	const toDelete = [];
+	let totalBytes = 0;
+
+	for (const [key, value] of Object.entries(allStorage)) {
+		if (!key.startsWith("cache:")) continue;
+		toDelete.push(key);
+		totalBytes += value.length * 2; // js uses utf-16
+	}
+	if (toDelete.length != 0) {
+		GM_deleteValues(toDelete);
+	}
+	console.vLog(`Successfully deleted ${(totalBytes / 1024).toFixed(2)} KB from StorageDB`);
+}
 function handler() {
 	visible.value = true;
 }
@@ -403,5 +428,17 @@ body {
 }
 .slider-reset:hover {
 	color: white !important;
+}
+
+.button {
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+	padding: 10px 20px;
+	border-radius: 10px;
+}
+.button:hover {
+	background: rgba(250, 100, 160, 0.4);
 }
 </style>

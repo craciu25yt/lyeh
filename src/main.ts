@@ -97,13 +97,16 @@ class Genie {
 		console.log("Loading settings...");
 		for (const category of settingsSchema) {
 			for (const setting of category.items) {
-				console.log(setting);
-				const value = GM_getValue(`lyeh:settings:${setting.id}`);
-				console.log(`--settings-${setting.id}`);
-				document.documentElement.style.setProperty(
-					`--settings-${setting.id}`,
-					value ? JSON.parse(value) : setting.default,
-				);
+				const value: string = GM_getValue(`lyeh:settings:${setting.id}`);
+				let settingValue = value ? JSON.parse(value) : setting.default;
+				if (!value && setting.format) {
+					settingValue = setting.format.replace("$!", settingValue);
+				}
+				console.log(`--settings-${setting.id}`, value);
+				// if (setting.format) {
+				// 	settingValue = setting.format.replace("$!", settingValue);
+				// }
+				document.documentElement.style.setProperty(`--settings-${setting.id}`, settingValue);
 			}
 		}
 		console.log("Settings loaded!");
@@ -119,7 +122,7 @@ class Genie {
 			this.mouseEvents();
 		}
 		//todo: investigate enforce via cookie
-		if (url.pathname.startsWith("/album/")) {
+		if (url.pathname.startsWith("/album/") || url.pathname.startsWith("/albums/")) {
 			if (url.searchParams.get("react") != "1") {
 				url.searchParams.set("react", "1");
 				window.location.replace(url.toString());
@@ -228,7 +231,8 @@ class Genie {
 					if (!(node instanceof HTMLElement)) continue;
 
 					const menu = node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`);
-					if (menu) {
+					console.log(node);
+					if (menu && node.querySelector('a[href="/forums"]')) {
 						const placeholder = document.createElement("button");
 						placeholder.className = "PageHeaderMenu__Title-sc-jiji PageHeaderMenu__Item-sc-holi gzRYgj";
 						placeholder.style.padding = "0.75 rem";
@@ -375,13 +379,13 @@ class Genie {
 			console.log("Genius Metadata captured:", trackingData);
 			for (const [_, data] of Object.entries(trackingData.entities.artists || {}) as [string, any]) {
 				if (data.headerImageUrl) {
-					console.log(data.url, data.headerImageUrl);
+					//console.log(data.url, data.headerImageUrl);
 					banners.set(data.url, data.headerImageUrl);
 				}
 			}
 			for (const [_, data] of Object.entries(trackingData.entities.user || {}) as [string, any]) {
 				if (data.headerImageUrl) {
-					console.log(data.url, data.headerImageUrl);
+					//console.log(data.url, data.headerImageUrl);
 					banners.set(data.url, data.headerImageUrl);
 				}
 			}
@@ -396,6 +400,7 @@ class Genie {
 			for (const [_, data] of Object.entries(trackingData.entities.albums || {}) as [string, any]) {
 				if (data.coverArtThumbnailUrl) {
 					coverAccent.set(data.url, this.getAccentCache(data.url, data.coverArtThumbnailUrl));
+					console.log("setted", data.url);
 				}
 			}
 		}
@@ -408,15 +413,12 @@ class Genie {
 	}
 
 	private async getAccentCache(songUrl: string, imgUrl: string): Promise<any> {
-		console.log("running accent async");
-		const cacheKey = `accent:${songUrl}`;
+		const cacheKey = `cache:accent:${songUrl}`;
 		const cached = await GM_getValue(cacheKey, null);
 		if (cached) {
-			console.log("CACHE HIT!!");
 			return JSON.parse(cached);
 		}
 
-		console.log(`[Genie] Cache miss ${songUrl}`);
 		return new Promise((resolve, reject) => {
 			privilegedFetch({
 				method: "GET",
@@ -428,10 +430,20 @@ class Genie {
 					tempImg.onload = async () => {
 						try {
 							const swatches = await getSwatches(tempImg);
+							const activeSwatch =
+								swatches.Vibrant ||
+								swatches.DarkVibrant ||
+								swatches.LightVibrant ||
+								swatches.Muted ||
+								swatches.DarkMuted ||
+								swatches.LightMuted;
 
-							await GM_setValue(cacheKey, JSON.stringify(swatches));
+							//@ts-ignore
+							GM_setValue(cacheKey, JSON.stringify(activeSwatch.color._oklch));
 							URL.revokeObjectURL(blobUrl);
-							resolve(swatches);
+
+							//@ts-ignore
+							resolve(activeSwatch.color._oklch);
 						} catch (err) {
 							URL.revokeObjectURL(blobUrl);
 							reject(err);
@@ -461,16 +473,9 @@ class Genie {
 				console.log(songAnchor);
 				const songUrl = songAnchor.href;
 				const swatches = await coverAccent.get(songUrl);
-				const activeSwatch =
-					swatches.Vibrant ||
-					swatches.DarkVibrant ||
-					swatches.LightVibrant ||
-					swatches.Muted ||
-					swatches.DarkMuted ||
-					swatches.LightMuted;
-
-				if (activeSwatch) {
-					const { l, c, h } = activeSwatch.color._oklch;
+				console.log(swatches);
+				if (swatches) {
+					const { l, c, h } = swatches;
 					const accentColor = `oklch(${l} ${c} ${h})`;
 
 					document.documentElement.style.setProperty("--current-accent", accentColor);

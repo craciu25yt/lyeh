@@ -112,6 +112,8 @@ div[class^="UnreviewedAnnotation__Unreviewed"] {
 div[class^="dashed_background_message"] {
     background: transparent !important;
     border-radius: 4px;
+    border: 1px solid rgb(255, 20, 100);
+    text-align: center;
 }
 
 /* Messages */

@@ -2,8 +2,8 @@
 interface BaseSliderItem {
 	id: string;
 	label: string;
-	type: "boolean" | "text" | "number" | "color" | "slider" | "slider_bottom";
-	default: any;
+	type: "boolean" | "text" | "number" | "color" | "button" | "slider" | "slider_bottom";
+	default?: any;
 	description: string;
 	disabled?: boolean;
 	tooltip?: string;
@@ -18,7 +18,7 @@ interface SliderSettingItem extends BaseSliderItem {
 }
 
 interface StandardSettingsItem extends BaseSliderItem {
-	type: "boolean" | "text" | "number" | "color";
+	type: "boolean" | "text" | "number" | "color" | "button";
 }
 
 export type SettingsItem = StandardSettingsItem | SliderSettingItem;
@@ -64,6 +64,18 @@ export const settingsSchema: SettingCategory[] = [
 				length: 72,
 				disabled: true,
 				tooltip: "I love genius",
+			},
+		],
+	},
+	{
+		id: "Advanced",
+		title: "Advanced",
+		items: [
+			{
+				id: "clear-cache",
+				label: "Clear cache",
+				description: "Clears all Lyeh's cache (image accents...)",
+				type: "button",
 			},
 		],
 	},

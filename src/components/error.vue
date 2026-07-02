@@ -6,7 +6,7 @@
             <div class="error-box">
                 <span>{{ error }}</span>
             </div>
-            <text class="footer"
+            <text class="lyeh-footer"
                 >If the issue persists, please <a href="https://github.com/craciu25yt/lyeh/issues" target="_blank"">report it</a></text
             >
         </div>
@@ -65,7 +65,8 @@ onUnmounted(() => {
 }
 .box {
     position: relative;
-    background: rgba(255, 255, 255, 0.03);
+   	background: rgba(0, 0, 0, 0.4);
+
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 24px;
@@ -108,7 +109,7 @@ onUnmounted(() => {
     color: white;
     white-space: pre;
 }
-.footer {
+.lyeh-footer {
     margin-top: 10px;
     color: #c2c2c2;
     text-shadow: 1px 1px black;

@@ -18,6 +18,12 @@ export default defineConfig(({ command }) => ({
 					"GM_getValue",
 					"GM_setValue",
 					"GM_deleteValue",
+
+					"GM_getValues",
+					"GM_setValues",
+					"GM_deleteValues",
+
+					"GM_listValues",
 					"unsafeWindow",
 				],
 				connect: ["genius.com", "images.genius.com", "t2.genius.com"],
