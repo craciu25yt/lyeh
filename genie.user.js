@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Genie
 // @namespace    npm/lyeh
-// @version      1.1.0
-// @downloadURL  https://craciu25yt.github.io/lyeh/genie.user.js
-// @updateURL    https://craciu25yt.github.io/lyeh/genie.user.js
+// @version      1.2.0
+// @downloadURL  https://raw.githubusercontent.com/craciu25yt/lyeh/gh-pages/genie.user.js
+// @updateURL    https://raw.githubusercontent.com/craciu25yt/lyeh/gh-pages/genie.user.js
 // @match        https://genius.com/*
 // @exclude      *://assets.genius.com/javascripts/compiled/apple_music*
 // @connect      genius.com
@@ -11,9 +11,13 @@
 // @connect      t2.genius.com
 // @grant        GM_addStyle
 // @grant        GM_deleteValue
+// @grant        GM_deleteValues
 // @grant        GM_getValue
+// @grant        GM_getValues
 // @grant        GM_info
+// @grant        GM_listValues
 // @grant        GM_setValue
+// @grant        GM_setValues
 // @grant        GM_xmlhttpRequest
 // @grant        unsafeWindow
 // @run-at       document-start
@@ -30,17 +34,17 @@
 			else (document.head || document.documentElement).appendChild(document.createElement("style")).append(c);
 		})(t);
 	};
-	_css(" .overlay[data-v-2838bb71]{z-index:99999;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);background:#0006;justify-content:center;align-items:center;display:flex;position:fixed;inset:0}.box[data-v-2838bb71]{-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);text-align:center;background:#ffffff14;border:1px solid #ffffff26;border-radius:24px;min-width:320px;padding:48px 64px;position:relative;box-shadow:0 8px 64px #00000080,inset 0 1px #ffffff1a}.close[data-v-2838bb71]{color:#ffffff80;cursor:pointer;background:0 0;border:none;padding:0;font-size:28px;line-height:1;position:absolute;top:12px;right:16px}.close[data-v-2838bb71]:hover{color:#fff}.title[data-v-2838bb71]{color:#fff;letter-spacing:-.02em;margin:0 0 16px;font-size:28px;font-weight:700}.version[data-v-2838bb71]{color:#fffc;justify-content:center;align-items:center;gap:12px;margin:0;font-size:18px;display:flex}.old[data-v-2838bb71]{opacity:.5;text-decoration:line-through}.arrow[data-v-2838bb71]{opacity:.6;font-size:22px}.new[data-v-2838bb71]{color:#fff;font-weight:600}[data-v-1684d7cb]::selection{color:#fff;background-color:#fa64a0b3}.overlay[data-v-1684d7cb]{z-index:99999;color:#f1f2f6;background:#0003;justify-content:center;align-items:center;display:flex;position:fixed;inset:0}.overlay[data-v-1684d7cb]:before{content:\"\";z-index:-1;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);will-change:backdrop-filter;position:absolute;inset:0}.box[data-v-1684d7cb]{-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);background:#ffffff08;border:1px solid #ffffff26;border-radius:24px;min-width:320px;padding:48px 64px;position:relative;box-shadow:0 8px 64px #00000080,inset 0 1px #ffffff1a}.close[data-v-1684d7cb]{color:#ffffff80;cursor:pointer;background:0 0;border:none;padding:0;font-size:28px;line-height:1;position:absolute;top:12px;right:16px}.close[data-v-1684d7cb]:hover{color:#fff}.title[data-v-1684d7cb]{text-align:center;margin:0 0 16px;font-size:28px;font-weight:700}.error-box[data-v-1684d7cb]{color:#fff;white-space:pre;background-color:#00000080;border:10px;border-radius:10px;padding:15px}.footer[data-v-1684d7cb]{color:#c2c2c2;text-shadow:1px 1px #000;margin-top:10px}a[data-v-1684d7cb]{color:#fff!important}\n/*$vite$:1*/ ");
-	_css(":root[data-lyeh-theme=dark]{--lyeh-bg-primary:#292424;--lyeh-bg-shadow:#1a1616;--lyeh-bg-secondary:#362f2f;--lyeh-bg-thirdy:#2e2828;--lyeh-accent:#ed4597;--lyeh-text-main:#f1f2f6;--lyeh-text-muted:#a4b0be;--accent-muted:#fa64a080;--lyeh-current-song-accent:#000;--lyeh-current-song-accent-secondary:#000;--artist-banner-url:linear-gradient(180deg, #1e1e2e 0%, #313244 50%, #1e1e2e 100%);--current-accent:#ffff64}body,div[class^=PageLayout__Container],main{transition:background-color 1s;background-color:var(--lyeh-bg-primary)!important;color:var(--lyeh-text-main)!important;fill:var(--lyeh-text-main)!important}path{fill:var(--lyeh-text-main)}div[class^=StickyNavLoggedIn__Container] path{fill:color-contrast(var(--current-accent))}div[class^=Lyrics__Container]{letter-spacing:-.01em!important;color:var(--lyeh-text-main)!important;font-size:1.15rem!important;line-height:1.7!important}div[class^=Lyrics__Container] a{border-bottom:1px dashed #ff47574d;transition:all .2s;-webkit-text-decoration-color:var(--lyeh-accent)!important;text-decoration-color:var(--lyeh-accent)!important}div[class^=Lyrics__Container] a:hover{border-bottom:1px solid var(--lyeh-accent);background:#ff47571a}span[class^=ReferentFragment]{background:var(--lyeh-bg-secondary);color:var(--lyeh-text-main)!important}span[class^=ReferentFragment]:hover{border-bottom:1px solid var(--lyeh-accent);background:#fa64a0b3;color:var(--lyeh-text-main)!important}[class^=TextLabel],[class^=ContributorsCreditSong]{color:var(--lyeh-text-main)!important}a:not([class^=StickyNavSectionLink__StyledLink]){color:var(--lyeh-text-main)!important;-webkit-text-decoration:underline #ffffff80!important;text-decoration:underline #ffffff80!important}span{color:var(--lyeh-text-main)!important}div[class^=SongHeader-desktop__CoverArt] img{border-radius:10px}aside[class^=ContributorSidebar__Container]{box-shadow:10px 5px 5px var(--lyeh-bg-shadow);border-radius:15px;padding-right:14px;background-color:var(--lyeh-bg-secondary)!important}div[class^=ContributorSidebarSection__Header],div[class^=ContributorSidebarMetadata]{color:var(--lyeh-text-main)}button[class^=Button__Container-sc]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}button[class^=Button__Container-sc]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}a[class^=Button__Container-sc]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}a[class^=Button__Container-sc]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}button[class^=ContributorActionTextbox]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}div[class^=ContributorSidebarSection__HeaderButtons] svg path:first-child{fill:var(--lyeh-text-main)!important}div[class^=ContributorSidebarSection__HeaderButtons] svg path:last-child{fill:var(--lyeh-bg-primary)!important}div[class^=PageGrid-desktop][class*=StickyToolbar__Container]{border-bottom:none;background-color:var(--lyeh-bg-primary)!important}button[class^=SmallButton__Container]{border-color:var(--lyeh-text-main);color:var(--lyeh-text-main)!important}button[class^=SmallButton__Container]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}a[class^=SmallButton__Container]{border-color:var(--lyeh-text-main);color:var(--lyeh-text-main)!important}a[class^=SmallButton__Container]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}svg[class^=LineItemActionIcon__Icon][data-action-name=recognized] path,svg[class^=LineItemActionIcon__Icon][data-action-name=accepted] path,svg[class^=LineItemActionIcon__Icon][data-action-name=hit_pageview_threshold] path,svg[class^=LineItemActionIcon__Icon][data-action-name=upvoted] path{fill:#4bbf38!important}div[class^=LineItemList__Container] path{fill:#9a9a9a!important}div[class^=LineItem__IqDifference]{color:#4bbf38!important}svg[class^=LineItemActionIcon__Icon][data-action-name=earned] path{fill:#c7ba18!important}span[class^=ContributorActionTextbox]{color:var(--lyeh-text-main)!important}[color=background\\.iqPoints]{color:#4bbf38!important}[color=background\\.negativeNumber]{color:#f03e26!important}div[class^=ContributorsCreditMarkedComplete__CompletedUsernameContainer]{color:var(--lyeh-text-main)!important}div[class^=TooltipShadow]{color:var(--lyeh-text-main);z-index:1;background-color:#0000;border-radius:15px;position:relative;overflow:hidden}div[class^=TooltipShadow]:before{content:\"\";filter:blur(2px)brightness(.5);z-index:-1;background-position:50%;background-size:cover;border:0;transition:all 1s;position:absolute;inset:0;transform:scale(1.1);background-image:var(--artist-banner-url)!important;border-radius:15px!important}div[class^=ArtistTooltip__Verified]{color:#000;text-align:center;background-color:#ffff64;margin-right:30%;font-size:.75rem;border-radius:15px!important}div[class^=TooltipShadow]:has([class^=ArtistTooltip__Verified]){box-shadow:1px 1px 20px #ffff6480!important}div[class^=TooltipShadow]:has([role=moderator]){box-shadow:1px 1px 20px #047ec680!important}div[class^=Placeholder__Container]{background-color:#fa64a0b3!important}span[class^=UserBadge__Iq]{border-radius:10px;padding:.125rem .225rem;color:#000!important;background-color:#ffff64cc!important}button{color:#fff!important}div[class^=UserBadge__Role-sc-]{align-items:center;padding:4px 0;transition:all .3s ease-in-out;display:inline-flex;overflow:hidden}span[class^=UserBadge__RoleLabel-sc-]{opacity:0;white-space:nowrap;max-width:0;margin-right:0;transition:max-width .3s ease-in-out,opacity .2s ease-in-out,margin .3s ease-in-out;display:inline-block}div[class^=UserBadge__Role-sc-]:hover span[class^=UserBadge__RoleLabel-sc-]{opacity:1;max-width:100px;margin-right:6px}span[class^=RoleIcon__Container-sc-]{flex-shrink:0;align-items:center;width:14px;height:14px;display:flex}span[class^=RoleIcon__Container-sc-] svg{width:100%;height:100%}div[class^=AlbumTracklist__Track]{color:var(--lyeh-text-main)}div[class^=PageGrid-desktop][class*=SongHeader-desktop__Container] :is(span,a,button,path){color:color-contrast(var(--current-accent))!important;fill:color-contrast(var(--current-accent))!important}div[class^=white_container]{background-color:#0000}span[class^=LineItemMessage__NoteBubble]{background-color:#fa64a0b3!important}input{caret-color:var(--lyeh-accent)}::selection{color:#fff;background-color:#fa64a0b3}div[class^=ScrollableTabs__TabNavContainer]{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);border-radius:15px 15px 0 0;background-color:#0000004d!important}div[class^=ScrollableTabs__ContentArea]{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);background-color:#0000004d}h3[class^=ScrollableTabsSection__Title],legend[class^=Field-shared__FieldLabel],div[class^=css-hfv4dh-singleValue]{color:var(--lyeh-text-main)}div[class^=LyricsHighlightTooltip__Content]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);background-color:#16141496;border:0;border-radius:10px;border:1px solid #fff3!important}div[class^=LyricsHighlightTooltip__Content]:hover{background-color:var(--accent-muted)!important}button[class^=LyricsHighlightTooltip__Container]:before{display:none}div[class^=LyricsHighlightTooltip__Content]:before:hover{background-color:var(--accent-muted)!important}span[class^=LyricsHighlightTooltip__IQ]{color:#40ff21!important}a[class^=LyricsHeader__TranslationLink]{background:0 0}a[class^=LyricsHeader__TranslationLink]:hover{background-color:var(--accent-muted)!important}div[class^=VotesModal__Container]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);background-color:#29242466;border-radius:10px}");
+	_css(" [data-v-81c02cd1]::selection{color:#fff;background-color:#fa64a0b3}.overlay[data-v-81c02cd1]{z-index:99999;color:#f1f2f6;background:#0003;justify-content:center;align-items:center;display:flex;position:fixed;inset:0}.overlay[data-v-81c02cd1]:before{content:\"\";z-index:-1;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);will-change:backdrop-filter;position:absolute;inset:0}.box[data-v-81c02cd1]{-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);background:#0006;border:1px solid #ffffff26;border-radius:24px;min-width:320px;padding:48px 64px;position:relative;box-shadow:0 8px 64px #00000080,inset 0 1px #ffffff1a}.close[data-v-81c02cd1]{color:#ffffff80;cursor:pointer;background:0 0;border:none;padding:0;font-size:28px;line-height:1;position:absolute;top:12px;right:16px}.close[data-v-81c02cd1]:hover{color:#fff}.title[data-v-81c02cd1]{text-align:center;margin:0 0 16px;font-size:28px;font-weight:700}.error-box[data-v-81c02cd1]{color:#fff;white-space:pre;background-color:#00000080;border:10px;border-radius:10px;padding:15px}.lyeh-footer[data-v-81c02cd1]{color:#c2c2c2;text-shadow:1px 1px #000;margin-top:10px}a[data-v-81c02cd1]{color:#fff!important}.overlay[data-v-2838bb71]{z-index:99999;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);background:#0006;justify-content:center;align-items:center;display:flex;position:fixed;inset:0}.box[data-v-2838bb71]{-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);text-align:center;background:#ffffff14;border:1px solid #ffffff26;border-radius:24px;min-width:320px;padding:48px 64px;position:relative;box-shadow:0 8px 64px #00000080,inset 0 1px #ffffff1a}.close[data-v-2838bb71]{color:#ffffff80;cursor:pointer;background:0 0;border:none;padding:0;font-size:28px;line-height:1;position:absolute;top:12px;right:16px}.close[data-v-2838bb71]:hover{color:#fff}.title[data-v-2838bb71]{color:#fff;letter-spacing:-.02em;margin:0 0 16px;font-size:28px;font-weight:700}.version[data-v-2838bb71]{color:#fffc;justify-content:center;align-items:center;gap:12px;margin:0;font-size:18px;display:flex}.old[data-v-2838bb71]{opacity:.5;text-decoration:line-through}.arrow[data-v-2838bb71]{opacity:.6;font-size:22px}.new[data-v-2838bb71]{color:#fff;font-weight:600}[data-v-a6ac9b78]::selection{color:#fff;background-color:#fa64a0b3}body[data-v-a6ac9b78]{height:100%;margin:0;overflow:hidden}.overlay[data-v-a6ac9b78]{z-index:99999;color:#f1f2f6;background:#0003;justify-content:center;align-items:center;transition:display 1s;display:flex;position:fixed;inset:0}.overlay[data-v-a6ac9b78]:before{content:\"\";z-index:-1;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);will-change:backdrop-filter;position:absolute;inset:0}.box[data-v-a6ac9b78]{-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);background:#0006;border:1px solid #ffffff26;border-radius:10px;min-width:40vw;position:relative;box-shadow:0 8px 64px #00000080,inset 0 1px #ffffff1a}.bar[data-v-a6ac9b78]{border-bottom:1px solid #ffffff26;flex-direction:row;justify-content:space-between;padding:16px 20px;display:flex}.close[data-v-a6ac9b78]{color:#ffffff80;cursor:pointer;background:0 0;border:none;padding:0;font-size:28px;line-height:1}.close[data-v-a6ac9b78]:hover{color:#fff}.title[data-v-a6ac9b78]{text-align:center;font-size:20px;font-weight:700}.content[data-v-a6ac9b78]{padding:20px}.category-title[data-v-a6ac9b78]{font-size:18px;font-weight:700}.setting-label[data-v-a6ac9b78]{font-size:16px}.setting-label[data-disabled][data-v-a6ac9b78]{opacity:.4}.setting-row[data-v-a6ac9b78]{border-radius:10px;justify-content:space-between;align-items:center;padding:10px 10px 10px 20px;display:flex;position:relative}.setting-row[data-v-a6ac9b78]:hover{background:#ffffff1a}.setting-row[data-disabled][data-v-a6ac9b78]:after{content:attr(data-tooltip);opacity:0;visibility:hidden;color:#fff;background-color:#1a1a1e;border:1px solid #ffffff26;border-radius:10px;padding:5px 10px;transition:opacity .15s,visibility .15s;position:absolute;bottom:105%;right:0;box-shadow:0 4px 12px #00000080}.setting-row[data-disabled][data-v-a6ac9b78]:hover:after{opacity:1;visibility:visible}.setting-info[data-v-a6ac9b78]{flex-direction:column;display:flex}.setting-description[data-disabled][data-v-a6ac9b78]{opacity:.5}.setting-description[data-v-a6ac9b78]{color:#c2c2c2;font-size:14px}.checkbox[data-v-a6ac9b78]{opacity:0;width:0;height:0}.setting-input-wrapper[data-disabled][data-v-a6ac9b78]{opacity:.5}.switch[data-v-a6ac9b78]{width:50px;height:26px;display:inline-block;position:relative}.button-slider[data-v-a6ac9b78]{cursor:pointer;background-color:#555;border-radius:26px;transition:background-color .2s;position:absolute;inset:0}.button-slider[data-v-a6ac9b78]:after{content:\"\";background-color:#fff;border-radius:50%;width:20px;height:20px;transition:transform .2s cubic-bezier(.4,0,.2,1);position:absolute;bottom:3px;left:3px}.switch input:checked+.button-slider[data-v-a6ac9b78]{background-color:#fa64a0b3}.switch input:checked+.button-slider[data-v-a6ac9b78]:after{transform:translate(24px)}.switch input:focus-visible+.button-slider[data-v-a6ac9b78]{box-shadow:0 0 0 2px #000,0 0 0 4px #fa64a0b3}.slider-bottom[data-v-a6ac9b78]{margin-top:10px}.slider-bottom[data-v-a6ac9b78],.slider[data-v-a6ac9b78]{appearance:none;width:var(--length);cursor:pointer;background-color:#0000;border-radius:16px;outline:none;height:15px;overflow:hidden}.slider-bottom[data-v-a6ac9b78]::-webkit-slider-runnable-track{background:#0006;border-radius:16px;height:15px}.slider[data-v-a6ac9b78]::-webkit-slider-runnable-track{background:#0006;border-radius:16px;height:15px}.slider-bottom[data-v-a6ac9b78]::-moz-range-track{background:0 0;border-radius:16px;height:15px}.slider[data-v-a6ac9b78]::-moz-range-track{background:0 0;border-radius:16px;height:15px}.slider-bottom[data-v-a6ac9b78]::-webkit-slider-thumb{appearance:none;background-color:#fff;border:2px solid #fa64a0b3;border-radius:50%;width:15px;height:15px;box-shadow:-407px 0 0 400px #fa64a0b3}.slider[data-v-a6ac9b78]::-webkit-slider-thumb{appearance:none;background-color:#fff;border:2px solid #fa64a0b3;border-radius:50%;width:15px;height:15px;box-shadow:-407px 0 0 400px #fa64a0b3}.slider-bottom[data-v-a6ac9b78]::-moz-range-thumb{background-color:#fff;border:1px solid #fa64a0b3;border-radius:50%;width:15px;height:15px;box-shadow:-407px 0 0 400px #fa64a0b3}.slider[data-v-a6ac9b78]::-moz-range-thumb{background-color:#fff;border:1px solid #fa64a0b3;border-radius:50%;width:15px;height:15px;box-shadow:-407px 0 0 400px #fa64a0b3}.slider-footer[data-v-a6ac9b78]{justify-content:space-between;margin-top:-4px;padding-top:2px;font-size:14px;display:flex}.slider-value[data-v-a6ac9b78],.slider-reset[data-v-a6ac9b78]{color:#c2c2c2!important}.slider-reset[data-v-a6ac9b78]:hover{color:#fff!important}.button[data-v-a6ac9b78]{background:#ffffff1a;border:1px solid #ffffff26;border-radius:10px;padding:10px 20px;box-shadow:0 4px 12px #00000080}.button[data-v-a6ac9b78]:hover{background:#fa64a066}\n/*$vite$:1*/ ");
+	_css(":root[data-lyeh-theme=dark]{--lyeh-bg-primary:#292424;--lyeh-bg-shadow:#1a1616;--lyeh-bg-secondary:#362f2f;--lyeh-bg-thirdy:#2e2828;--lyeh-accent:#ed4597;--lyeh-text-main:#f1f2f6;--lyeh-text-muted:#a4b0be;--accent-muted:#fa64a080;--lyeh-current-song-accent:#000;--lyeh-current-song-accent-secondary:#000;--artist-banner-url:linear-gradient(180deg, #1e1e2e 0%, #313244 50%, #1e1e2e 100%);--current-accent:#ffff64;--settings-player-width:40vh}body,div[class^=PageLayout__Container],main{transition:background-color 1s;background-color:var(--lyeh-bg-primary)!important;color:var(--lyeh-text-main)!important;fill:var(--lyeh-text-main)!important}path{fill:var(--lyeh-text-main)}div[class^=StickyNavLoggedIn__Container] path{fill:color-contrast(var(--current-accent))}div[class^=Lyrics__Container]{letter-spacing:-.01em!important;color:var(--lyeh-text-main)!important;font-size:1.15rem!important;line-height:1.7!important}div[class^=Lyrics__Container] a{border-bottom:1px dashed #ff47574d;transition:all .2s;-webkit-text-decoration-color:var(--lyeh-accent)!important;text-decoration-color:var(--lyeh-accent)!important}.rich_text_formatting a:hover{background-color:#fa64a080;border-radius:4px}div[class^=Lyrics__Container] a:hover{border-bottom:1px solid var(--lyeh-accent);background:#ff47571a}span[class^=ReferentFragment]{background:var(--lyeh-bg-secondary);color:var(--lyeh-text-main)!important}span[class^=ReferentFragment]:hover{border-bottom:1px solid var(--lyeh-accent);background:#fa64a0b3;color:var(--lyeh-text-main)!important}[class^=TextLabel],[class^=ContributorsCreditSong]{color:var(--lyeh-text-main)!important}a:not([class^=StickyNavSectionLink__StyledLink]){color:var(--lyeh-text-main)!important;-webkit-text-decoration:underline #ffffff80!important;text-decoration:underline #ffffff80!important}span{color:var(--lyeh-text-main)!important}div[class^=SongHeader-desktop__CoverArt] img{border-radius:10px}aside[class^=ContributorSidebar__Container]{box-shadow:5px 5px 5px var(--lyeh-bg-shadow);border-radius:15px;padding-right:14px;background-color:#16141496!important}div[class^=ContributorSidebarSection__Header],div[class^=ContributorSidebarMetadata]{color:var(--lyeh-text-main)}button[class^=Button__Container-sc]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}button[class^=Button__Container-sc]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}a[class^=Button__Container-sc]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}a[class^=Button__Container-sc]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}button[class^=ContributorActionTextbox]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}div[class^=ContributorSidebarSection__HeaderButtons] svg path:first-child{fill:var(--lyeh-text-main)!important}div[class^=ContributorSidebarSection__HeaderButtons] svg path:last-child{fill:var(--lyeh-bg-primary)!important}div[class^=PageGrid-desktop][class*=StickyToolbar__Container]{border-bottom:none;background-color:var(--lyeh-bg-primary)!important}button[class^=SmallButton__Container]{border-color:var(--lyeh-text-main);color:var(--lyeh-text-main)!important}button[class^=SmallButton__Container]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}a[class^=SmallButton__Container]{border-color:var(--lyeh-text-main);color:var(--lyeh-text-main)!important}a[class^=SmallButton__Container]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}svg[class^=LineItemActionIcon__Icon][data-action-name=recognized] path,svg[class^=LineItemActionIcon__Icon][data-action-name=accepted] path,svg[class^=LineItemActionIcon__Icon][data-action-name=hit_pageview_threshold] path,svg[class^=LineItemActionIcon__Icon][data-action-name=upvoted] path{fill:#4bbf38!important}div[class^=LineItemList__Container] path{fill:#9a9a9a!important}div[class^=LineItem__IqDifference]{color:#4bbf38!important}svg[class^=LineItemActionIcon__Icon][data-action-name=earned] path{fill:#c7ba18!important}span[class^=ContributorActionTextbox]{color:var(--lyeh-text-main)!important}[color=background\\.iqPoints]{color:#4bbf38!important}[color=background\\.negativeNumber]{color:#f03e26!important}div[class^=ContributorsCreditMarkedComplete__CompletedUsernameContainer]{color:var(--lyeh-text-main)!important}div[class^=TooltipShadow]{color:var(--lyeh-text-main);z-index:1;background-color:#0000;border-radius:15px;position:relative;overflow:hidden}div[class^=TooltipShadow]:before{content:\"\";filter:blur(2px)brightness(.5);z-index:-1;background-position:50%;background-size:cover;border:0;transition:all 1s;position:absolute;inset:0;transform:scale(1.1);background-image:var(--artist-banner-url)!important;border-radius:15px!important}div[class^=ArtistTooltip__Verified]{color:#000;text-align:center;background-color:#ffff64;margin-right:30%;font-size:.75rem;border-radius:15px!important}div[class^=TooltipShadow]:has([class^=ArtistTooltip__Verified]){box-shadow:1px 1px 20px #ffff6480!important}div[class^=TooltipShadow]:has([role=moderator]){box-shadow:1px 1px 20px #047ec680!important}div[class^=Placeholder__Container]{background-color:#fa64a0b3!important}span[class^=UserBadge__Iq]{border-radius:10px;padding:.125rem .225rem;color:#000!important;background-color:#ffff64cc!important}button{color:#fff!important}div[class^=UserBadge__Role-sc-]{align-items:center;padding:4px 0;transition:all .3s ease-in-out;display:inline-flex;overflow:hidden}span[class^=UserBadge__RoleLabel-sc-]{opacity:0;white-space:nowrap;max-width:0;margin-right:0;transition:max-width .3s ease-in-out,opacity .2s ease-in-out,margin .3s ease-in-out;display:inline-block}div[class^=UserBadge__Role-sc-]:hover span[class^=UserBadge__RoleLabel-sc-]{opacity:1;max-width:100px;margin-right:6px}span[class^=RoleIcon__Container-sc-]{flex-shrink:0;align-items:center;width:14px;height:14px;display:flex}span[class^=RoleIcon__Container-sc-] svg{width:100%;height:100%}div[class^=AlbumTracklist__Track]{color:var(--lyeh-text-main)}div[class^=PageGrid-desktop][class*=SongHeader-desktop__Container] :is(span,a,button,path){color:color-contrast(var(--current-accent))!important;fill:color-contrast(var(--current-accent))!important}div[class^=white_container]{background-color:#0000}span[class^=LineItemMessage__NoteBubble]{background-color:#fa64a0b3!important}input{caret-color:var(--lyeh-accent)}::selection{color:#fff;background-color:#fa64a0b3!important}div[class^=ScrollableTabs__TabNavContainer]{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);border-radius:15px 15px 0 0;background-color:#0000004d!important}div[class^=ScrollableTabs__ContentArea]{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);background-color:#0000004d}h3[class^=ScrollableTabsSection__Title],legend[class^=Field-shared__FieldLabel],div[class^=css-hfv4dh-singleValue]{color:var(--lyeh-text-main)}div[class^=LyricsHighlightTooltip__Content]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);background-color:#16141496;border:0;border-radius:10px;border:1px solid #fff3!important}div[class^=LyricsHighlightTooltip__Content]:hover{background-color:var(--accent-muted)!important}button[class^=LyricsHighlightTooltip__Container]:before{display:none}div[class^=LyricsHighlightTooltip__Content]:before:hover{background-color:var(--accent-muted)!important}span[class^=LyricsHighlightTooltip__IQ]{color:#40ff21!important}a[class^=LyricsHeader__TranslationLink]{background:0 0}a[class^=LyricsHeader__TranslationLink]:hover{background-color:var(--accent-muted)!important}div[class^=VotesModal__Container]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);background-color:#29242466;border-radius:10px}");
 	_css("html{scroll-behavior:smooth}div[class^=Modal-shared__ModalSharedContainer]{background-color:#0000}div[class^=ContributionsScholars__Container]{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);background-image:none;border-radius:10px 10px 0 0;background-color:#000000b3!important}div[class^=RecentActivity__Container]{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);background-color:#0000001a}div[class^=LineItem__ItemRow]{background-color:#16141496;border:0;border-radius:10px;margin-top:8px;border:1px solid #fff3!important}div[class^=LineItem__ItemRow]:hover{background-color:#161414;transition:all .2s cubic-bezier(.4,0,.2,1)}div[class^=Annotation__Container]{color:var(--lyeh-text-main)}div[class^=LineItemList__Container],div[class^=LineItemList__Container]>div{background:0 0!important}body[class^=act-embed\\ cont-searches]{padding:20px;background-color:#0000!important}.mini_card{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);border:1px solid #7d7d7d;border-radius:10px;background-color:#29242466!important}mini-song-card .mini_card{padding:10px}.mini_card path{fill:var(--lyeh-text-main)!important}.mini_card:hover{background-color:#16141496!important}.mini_card-lyric_excerpt span{color:#d6d6d6!important;background-color:#fa64a080!important}div[class^=mini_card-thumbnail]{border-radius:10px}a[class^=full_width_button]{background-color:#0000!important}div[class^=thumbnail_grid]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);border:1px solid #7d7d7d;border-radius:10px;background-color:#29242466!important}div[class^=thumbnail_grid-grid_element]{padding:5px}div[class^=thumbnail_grid-grid_element]:hover{background-color:#16141496!important}.vertical_album_card:hover{background-color:unset!important}");
 	_css("h4[class^=SiteCommandPalettePage__PageContainer],[class^=SiteCommandPaletteItem__Title],div[class^=SiteCommandPalettePage__PageContainer] h4{color:var(--lyeh-text-main)!important}div[class^=SiteCommandPalettePage__PageContainer] [class^=command-palette-list-item]{margin-bottom:2px;border-radius:15px!important}input#command-palette-search-input[type=text]{color:#fff!important;-webkit-text-fill-color:#fff!important}.command-palette div[id^=headlessui-dialog-panel-]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);background-color:#151a1a80!important;background-image:none!important;border-radius:15px!important}.command-palette [class*=bg-gray-900][class*=bg-opacity-80]{background-color:#0000}html{overflow:visible!important}");
-	_css("div[class^=apple_music_player-container]{background-color:#0000;border:0!important}body[ng-app=genius\\.apple_music_player]{border-radius:10px;padding:0;display:block;background-color:#0000!important}div[class=apple_music_player-player]{-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);background-color:#15101080;border:1px solid #ffffff26;border-radius:10px;width:1900px;padding:5px}div[class^=apple_music_player-player-info]{flex-direction:column;justify-content:center;display:flex}div[class^=apple_music_player-player-info-title]{padding:0 0 0 5px;font-size:1rem;line-height:1.2;margin:0!important}div[class^=apple_music_player-player-info-artist]{padding:0 0 0 5px;font-size:.8rem;line-height:1.2;margin:0!important}div[class^=apple_music_player-player-song_art]{justify-content:center;align-items:center;width:60px;height:60px;display:flex;position:static}div[class^=apple_music_player-seekbar]:before{background-color:var(--lyeh-text-main)}div[class^=apple_music_player-player-seekbar-dashed]{border-bottom:2px dashed var(--lyeh-text-main)}.cover_art-image{border-radius:5px}.cover_art{background-color:#0000!important}.apple_music_player-seekbar-scrubber-circle{background-color:var(--lyeh-text-main)!important}div[class^=AppleMusicPlayer-desktop__IframeContainer]{width:120%;position:relative!important;left:50%!important;transform:translate(-50%)!important}");
+	_css("div[class^=apple_music_player-container]{background-color:#0000;border:0!important}body[ng-app=genius\\.apple_music_player]{border-radius:10px;padding:0;display:block;background-color:#0000!important}div[class=apple_music_player-player]{-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);background-color:#15101080;border:1px solid #ffffff26;border-radius:10px;padding:5px}div[class^=apple_music_player-player-info]{flex-direction:column;justify-content:center;display:flex}div[class^=apple_music_player-player-info-title]{padding:0 0 0 5px;font-size:1rem;line-height:1.2;margin:0!important}div[class^=apple_music_player-player-info-artist]{padding:0 0 0 5px;font-size:.8rem;line-height:1.2;margin:0!important}div[class^=apple_music_player-player-song_art]{justify-content:center;align-items:center;width:60px;height:60px;display:flex;position:static}div[class^=apple_music_player-seekbar]:before{background-color:var(--lyeh-text-main)}div[class^=apple_music_player-player-seekbar-dashed]{border-bottom:2px dashed var(--lyeh-text-main)}.cover_art-image{border-radius:5px}.cover_art{background-color:#0000!important}.apple_music_player-seekbar-scrubber-circle{background-color:var(--lyeh-text-main)!important}div[class^=AppleMusicPlayer-desktop__IframeContainer]{width:var(--settings-player-width);margin:0;grid-column:page-start/page-end!important;justify-self:center!important;position:relative!important}.apple_music_player-root.apple_music_player--desktop{padding:0!important}");
 	_css("textarea[class^=TextInput-sc]{color:var(--lyeh-text-main);border:1px solid var(--lyeh-text-main)!important}button[class*=jSZRoS]{background-color:#56cd4d;color:#000!important;border:1px solid var(--lyeh-text-main)!important}");
-	_css("div[class^=styleAnchors__PageHeaderDropdownMenu]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);background-color:#29242466;border-radius:10px;top:3rem!important}div[class^=styleAnchors__PageHeaderDropdownMenu][class*=PageHeaderDropdown-desktop__Container]:has([src*=\"/inboxes/messages_inbox?embed=true\"]){width:40vw!important}div[class*=styleAnchors__PageHeaderDropdownMenu][class*=PageHeaderDropdown-desktop__Container]{width:35vw!important}div[aria-label^=User\\ Menu]~div[class*=styleAnchors__PageHeaderDropdownMenu]{width:10vw!important}[class^=PageHeaderMenu__Title][class*=PageHeaderMenu__Item]:hover{color:var(--lyeh-text-main);transition:background-color .3s;background-color:#fa64a0b3!important}div[class^=PageHeaderInbox-desktop__Label]{display:none!important}form[class^=StickyNavSearch-desktop__Form]{background-color:var(--lyeh-bg-primary);border-radius:15px}input[class^=StickyNavSearch-desktop__Input]{background-color:var(--lyeh-bg-primary);justify-content:center;margin-left:15px;color:#fff!important;-webkit-text-fill-color:#fff!important}div[class^=styleAnchors__PageHeaderDropdownMenu] div[class^=LineItemList__Container]{margin:20px}div[class^=LineItemDetail__Container]{background-color:#16141496!important}div[class^=LyricsDiffsSection__Container]{background-color:#0000!important}div[class=lyeh__ItemParent]:has([class^=LineItemDetail__Container]) [class^=LineItem__ItemRow]{border-radius:10px 10px 0 0;border-bottom:none!important}div[class=lyeh__ItemParent]:has([class^=LineItemDetail__Container]) [class^=LineItemDetail__Container]{border-radius:0 0 10px 10px;color:var(--lyeh-text-main)!important;border:1px solid #fff3!important}div[class^=ExpandableDiff__Lines] ins{background-color:#13ff004a!important}div[class^=ExpandableDiff__Lines] del{background-color:#ff00004a!important}div[class^=DetailSection__SectionWrapper]{background-color:#0000!important}div[class^=DetailSection__SectionWrapper]:first-child{margin-top:10px;background-color:#0000!important}div[class^=DetailSection-shared]{background-color:#0000!important}a[class^=MiniCard__Link]{border:1px solid #fff9;border-radius:10px;padding:.5rem;background-color:#16141496!important}a[class^=MiniCard__Link]:hover{transition:all .2s cubic-bezier(.4,0,.2,1);background-color:#fa64a0b3!important}div[class*=MiniCard__Thumbnail]{border-radius:10px}div[class^=Referent__FragmentContainer],a[class^=Referent__FragmentHighlight]{background-color:#0000}a[class^=UnreviewedAnnotation__Unreviewed],div[class^=UnreviewedAnnotation__Unreviewed],div[class^=dashed_background_message]{border-radius:4px;background:0 0!important}body[class^=act-messages_inbox]{background-color:#0000!important}div[class^=feed_dropdown-item]{border-radius:10px;margin:10px;background-color:#16141496!important;border:1px solid #fff3!important}div[class^=feed_dropdown-item]:hover{transition:all .2s cubic-bezier(.4,0,.2,1);background-color:#161414!important}.modal_window-content{background-color:#0000!important}.modal_window-content p{background-color:#fa64a080;border-radius:5px;padding:5px;border:1px solid #ffffff4d!important}.u-dark_overlay:before{background-color:#16141496!important}.conversation-compose_area{background-color:#0000!important}textarea[class^=square_input]{color:#fff!important;background-color:#0000!important;border:1px solid #ffffff4d!important;border-radius:10px!important;padding:5px 10px!important}textarea[class^=square_input]:focus{transition:all .2s cubic-bezier(.4,0,.2,1);box-shadow:inset 0 0 .3em #fa64a080!important}.square_button{color:var(--lyeh-text-main)!important;background-color:#161414!important;border:1px solid #ffffff4d!important;border-radius:10px!important;padding:5px 10px!important}.square_button:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}span[class*=text_label--purple]{background-color:#0000;border:none;border-color:none!important}div[class=conversation] span[class*=text_label]:not([class*=text_label--purple]){background-color:#fa64a080;border-radius:4px;padding:3px;border-bottom:1px!important}div[class^=MetadataChangesSection__Container]{background:0 0;padding:0}div[class^=LineItem__EventCountBadge]{color:#fff;border:1px solid #7d7d7d;background-color:#0006!important}div[class^=StickyNavSearch-desktop__Icon] path{fill:#fff!important}body[class^=\"act-iq_inbox cont-inboxes snarly\"]{background-color:#0000!important}div[class^=contribution_opportunity]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:none;border-radius:10px;background-color:#16141430!important}input[class^=square_input],[class^=tags_input]{background-color:#0000!important}span[class^=square_item_and_iq] span[class^=square_button],span[class^=square_item_and_iq] button[class^=square_button]{z-index:10;background:#141414!important}span[class^=square_item_and_iq] span[class^=square_button]:hover,span[class^=square_item_and_iq] button[class^=square_button]:hover{background:var(--lyeh-accent)!important}");
+	_css("div[class^=styleAnchors__PageHeaderDropdownMenu]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);background-color:#29242466;border-radius:10px;top:3rem!important}div[class^=styleAnchors__PageHeaderDropdownMenu][class*=PageHeaderDropdown-desktop__Container]:has([src*=\"/inboxes/messages_inbox?embed=true\"]){width:40vw!important}div[class*=styleAnchors__PageHeaderDropdownMenu][class*=PageHeaderDropdown-desktop__Container]{width:35vw!important}div[aria-label^=User\\ Menu]~div[class*=styleAnchors__PageHeaderDropdownMenu]{width:10vw!important}[class^=PageHeaderMenu__Title][class*=PageHeaderMenu__Item]:hover{color:var(--lyeh-text-main);transition:background-color .3s;background-color:#fa64a0b3!important}div[class^=PageHeaderInbox-desktop__Label]{display:none!important}form[class^=StickyNavSearch-desktop__Form]{background-color:var(--lyeh-bg-primary);border-radius:15px}input[class^=StickyNavSearch-desktop__Input]{background-color:var(--lyeh-bg-primary);justify-content:center;margin-left:15px;color:#fff!important;-webkit-text-fill-color:#fff!important}div[class^=styleAnchors__PageHeaderDropdownMenu] div[class^=LineItemList__Container]{margin:20px}div[class^=LineItemDetail__Container]{background-color:#16141496!important}div[class^=LyricsDiffsSection__Container]{background-color:#0000!important}div[class=lyeh__ItemParent]:has([class^=LineItemDetail__Container]) [class^=LineItem__ItemRow]{border-radius:10px 10px 0 0;border-bottom:none!important}div[class=lyeh__ItemParent]:has([class^=LineItemDetail__Container]) [class^=LineItemDetail__Container]{border-radius:0 0 10px 10px;color:var(--lyeh-text-main)!important;border:1px solid #fff3!important}div[class^=ExpandableDiff__Lines] ins{background-color:#13ff004a!important}div[class^=ExpandableDiff__Lines] del{background-color:#ff00004a!important}div[class^=DetailSection__SectionWrapper]{background-color:#0000!important}div[class^=DetailSection__SectionWrapper]:first-child{margin-top:10px;background-color:#0000!important}div[class^=DetailSection-shared]{background-color:#0000!important}a[class^=MiniCard__Link]{border:1px solid #fff9;border-radius:10px;padding:.5rem;background-color:#16141496!important}a[class^=MiniCard__Link]:hover{transition:all .2s cubic-bezier(.4,0,.2,1);background-color:#fa64a0b3!important}div[class*=MiniCard__Thumbnail]{border-radius:10px}div[class^=Referent__FragmentContainer],a[class^=Referent__FragmentHighlight]{background-color:#0000}a[class^=UnreviewedAnnotation__Unreviewed],div[class^=UnreviewedAnnotation__Unreviewed]{border-radius:4px;background:0 0!important}div[class^=dashed_background_message]{text-align:center;border:1px solid #ff1464;border-radius:4px;background:0 0!important}body[class^=act-messages_inbox]{background-color:#0000!important}div[class^=feed_dropdown-item]{border-radius:10px;margin:10px;background-color:#16141496!important;border:1px solid #fff3!important}div[class^=feed_dropdown-item]:hover{transition:all .2s cubic-bezier(.4,0,.2,1);background-color:#161414!important}.modal_window-content{background-color:#0000!important}.modal_window-content p{background-color:#fa64a080;border-radius:5px;padding:5px;border:1px solid #ffffff4d!important}.u-dark_overlay:before{background-color:#16141496!important}.conversation-compose_area{background-color:#0000!important}textarea[class^=square_input]{color:#fff!important;background-color:#0000!important;border:1px solid #ffffff4d!important;border-radius:10px!important;padding:5px 10px!important}textarea[class^=square_input]:focus{transition:all .2s cubic-bezier(.4,0,.2,1);box-shadow:inset 0 0 .3em #fa64a080!important}.square_button{color:var(--lyeh-text-main)!important;background-color:#161414!important;border:1px solid #ffffff4d!important;border-radius:10px!important;padding:5px 10px!important}.square_button:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}span[class*=text_label--purple]{background-color:#0000;border:none;border-color:none!important}div[class=conversation] span[class*=text_label]:not([class*=text_label--purple]){background-color:#fa64a080;border-radius:4px;padding:3px;border-bottom:1px!important}div[class^=MetadataChangesSection__Container]{background:0 0;padding:0}div[class^=LineItem__EventCountBadge]{color:#fff;border:1px solid #7d7d7d;background-color:#0006!important}div[class^=StickyNavSearch-desktop__Icon] path{fill:#fff!important}body[class^=\"act-iq_inbox cont-inboxes snarly\"]{background-color:#0000!important}div[class^=contribution_opportunity]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:none;border-radius:10px;background-color:#16141430!important}input[class^=square_input],[class^=tags_input]{background-color:#0000!important}span[class^=square_item_and_iq] span[class^=square_button],span[class^=square_item_and_iq] button[class^=square_button]{z-index:10;background:#141414!important}span[class^=square_item_and_iq] span[class^=square_button]:hover,span[class^=square_item_and_iq] button[class^=square_button]:hover{background:var(--lyeh-accent)!important}");
 	_css("h2{color:var(--lyeh-text-main)!important}nav[class^=StickyNav-desktop__Container]:has(~div[class^=Profile__Container]){background-color:var(--current-accent);transition:all .5s cubic-bezier(.4,0,.2,1)!important}nav[class^=StickyNav-desktop__Container]:has(~div[class^=Profile__Container]) :is(a,span,path){fill:contrast-color(var(--current-accent));color:contrast-color(var(--current-accent));text-decoration:none!important;transition:all .5s cubic-bezier(.4,0,.2,1)!important}nav[class^=StickyNav-desktop__Container]:has(~div[class^=Profile__Container]) div[class^=PageHeaderMenu__Iq]{color:contrast-color(var(--current-accent))!important}main[class*=ProfileContent-desktop__PageGrid] path{fill:var(--lyeh-text-main)!important}div[class^=DiscographyItem__Info]{color:var(--lyeh-text-main)!important}span[class^=LabelWithIcon__Container] path{fill:var(--lyeh-text-main)!important}button[class^=DropdownList__LabeledButton]{border-color:var(--lyeh-text-main)}button[class^=DropdownList__LabeledButton]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}button[class^=VotingActions__Button][aria-pressed=true] svg[class^=VotingActions__ThumbsUp] path{fill:#4bbf38!important}button[class^=VotingActions__Button][aria-pressed=true] svg[class^=VotingActions__ThumbsDown] path{fill:#bf4538!important}a[class^=DiscographyItem__Container]{border-radius:10px;padding:3px}a[class^=DiscographyItem__Container]:hover{background-color:#16141496;border:1px solid #fff9;scale:1.1;transition:all .4s cubic-bezier(.4,0,.2,1)!important}div[class^=SizedImage__Container]{border-radius:8px}div[class^=PopularSongs__Container],div[class^=PopularAlbums__Container]{border:1px solid #fff9;border-radius:10px;background-color:#16141496!important}button[class*=ProfileContent-desktop__FeaturedButton]{background-color:#0000}h3[class^=VerifiedBadge__VerifiedBadgeContainer-sc]{background-color:var(--current-accent);color:#000;fill:#fff;border-radius:10px;padding:2px 6px;color:contrast-color(var(--current-accent))!important;transition:all .5s cubic-bezier(.4,0,.2,1)!important}h3[class^=VerifiedBadge__VerifiedBadgeContainer-sc] svg{fill:contrast-color(var(--current-accent));transition:all .4s cubic-bezier(.4,0,.2,1)!important}h3[class^=VerifiedBadge__VerifiedBadgeContainer-sc] path{fill:contrast-color(contrast-color(var(--current-accent)))!important}div[class^=ArtistAvatar__Container]{border-color:var(--current-accent);transition:all .5s cubic-bezier(.4,0,.2,1)!important}ul[class^=DiscographyItemList]{gap:1rem;overflow:visible}a[class*=OptOutButton__Container-sc]{display:none}hr[class^=ProfileContent-desktop__Divider]{border-color:#fff3}div[class^=CollaboratorEntry__Container],li[class^=IqEarnersList__List]{border-color:#fff3!important}.iHfhfx{background-color:#fa64a080}ul[class^=DropdownList__ItemsContainer]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);background-color:#16141496;border:1px solid #fff9;border-radius:10px}a[class^=ProfilesDropdown__SocialLink]:hover{background-color:#fa64a080}span[class^=DropdownList__Caret]{background-color:var(--lyeh-text-main)!important}div[class^=QuestionAnswerList__List]{gap:10px}a[class^=QuestionAnswerList__ItemContainer]{column-gap:10px;border:1px solid var(--lyeh-text-main)!important;border-radius:10px!important}");
 	_css("nav[class^=StickyNav-desktop__Container] path{fill:color-contrast(var(--current-accent))}nav[class^=StickyNav-desktop__Container] div[class^=PageHeaderMenu__Container] span{color:color-contrast(var(--current-accent))!important}div[class^=Question__Attribution],div[class^=Contributors__LabelContainerRow]{color:var(--lyeh-text-main)}div[class^=Answer-desktop__Card]{border-radius:10px}");
 	_css("div[class^=SectionTitle__Title-sc]{color:var(--lyeh-text-main)}div[class^=ExpandableListItem__Container]{border-color:var(--lyeh-text-main)}div[class^=ExpandableListItem__Title]{color:var(--lyeh-text-main);background-color:#0000}div[class^=AlbumCredits__Columns] div,div[class^=SongCredits__Columns] div{color:var(--lyeh-text-main)!important}a[class^=SongTags__Tag]{border-color:var(--lyeh-text-main)!important}");
-	_css("div[class^=standalone_annotation]{background-color:#16141496;border:1px solid #fff9;border-radius:10px;padding:10px}a[class^=referent--accent_font\\ referent--line_break]{background-color:#fa64a0b3!important}div[class^=profile_achievements-badge-name]{color:var(--lyeh-text-main)}div[class^=statistics_panel]{background-color:#0000}div[class^=statistics_panel] path{fill:var(--lyeh-text-main)}a[class^=profile_contribution],a[class^=referent]{background-color:#0000!important}div[class^=note_bubble]{background-color:var(--accent-muted)!important}div[class^=note_bubble]:before{border-bottom-color:var(--accent-muted)!important}");
+	_css(".standalone_annotation{border:1px solid #fff9;border-radius:10px;padding:20px;background-color:#16141496!important}a[class^=referent--accent_font\\ referent--line_break]{background-color:#fa64a0b3!important}div[class^=profile_achievements-badge-name]{color:var(--lyeh-text-main)}div[class^=statistics_panel]{background-color:#0000}div[class^=statistics_panel] path{fill:var(--lyeh-text-main)}a[class^=profile_contribution]{border:1px solid #fff9;border-radius:10px;padding:20px;background-color:#16141496!important}a[class^=referent]{background-color:#0000!important}div[class^=note_bubble]{background-color:var(--accent-muted)!important}div[class^=note_bubble]:before{border-bottom-color:var(--accent-muted)!important}profile-user-pane .white_container{border-radius:10px;background-color:#16141496!important}[ng-show=\"!$ctrl.show_artist_pane\"] [class*=column_layout-column_span--secondary]{width:40%}[ng-show=\"!$ctrl.show_artist_pane\"] [class*=column_layout-column_span--primary]{width:100%}.column_layout[ng-show=\"!$ctrl.show_artist_pane\"]{max-width:1200px;padding:0}.profile_header .column_layout{max-width:1160px;margin:none!important;width:none!important}.profile_identity-iq{border-radius:10px;color:#000!important;background-color:#ffff64cc!important;padding:.125rem .225rem!important}");
 	_css("div[class^=HomeContent-desktop__Section]{background-color:#0000!important}div[class^=HomeContent-desktop__Section] :is(h2,h3){color:inherit;text-shadow:unset!important}div[class^=EditorialPlacement__Container]:hover :is(h2,h3){color:var(--lyeh-accent)!important}div[class^=SquareManySelects__Container]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);background-color:#16141496;border:1px solid #fff9;border-radius:10px}div[class^=SquareManySelects__Option]:hover{background-color:var(--accent-muted)!important}a[class^=PageGrid-desktop][class*=ChartItem-desktop__Row]:hover{background-color:#16141496}button[class^=SquareButton]{border:1px solid var(--lyeh-text-main);border-radius:10px;color:var(--lyeh-text-main)!important}button[class^=SquareButton]:hover{background-color:var(--accent-muted)}a[class^=SquareButton]{border:1px solid var(--lyeh-text-main);border-radius:10px;color:var(--lyeh-text-main)!important}a[class^=SquareButton]:hover{background-color:var(--accent-muted)}div[class^=EditorialPlacement__Label]:after{border-bottom-color:#fff!important}a[class^=PageGrid-desktop][class*=CommunityRanking-desktop__Row]:hover{background-color:var(--accent-muted)}");
 	_css("div[class^=PageGrid-desktop][class*=AddSongPage__PageGrid]{background-image:none;background-color:var(--lyeh-background-main)!important}.css-wkgora-control,.css-qabeig-control{border-color:var(--lyeh-text-main)!important;color:var(--lyeh-text-main)!important}.css-13q8uhz-placeholder{color:#9a9a9a!important}.css-1wy0on6 path{fill:var(--lyeh-text-main)!important}.css-13q8uhz-placeholder path{color:#9a9a9a!important;fill:var(--lyeh-text-main)!important}input[class^=TextInput]{color:var(--lyeh-text-main);border-color:var(--lyeh-text-main)!important}input[class^=TextInput]::placeholder{color:#9a9a9a}input{color:var(--lyeh-text-main)!important}textarea[class^=TextInput]{color:var(--lyeh-text-main);border-color:var(--lyeh-text-main)!important}textarea[class^=TextInput]::placeholder{color:#9a9a9a}div[class^=Lyrics__HelperText],div[class^=Field-shared__FieldHelpText]{color:var(--lyeh-text-main)!important}div[class^=LyricsTextarea__Container]{border-color:var(--lyeh-text-main)!important;fill:var(--lyeh-text-main)!important}div[class^=LyricsTextarea__Container] path{fill:var(--lyeh-text-main)!important}fieldset[class^=DisclosureWidget__Container],div[class^=AddSongForm__AdditionalMetadataContent]{border-color:var(--lyeh-text-main)!important}div[class^=AddSongForm__AdditionalMetadataContent] :is(legend,path){color:var(--lyeh-text-main)!important;fill:var(--lyeh-text-main)!important}legend[class^=DisclosureWidget__Header]{background-color:#0000!important}");
 	var __defProp = Object.defineProperty;
@@ -1437,6 +1441,9 @@ self.onmessage = function (e) {
 		}
 		return String(a) === String(b);
 	}
+	function looseIndexOf(arr, val) {
+		return arr.findIndex((item) => looseEqual(item, val));
+	}
 	var isRef$1 = (val) => {
 		return !!(val && val["__v_isRef"] === true);
 	};
@@ -2812,6 +2819,30 @@ self.onmessage = function (e) {
 		renderFnWithContext._d = true;
 		return renderFnWithContext;
 	}
+	function withDirectives(vnode, directives) {
+		if (currentRenderingInstance === null) return vnode;
+		const instance = getComponentPublicInstance(currentRenderingInstance);
+		const bindings = vnode.dirs || (vnode.dirs = []);
+		for (let i = 0; i < directives.length; i++) {
+			let [dir, value, arg, modifiers = EMPTY_OBJ] = directives[i];
+			if (dir) {
+				if (isFunction(dir)) dir = {
+					mounted: dir,
+					updated: dir
+				};
+				if (dir.deep) traverse(value);
+				bindings.push({
+					dir,
+					instance,
+					value,
+					oldValue: void 0,
+					arg,
+					modifiers
+				});
+			}
+		}
+		return vnode;
+	}
 	function invokeDirectiveHook(vnode, prevVNode, instance, name) {
 		const bindings = vnode.dirs;
 		const oldBindings = prevVNode && prevVNode.dirs;
@@ -3103,6 +3134,37 @@ self.onmessage = function (e) {
 		injectHook("ec", hook, target);
 	}
 	var NULL_DYNAMIC_COMPONENT = Symbol.for("v-ndc");
+	function renderList(source, renderItem, cache, index) {
+		let ret;
+		const cached = cache && cache[index];
+		const sourceIsArray = isArray(source);
+		if (sourceIsArray || isString(source)) {
+			const sourceIsReactiveArray = sourceIsArray && isReactive(source);
+			let needsWrap = false;
+			let isReadonlySource = false;
+			if (sourceIsReactiveArray) {
+				needsWrap = !isShallow(source);
+				isReadonlySource = isReadonly(source);
+				source = shallowReadArray(source);
+			}
+			ret = new Array(source.length);
+			for (let i = 0, l = source.length; i < l; i++) ret[i] = renderItem(needsWrap ? isReadonlySource ? toReadonly(toReactive(source[i])) : toReactive(source[i]) : source[i], i, void 0, cached && cached[i]);
+		} else if (typeof source === "number") {
+			ret = new Array(source);
+			for (let i = 0; i < source; i++) ret[i] = renderItem(i + 1, i, void 0, cached && cached[i]);
+		} else if (isObject(source)) if (source[Symbol.iterator]) ret = Array.from(source, (item, i) => renderItem(item, i, void 0, cached && cached[i]));
+		else {
+			const keys = Object.keys(source);
+			ret = new Array(keys.length);
+			for (let i = 0, l = keys.length; i < l; i++) {
+				const key = keys[i];
+				ret[i] = renderItem(source[key], key, i, cached && cached[i]);
+			}
+		}
+		else ret = [];
+		if (cache) cache[index] = ret;
+		return ret;
+	}
 	var getPublicInstance = (i) => {
 		if (!i) return null;
 		if (isStatefulComponent(i)) return getComponentPublicInstance(i);
@@ -5313,6 +5375,110 @@ self.onmessage = function (e) {
 		const camelKey = camelize(key);
 		return Array.isArray(props) ? props.some((prop) => camelize(prop) === camelKey) : Object.keys(props).some((prop) => camelize(prop) === camelKey);
 	}
+	var getModelAssigner = (vnode) => {
+		const fn = vnode.props["onUpdate:modelValue"] || false;
+		return isArray(fn) ? (value) => invokeArrayFns(fn, value) : fn;
+	};
+	function onCompositionStart(e) {
+		e.target.composing = true;
+	}
+	function onCompositionEnd(e) {
+		const target = e.target;
+		if (target.composing) {
+			target.composing = false;
+			target.dispatchEvent(new Event("input"));
+		}
+	}
+	var assignKey = Symbol("_assign");
+	function castValue(value, trim, number) {
+		if (trim) value = value.trim();
+		if (number) value = looseToNumber(value);
+		return value;
+	}
+	var vModelText = {
+		created(el, { modifiers: { lazy, trim, number } }, vnode) {
+			el[assignKey] = getModelAssigner(vnode);
+			const castToNumber = number || vnode.props && vnode.props.type === "number";
+			addEventListener(el, lazy ? "change" : "input", (e) => {
+				if (e.target.composing) return;
+				el[assignKey](castValue(el.value, trim, castToNumber));
+			});
+			if (trim || castToNumber) addEventListener(el, "change", () => {
+				el.value = castValue(el.value, trim, castToNumber);
+			});
+			if (!lazy) {
+				addEventListener(el, "compositionstart", onCompositionStart);
+				addEventListener(el, "compositionend", onCompositionEnd);
+				addEventListener(el, "change", onCompositionEnd);
+			}
+		},
+		mounted(el, { value }) {
+			el.value = value == null ? "" : value;
+		},
+		beforeUpdate(el, { value, oldValue, modifiers: { lazy, trim, number } }, vnode) {
+			el[assignKey] = getModelAssigner(vnode);
+			if (el.composing) return;
+			const elValue = (number || el.type === "number") && !/^0\d/.test(el.value) ? looseToNumber(el.value) : el.value;
+			const newValue = value == null ? "" : value;
+			if (elValue === newValue) return;
+			const rootNode = el.getRootNode();
+			if ((rootNode instanceof Document || rootNode instanceof ShadowRoot) && rootNode.activeElement === el && el.type !== "range") {
+				if (lazy && value === oldValue) return;
+				if (trim && el.value.trim() === newValue) return;
+			}
+			el.value = newValue;
+		}
+	};
+	var vModelCheckbox = {
+		deep: true,
+		created(el, _, vnode) {
+			el[assignKey] = getModelAssigner(vnode);
+			addEventListener(el, "change", () => {
+				const modelValue = el._modelValue;
+				const elementValue = getValue(el);
+				const checked = el.checked;
+				const assign = el[assignKey];
+				if (isArray(modelValue)) {
+					const index = looseIndexOf(modelValue, elementValue);
+					const found = index !== -1;
+					if (checked && !found) assign(modelValue.concat(elementValue));
+					else if (!checked && found) {
+						const filtered = [...modelValue];
+						filtered.splice(index, 1);
+						assign(filtered);
+					}
+				} else if (isSet(modelValue)) {
+					const cloned = new Set(modelValue);
+					if (checked) cloned.add(elementValue);
+					else cloned.delete(elementValue);
+					assign(cloned);
+				} else assign(getCheckboxValue(el, checked));
+			});
+		},
+		mounted: setChecked,
+		beforeUpdate(el, binding, vnode) {
+			el[assignKey] = getModelAssigner(vnode);
+			setChecked(el, binding, vnode);
+		}
+	};
+	function setChecked(el, { value, oldValue }, vnode) {
+		el._modelValue = value;
+		let checked;
+		if (isArray(value)) checked = looseIndexOf(value, vnode.props.value) > -1;
+		else if (isSet(value)) checked = value.has(vnode.props.value);
+		else {
+			if (value === oldValue) return;
+			checked = looseEqual(value, getCheckboxValue(el, true));
+		}
+		if (el.checked !== checked) el.checked = checked;
+	}
+	function getValue(el) {
+		return "_value" in el ? el._value : el.value;
+	}
+	function getCheckboxValue(el, checked) {
+		const key = checked ? "_trueValue" : "_falseValue";
+		return key in el ? el[key] : checked;
+	}
 	var systemModifiers = [
 		"ctrl",
 		"shift",
@@ -5375,11 +5541,62 @@ self.onmessage = function (e) {
 		if (isString(container)) return document.querySelector(container);
 		return container;
 	}
+	var _hoisted_1$2 = { class: "box" };
+	var _hoisted_2$2 = { class: "title" };
+	var _hoisted_3$2 = { class: "error-box" };
+	var error_vue_vue_type_script_setup_true_lang_default = defineComponent({
+		__name: "error",
+		setup(__props) {
+			const visible = ref(false);
+			const error = ref("");
+			const state = ref("");
+			function handler(e) {
+				console.vLog("Error received", e);
+				error.value = e.detail.err.error.stack;
+				state.value = e.detail.state;
+				visible.value = true;
+			}
+			function dismiss() {
+				visible.value = false;
+			}
+			onMounted(() => {
+				window.addEventListener("lyeh:error", handler);
+			});
+			onUnmounted(() => {
+				window.removeEventListener("lyeh:error", handler);
+			});
+			return (_ctx, _cache) => {
+				return visible.value ? (openBlock(), createElementBlock("div", {
+					key: 0,
+					class: "overlay",
+					onClick: withModifiers(dismiss, ["self"])
+				}, [createBaseVNode("div", _hoisted_1$2, [
+					createBaseVNode("button", {
+						class: "close",
+						onClick: dismiss
+					}, "×"),
+					createBaseVNode("h2", _hoisted_2$2, "Lyeh encountered an error while " + toDisplayString(state.value), 1),
+					createBaseVNode("div", _hoisted_3$2, [createBaseVNode("span", null, toDisplayString(error.value), 1)]),
+					_cache[0] || (_cache[0] = createBaseVNode("text", { class: "lyeh-footer" }, [createTextVNode("If the issue persists, please "), createBaseVNode("a", {
+						href: "https://github.com/craciu25yt/lyeh/issues",
+						target: "_blank",
+						"\"": ""
+					}, "report it")], -1))
+				])])) : createCommentVNode("", true);
+			};
+		}
+	});
+	var _plugin_vue_export_helper_default = (sfc, props) => {
+		const target = sfc.__vccOpts || sfc;
+		for (const [key, val] of props) target[key] = val;
+		return target;
+	};
+	var error_default = _plugin_vue_export_helper_default(error_vue_vue_type_script_setup_true_lang_default, [["__scopeId", "data-v-81c02cd1"]]);
 	var _hoisted_1$1 = { class: "box" };
 	var _hoisted_2$1 = { class: "version" };
 	var _hoisted_3$1 = { class: "old" };
-	var _hoisted_4 = { class: "new" };
-	var update_vue_vue_type_script_setup_true_lang_default = defineComponent({
+	var _hoisted_4$1 = { class: "new" };
+	var update_default = _plugin_vue_export_helper_default(defineComponent({
 		__name: "update",
 		setup(__props) {
 			const visible = ref(false);
@@ -5413,76 +5630,289 @@ self.onmessage = function (e) {
 					createBaseVNode("p", _hoisted_2$1, [
 						createBaseVNode("span", _hoisted_3$1, toDisplayString(oldVersion.value), 1),
 						_cache[0] || (_cache[0] = createBaseVNode("span", { class: "arrow" }, "→", -1)),
-						createBaseVNode("span", _hoisted_4, toDisplayString(newVersion.value), 1)
+						createBaseVNode("span", _hoisted_4$1, toDisplayString(newVersion.value), 1)
 					])
 				])])) : createCommentVNode("", true);
 			};
 		}
-	});
-	var _plugin_vue_export_helper_default = (sfc, props) => {
-		const target = sfc.__vccOpts || sfc;
-		for (const [key, val] of props) target[key] = val;
-		return target;
-	};
-	var update_default = _plugin_vue_export_helper_default(update_vue_vue_type_script_setup_true_lang_default, [["__scopeId", "data-v-2838bb71"]]);
+	}), [["__scopeId", "data-v-2838bb71"]]);
+	var settingsSchema = [{
+		id: "general",
+		title: "General",
+		items: [
+			{
+				id: "light-theme",
+				label: "Light theme",
+				type: "boolean",
+				default: false,
+				description: "Enables the light theme",
+				disabled: true,
+				tooltip: "Light theme is not available at the moment"
+			},
+			{
+				id: "explode",
+				label: "Explode",
+				type: "boolean",
+				default: false,
+				description: "instant combustion"
+			},
+			{
+				id: "player-width",
+				label: "Player width",
+				type: "slider",
+				default: 70,
+				description: "Modifies Apple's player width",
+				min: 30,
+				length: 50,
+				format: "$!%"
+			},
+			{
+				id: "pepe",
+				label: "Bottom slider",
+				type: "slider_bottom",
+				default: 70,
+				description: "xd",
+				length: 72,
+				disabled: true,
+				tooltip: "I love genius"
+			}
+		]
+	}, {
+		id: "Advanced",
+		title: "Advanced",
+		items: [{
+			id: "clear-cache",
+			label: "Clear cache",
+			description: "Clears all Lyeh's cache (image accents...)",
+			type: "button"
+		}]
+	}];
+	var _GM_deleteValues = (() => typeof GM_deleteValues != "undefined" ? GM_deleteValues : void 0)();
+	var _GM_getValue = (() => typeof GM_getValue != "undefined" ? GM_getValue : void 0)();
+	var _GM_getValues = (() => typeof GM_getValues != "undefined" ? GM_getValues : void 0)();
+	var _GM_info = (() => typeof GM_info != "undefined" ? GM_info : void 0)();
+	var _GM_listValues = (() => typeof GM_listValues != "undefined" ? GM_listValues : void 0)();
+	var _GM_setValue = (() => typeof GM_setValue != "undefined" ? GM_setValue : void 0)();
+	var _GM_xmlhttpRequest = (() => typeof GM_xmlhttpRequest != "undefined" ? GM_xmlhttpRequest : void 0)();
 	var _hoisted_1 = { class: "box" };
-	var _hoisted_2 = { class: "title" };
-	var _hoisted_3 = { class: "error-box" };
-	var error_default = _plugin_vue_export_helper_default(defineComponent({
-		__name: "error",
+	var _hoisted_2 = { class: "content" };
+	var _hoisted_3 = { class: "category-title" };
+	var _hoisted_4 = { class: "setting-list" };
+	var _hoisted_5 = ["data-disabled", "data-tooltip"];
+	var _hoisted_6 = { class: "setting-info" };
+	var _hoisted_7 = ["for", "data-disabled"];
+	var _hoisted_8 = ["for", "data-disabled"];
+	var _hoisted_9 = ["data-disabled"];
+	var _hoisted_10 = [
+		"id",
+		"onUpdate:modelValue",
+		"onInput",
+		"disabled",
+		"min",
+		"max",
+		"step"
+	];
+	var _hoisted_11 = {
+		key: 1,
+		class: "slider-footer"
+	};
+	var _hoisted_12 = { class: "slider-value" };
+	var _hoisted_13 = ["onClick", "disabled"];
+	var _hoisted_14 = ["data-disabled"];
+	var _hoisted_15 = {
+		key: 1,
+		class: "switch"
+	};
+	var _hoisted_16 = [
+		"id",
+		"onUpdate:modelValue",
+		"onChange",
+		"disabled"
+	];
+	var _hoisted_17 = [
+		"id",
+		"onUpdate:modelValue",
+		"onInput",
+		"disabled",
+		"min",
+		"max",
+		"step"
+	];
+	var _hoisted_18 = {
+		key: 3,
+		class: "slider-footer"
+	};
+	var _hoisted_19 = { class: "slider-value" };
+	var _hoisted_20 = ["onClick", "disabled"];
+	var settings_default = _plugin_vue_export_helper_default(defineComponent({
+		__name: "settings",
 		setup(__props) {
 			const visible = ref(false);
-			const error = ref("");
-			const state = ref("");
-			function handler(e) {
-				console.vLog("Error received", e);
-				error.value = e.detail.err.error.stack;
-				state.value = e.detail.state;
+			function saveSetting(key, value, format = void 0) {
+				console.log(value);
+				if (format) value = format.replace("$!", value);
+				console.log(value);
+				_GM_setValue(`lyeh:settings:${key}`, JSON.stringify(value));
+				document.documentElement.style.setProperty(`--settings-${key}`, value);
+			}
+			const settingsState = reactive(settingsSchema.reduce((acc, cat) => {
+				cat.items.forEach((item) => {
+					acc[item.id] = _GM_getValue(`lyeh:settings:${item.id}`) ? JSON.parse(_GM_getValue(`lyeh:settings:${item.id}`)) : item.default;
+					if (item.disabled) {
+						acc[item.id] = item.default;
+						saveSetting(item.id, item.default);
+					}
+				});
+				return acc;
+			}, {}));
+			console.log(settingsState);
+			function clearCache() {
+				console.vLog("Clearing cache...");
+				const allStorage = _GM_getValues(_GM_listValues());
+				const toDelete = [];
+				let totalBytes = 0;
+				for (const [key, value] of Object.entries(allStorage)) {
+					if (!key.startsWith("cache:")) continue;
+					toDelete.push(key);
+					totalBytes += value.length * 2;
+				}
+				if (toDelete.length != 0) _GM_deleteValues(toDelete);
+				console.vLog(`Successfully deleted ${(totalBytes / 1024).toFixed(2)} KB from StorageDB`);
+			}
+			function handler() {
 				visible.value = true;
 			}
 			function dismiss() {
 				visible.value = false;
 			}
 			onMounted(() => {
-				window.addEventListener("lyeh:error", handler);
+				window.addEventListener("lyeh:settings", handler);
 			});
 			onUnmounted(() => {
-				window.removeEventListener("lyeh:error", handler);
+				window.removeEventListener("lyeh:settings", handler);
 			});
 			return (_ctx, _cache) => {
 				return visible.value ? (openBlock(), createElementBlock("div", {
 					key: 0,
 					class: "overlay",
 					onClick: withModifiers(dismiss, ["self"])
-				}, [createBaseVNode("div", _hoisted_1, [
-					createBaseVNode("button", {
-						class: "close",
-						onClick: dismiss
-					}, "×"),
-					createBaseVNode("h2", _hoisted_2, "Lyeh encountered an error while " + toDisplayString(state.value), 1),
-					createBaseVNode("div", _hoisted_3, [createBaseVNode("span", null, toDisplayString(error.value), 1)]),
-					_cache[0] || (_cache[0] = createBaseVNode("text", { class: "footer" }, [createTextVNode("If the issue persists, please "), createBaseVNode("a", {
-						href: "https://github.com/craciu25yt/lyeh/issues",
-						target: "_blank",
-						"\"": ""
-					}, "report it")], -1))
-				])])) : createCommentVNode("", true);
+				}, [createBaseVNode("div", _hoisted_1, [createBaseVNode("div", { class: "bar" }, [_cache[2] || (_cache[2] = createBaseVNode("span", { class: "title" }, "Settings", -1)), createBaseVNode("button", {
+					class: "close",
+					onClick: dismiss
+				}, [..._cache[1] || (_cache[1] = [createBaseVNode("svg", {
+					width: "18",
+					height: "18",
+					viewBox: "0 0 32 32",
+					xmlns: "http://www.w3.org/2000/svg"
+				}, [createBaseVNode("title", null, "Close"), createBaseVNode("path", {
+					d: "M31.098 29.794L16.955 15.65 31.097 1.51 29.683.093 15.54 14.237 1.4.094-.016 1.508 14.126 15.65-.016 29.795l1.414 1.414L15.54 17.065l14.144 14.143",
+					fill: "currentColor",
+					"fill-rule": "evenodd"
+				})], -1)])])]), createBaseVNode("div", _hoisted_2, [(openBlock(true), createElementBlock(Fragment, null, renderList(unref(settingsSchema), (category) => {
+					return openBlock(), createElementBlock("div", {
+						key: category.id,
+						class: "category-row"
+					}, [createBaseVNode("h3", _hoisted_3, toDisplayString(category.title), 1), createBaseVNode("div", _hoisted_4, [(openBlock(true), createElementBlock(Fragment, null, renderList(category.items, (item) => {
+						return openBlock(), createElementBlock("div", {
+							key: item.id,
+							class: "setting-row",
+							"data-disabled": item.disabled || null,
+							"data-tooltip": item.disabled ? item.tooltip : null
+						}, [createBaseVNode("div", _hoisted_6, [
+							createBaseVNode("label", {
+								for: item.id,
+								class: "setting-label",
+								"data-disabled": item.disabled || null
+							}, toDisplayString(item.label), 9, _hoisted_7),
+							createBaseVNode("text", {
+								for: item.description,
+								class: "setting-description",
+								"data-disabled": item.disabled || null
+							}, toDisplayString(item.description), 9, _hoisted_8),
+							item.type == "slider_bottom" ? (openBlock(), createElementBlock("div", {
+								key: 0,
+								class: "setting-input-wrapper",
+								"data-disabled": item.disabled || null
+							}, [withDirectives(createBaseVNode("input", {
+								id: item.id,
+								type: "range",
+								"onUpdate:modelValue": ($event) => settingsState[item.id] = $event,
+								onInput: ($event) => saveSetting(item.id, settingsState[item.id], item.format),
+								class: "slider-bottom",
+								style: normalizeStyle({ "--length": item.length + "vh" }),
+								disabled: item.disabled,
+								min: item.min,
+								max: item.max,
+								step: item.step
+							}, null, 44, _hoisted_10), [[vModelText, settingsState[item.id]]])], 8, _hoisted_9)) : createCommentVNode("", true),
+							item.type == "slider_bottom" ? (openBlock(), createElementBlock("div", _hoisted_11, [createBaseVNode("span", _hoisted_12, toDisplayString(settingsState[item.id]), 1), settingsState[item.id] != item.default ? (openBlock(), createElementBlock("button", {
+								key: 0,
+								class: "slider-reset",
+								onClick: ($event) => {
+									saveSetting(item.id, item.default, item.format);
+									settingsState[item.id] = item.default;
+								},
+								disabled: item.disabled
+							}, " reset ", 8, _hoisted_13)) : createCommentVNode("", true)])) : createCommentVNode("", true)
+						]), createBaseVNode("div", {
+							class: "setting-input-wrapper",
+							"data-disabled": item.disabled || null
+						}, [
+							item.type == "button" ? (openBlock(), createElementBlock("button", {
+								key: 0,
+								class: "button",
+								onClick: _cache[0] || (_cache[0] = ($event) => clearCache())
+							}, toDisplayString(item.label), 1)) : createCommentVNode("", true),
+							item.type == "boolean" ? (openBlock(), createElementBlock("label", _hoisted_15, [withDirectives(createBaseVNode("input", {
+								id: item.id,
+								type: "checkbox",
+								"onUpdate:modelValue": ($event) => settingsState[item.id] = $event,
+								onChange: ($event) => saveSetting(item.id, settingsState[item.id], item.format),
+								class: "checkbox",
+								disabled: item.disabled
+							}, null, 40, _hoisted_16), [[vModelCheckbox, settingsState[item.id]]]), _cache[3] || (_cache[3] = createBaseVNode("span", { class: "button-slider" }, null, -1))])) : createCommentVNode("", true),
+							item.type == "slider" ? withDirectives((openBlock(), createElementBlock("input", {
+								key: 2,
+								id: item.id,
+								type: "range",
+								"onUpdate:modelValue": ($event) => settingsState[item.id] = $event,
+								onInput: ($event) => saveSetting(item.id, settingsState[item.id], item.format),
+								class: "slider",
+								style: normalizeStyle({ "--length": item.length + "vh" }),
+								disabled: item.disabled,
+								min: item.min,
+								max: item.max,
+								step: item.step
+							}, null, 44, _hoisted_17)), [[vModelText, settingsState[item.id]]]) : createCommentVNode("", true),
+							item.type == "slider" ? (openBlock(), createElementBlock("div", _hoisted_18, [createBaseVNode("span", _hoisted_19, toDisplayString(item.format ? item.format.replace("$!", settingsState[item.id]) : settingsState[item.id]), 1), settingsState[item.id] != item.default ? (openBlock(), createElementBlock("button", {
+								key: 0,
+								class: "slider-reset",
+								onClick: ($event) => {
+									saveSetting(item.id, item.default, item.format);
+									settingsState[item.id] = item.default;
+								},
+								disabled: item.disabled
+							}, " reset ", 8, _hoisted_20)) : createCommentVNode("", true)])) : createCommentVNode("", true)
+						], 8, _hoisted_14)], 8, _hoisted_5);
+					}), 128))])]);
+				}), 128))])])])) : createCommentVNode("", true);
 			};
 		}
-	}), [["__scopeId", "data-v-1684d7cb"]]);
+	}), [["__scopeId", "data-v-a6ac9b78"]]);
 	var app_default = defineComponent({
 		__name: "app",
 		setup(__props) {
 			console.vLog("Initializing vue");
 			return (_ctx, _cache) => {
-				return openBlock(), createElementBlock(Fragment, null, [createVNode(update_default), createVNode(error_default)], 64);
+				return openBlock(), createElementBlock(Fragment, null, [
+					createVNode(error_default),
+					createVNode(update_default),
+					createVNode(settings_default)
+				], 64);
 			};
 		}
 	});
-	var _GM_getValue = (() => typeof GM_getValue != "undefined" ? GM_getValue : void 0)();
-	var _GM_info = (() => typeof GM_info != "undefined" ? GM_info : void 0)();
-	var _GM_setValue = (() => typeof GM_setValue != "undefined" ? GM_setValue : void 0)();
-	var privilegedFetch = (() => typeof GM_xmlhttpRequest != "undefined" ? GM_xmlhttpRequest : void 0)();
+	var privilegedFetch = _GM_xmlhttpRequest;
 	var banners = new Map();
 	var covers = new Map();
 	var coverAccent = new Map();
@@ -5522,6 +5952,22 @@ self.onmessage = function (e) {
 					state
 				} }));
 			});
+			if (window.top !== window.self) {
+				console.log("iframe detected, exitting out");
+				if (document.readyState == "loading") window.addEventListener("DOMContentLoaded", () => {
+					setTimeout(() => {}, 4e3);
+				});
+				else setTimeout(() => {}, 4e3);
+			}
+			console.log("Loading settings...");
+			for (const category of settingsSchema) for (const setting of category.items) {
+				const value = _GM_getValue(`lyeh:settings:${setting.id}`);
+				let settingValue = value ? JSON.parse(value) : setting.default;
+				if (!value && setting.format) settingValue = setting.format.replace("$!", settingValue);
+				console.log(`--settings-${setting.id}`, value);
+				document.documentElement.style.setProperty(`--settings-${setting.id}`, settingValue);
+			}
+			console.log("Settings loaded!");
 			document.documentElement.dataset.lyehTheme = "dark";
 			const url = new URL(window.location.href);
 			if (url.pathname.startsWith("/artists/")) {
@@ -5531,7 +5977,7 @@ self.onmessage = function (e) {
 				}
 				this.mouseEvents();
 			}
-			if (url.pathname.startsWith("/album/")) {
+			if (url.pathname.startsWith("/album/") || url.pathname.startsWith("/albums/")) {
 				if (url.searchParams.get("react") != "1") {
 					url.searchParams.set("react", "1");
 					window.location.replace(url.toString());
@@ -5572,11 +6018,20 @@ self.onmessage = function (e) {
 			new MutationObserver(async (mutations) => {
 				for (const mutation of mutations) for (const node of mutation.addedNodes) {
 					if (!(node instanceof HTMLElement)) continue;
-					const navvar = document.querySelector(`[class^="StickyNav-desktop__Container"]`);
-					if (navvar) {
-						console.log(window.getComputedStyle(navvar).backgroundColor);
-						document.documentElement.style.setProperty("--current-accent", window.getComputedStyle(navvar).backgroundColor);
+					const menu = node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`);
+					console.log(node);
+					if (menu && node.querySelector("a[href=\"/forums\"]")) {
+						const placeholder = document.createElement("button");
+						placeholder.className = "PageHeaderMenu__Title-sc-jiji PageHeaderMenu__Item-sc-holi gzRYgj";
+						placeholder.style.padding = "0.75 rem";
+						placeholder.innerText = "Lyeh Settings";
+						placeholder.onclick = () => {
+							window.dispatchEvent(new CustomEvent("lyeh:settings"));
+						};
+						node.insertBefore(placeholder, node.lastElementChild);
 					}
+					const navvar = document.querySelector(`[class^="StickyNav-desktop__Container"]`);
+					if (navvar) document.documentElement.style.setProperty("--current-accent", window.getComputedStyle(navvar).backgroundColor);
 					const referents = node.querySelectorAll(`[class^="Referent__FragmentContainer"]`);
 					if (referents.length != 0) for (const elem of referents);
 					if (node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`)) {
@@ -5676,19 +6131,16 @@ self.onmessage = function (e) {
 			const trackingData = window.__PRELOADED_STATE__ || null;
 			if (trackingData) {
 				console.log("Genius Metadata captured:", trackingData);
-				for (const [_, data] of Object.entries(trackingData.entities.artists || {})) if (data.headerImageUrl) {
-					console.log(data.url, data.headerImageUrl);
-					banners.set(data.url, data.headerImageUrl);
-				}
-				for (const [_, data] of Object.entries(trackingData.entities.user || {})) if (data.headerImageUrl) {
-					console.log(data.url, data.headerImageUrl);
-					banners.set(data.url, data.headerImageUrl);
-				}
+				for (const [_, data] of Object.entries(trackingData.entities.artists || {})) if (data.headerImageUrl) banners.set(data.url, data.headerImageUrl);
+				for (const [_, data] of Object.entries(trackingData.entities.user || {})) if (data.headerImageUrl) banners.set(data.url, data.headerImageUrl);
 				for (const [_, data] of Object.entries(trackingData.entities.songs || {})) if (data.songArtImageThumbnailUrl) {
 					covers.set(data.url, data.songArtImageThumbnailUrl);
 					coverAccent.set(data.url, this.getAccentCache(data.url, data.songArtImageThumbnailUrl));
 				}
-				for (const [_, data] of Object.entries(trackingData.entities.albums || {})) if (data.coverArtThumbnailUrl) coverAccent.set(data.url, this.getAccentCache(data.url, data.coverArtThumbnailUrl));
+				for (const [_, data] of Object.entries(trackingData.entities.albums || {})) if (data.coverArtThumbnailUrl) {
+					coverAccent.set(data.url, this.getAccentCache(data.url, data.coverArtThumbnailUrl));
+					console.log("setted", data.url);
+				}
 			}
 		}
 		getAccent(img) {
@@ -5698,14 +6150,9 @@ self.onmessage = function (e) {
 			return color;
 		}
 		async getAccentCache(songUrl, imgUrl) {
-			console.log("running accent async");
-			const cacheKey = `accent:${songUrl}`;
+			const cacheKey = `cache:accent:${songUrl}`;
 			const cached = await _GM_getValue(cacheKey, null);
-			if (cached) {
-				console.log("CACHE HIT!!");
-				return JSON.parse(cached);
-			}
-			console.log(`[Genie] Cache miss ${songUrl}`);
+			if (cached) return JSON.parse(cached);
 			return new Promise((resolve, reject) => {
 				privilegedFetch({
 					method: "GET",
@@ -5717,9 +6164,10 @@ self.onmessage = function (e) {
 						tempImg.onload = async () => {
 							try {
 								const swatches = await getSwatches(tempImg);
-								await _GM_setValue(cacheKey, JSON.stringify(swatches));
+								const activeSwatch = swatches.Vibrant || swatches.DarkVibrant || swatches.LightVibrant || swatches.Muted || swatches.DarkMuted || swatches.LightMuted;
+								_GM_setValue(cacheKey, JSON.stringify(activeSwatch.color._oklch));
 								URL.revokeObjectURL(blobUrl);
-								resolve(swatches);
+								resolve(activeSwatch.color._oklch);
 							} catch (err) {
 								URL.revokeObjectURL(blobUrl);
 								reject(err);
@@ -5746,9 +6194,9 @@ self.onmessage = function (e) {
 					console.log(songAnchor);
 					const songUrl = songAnchor.href;
 					const swatches = await coverAccent.get(songUrl);
-					const activeSwatch = swatches.Vibrant || swatches.DarkVibrant || swatches.LightVibrant || swatches.Muted || swatches.DarkMuted || swatches.LightMuted;
-					if (activeSwatch) {
-						const { l, c, h } = activeSwatch.color._oklch;
+					console.log(swatches);
+					if (swatches) {
+						const { l, c, h } = swatches;
 						const accentColor = `oklch(${l} ${c} ${h})`;
 						document.documentElement.style.setProperty("--current-accent", accentColor);
 						document.documentElement.style.setProperty("--lyeh-bg-primary", `color-mix(in oklch, ${accentColor} 15%, #292424)`);
