@@ -89,10 +89,10 @@ div[class^="SongHeader-desktop__CoverArt"] img {
     border-radius: 10px;
 }
 aside[class^="ContributorSidebar__Container"] {
-    background-color: var(--lyeh-bg-secondary) !important;
+    background-color: #16141496 !important;
     padding-right: 14px;
     border-radius: 15px;
-    box-shadow: 10px 5px 5px var(--lyeh-bg-shadow);
+    box-shadow: 5px 5px 5px var(--lyeh-bg-shadow);
 }
 div[class^="ContributorSidebarSection__Header"] {
     color: var(--lyeh-text-main);

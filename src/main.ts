@@ -84,16 +84,20 @@ class Genie {
 		});
 
 		// find a way to optimize apple's injection
-		//if (window.top !== window.self) {
-		//	console.log("iframe detected, exitting out");
-		//	if (document.readyState == "loading") {
-		//		window.addEventListener("DOMContentLoaded", () => {
-		//			return;
-		//		});
-		//	} else {
-		//		return;
-		//	}
-		//}
+		if (window.top !== window.self) {
+			console.log("iframe detected, exitting out");
+			if (document.readyState == "loading") {
+				window.addEventListener("DOMContentLoaded", () => {
+					setTimeout(() => {
+						return;
+					}, 4000);
+				});
+			} else {
+				setTimeout(() => {
+					return;
+				}, 4000);
+			}
+		}
 		console.log("Loading settings...");
 		for (const category of settingsSchema) {
 			for (const setting of category.items) {
