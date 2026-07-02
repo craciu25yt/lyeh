@@ -3,13 +3,15 @@ import "./styles/modal.css";
 import "./styles/command_pallete.css";
 import "./styles/player.css";
 import "./styles/song_edit.css";
-import "./styles/navvar.css";
+import "./styles/navbar.css";
 import "./styles/artist.css";
 import "./styles/faq.css";
 import "./styles/albums.css";
 import "./styles/user.css";
 import "./styles/home.css";
 import "./styles/add_song.css";
+
+import "./styles/art_extractor.css";
 import { getColorSync, getSwatches, getSwatchesSync } from "colorthief";
 
 import { createApp } from "vue";
@@ -63,6 +65,11 @@ class Genie {
 		console.log("Launching 🚀!");
 		state = "launching";
 		window.addEventListener("error", (err) => {
+			const source = err.filename || (err.error && err.error.stack) || "";
+			console.log(source);
+
+			// scribe guy fix your thing and stop sending my data to ai pls
+			if (source.includes("chrome-extension://") && !source.includes("lyeh")) return;
 			console.log("error unu", document.readyState);
 			if (document.readyState == "loading") {
 				window.addEventListener("DOMContentLoaded", () => {

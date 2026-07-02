@@ -1,0 +1,8 @@
+/* To the Art Extractor developer, I hate your extension man 😭 */
+
+div[class^="apple_music_player-player"] button {
+    background-color: transparent !important;
+    color: var(--lyeh-text-main) !important;
+    border-color: var(--lyeh-text-main) !important;
+    padding: 0px 10px !important;
+}

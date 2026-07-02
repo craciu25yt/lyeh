@@ -381,3 +381,12 @@ backdrop-filter: blur(10px);
 layer:
 #16141496
 */
+
+li[class^="ContributorList__ListItem"] {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    background-image: none !important;
+}
+div[class^="Attribution__Author"] {
+    color: var(--lyeh-text-main);
+}
