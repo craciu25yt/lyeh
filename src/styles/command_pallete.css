@@ -30,7 +30,7 @@ input#command-palette-search-input[type="text"] {
 }
 
 /*allow scroll*/
-html {
+html:has(.command-palette) {
     overflow: visible !important;
     overflow-y: visible !important;
 }
