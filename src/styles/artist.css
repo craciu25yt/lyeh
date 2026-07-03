@@ -136,3 +136,10 @@ a[class^="QuestionAnswerList__ItemContainer"] {
     column-gap: 10px;
     border: 1px solid var(--lyeh-text-main) !important;
 }
+
+div[class^="AllAlbumsModal__Contents"],
+div[class^="AllSongsModal__Contents"] {
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}

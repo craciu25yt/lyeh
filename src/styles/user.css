@@ -40,6 +40,10 @@ profile-user-pane .white_container {
     background-color: #16141496 !important;
     border-radius: 10px;
 }
+.statistics_panel {
+    background-color: #16141496 !important;
+    border-radius: 10px;
+}
 
 [ng-show="!$ctrl.show_artist_pane"] [class*="column_layout-column_span--secondary"] {
     /*background-color: red;*/
