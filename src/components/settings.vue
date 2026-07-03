@@ -268,6 +268,7 @@ body {
 	align-items: center;
 	padding-right: 10px;
 	position: relative;
+	transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .setting-row:hover {
 	background: rgba(255, 255, 255, 0.1);

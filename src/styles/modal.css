@@ -90,3 +90,14 @@ div[class^="thumbnail_grid-grid_element"]:hover {
 .vertical_album_card:hover {
     background-color: unset !important;
 }
+
+li[class^="ContributorList__ListItem"] {
+    border-radius: 10px;
+    border-bottom: none !important;
+}
+li[class^="ContributorList__ListItem"]:not(:last-child) {
+    margin-bottom: 3px !important;
+}
+div[class^="Attribution__Author"] {
+    color: var(--lyeh-text-main);
+}

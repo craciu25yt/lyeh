@@ -383,13 +383,6 @@ layer:
 
 border: 1px solid rgba(255, 255, 255, 0.15);
 
-*/
+rgba(250, 100, 160, 0.4)
 
-li[class^="ContributorList__ListItem"] {
-    background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 10px;
-    background-image: none !important;
-}
-div[class^="Attribution__Author"] {
-    color: var(--lyeh-text-main);
-}
+*/

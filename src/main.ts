@@ -276,7 +276,6 @@ class Genie {
 					}
 					if (node.querySelector(`[class^="LineItem__ItemRow"]`)) {
 						node.classList.add("lyeh__ItemParent");
-						console.log("lirico en la casa");
 					}
 					if (node.matches('[class^="PortalTooltip__Content"]')) {
 						let artistLink = node.querySelector(`a[class^="ArtistTooltip__ArtistBadge"]`);
@@ -301,15 +300,24 @@ class Genie {
 						for (const progress of progressBars) {
 							const Class = progress.className.split(" ")[1];
 							if (!Class) {
-								console.warn("xd?");
 								continue;
 							}
 							const barElem = node.getElementsByClassName(Class)[0];
-							console.log(barElem, barElem.style);
-							const regex = barElem.style.background.match(progressBarRegex);
-							console.log("jeje", regex, progress);
-							if (!regex) continue;
-							barElem.style.background = `linear-gradient(to right, white ${regex[0]}, transparent 0px)`;
+							const percentageElm = barElem.querySelector(`[class^="ContributorList__AttributionValue"]`);
+							console.log();
+							barElem.style.background = `linear-gradient(to right, rgba(250, 100, 160, 0.4) ${percentageElm?.innerHTML},  rgba(0, 0, 0, 0.4) 0px)`;
+						}
+					}
+					if (node.matches(`[class^="ContributorList__List-sc"`)) {
+						for (const progress of node.children) {
+							const Class = progress.className.split(" ")[1];
+							if (!Class) {
+								continue;
+							}
+							const barElem = node.getElementsByClassName(Class)[0];
+							const percentageElm = barElem.querySelector(`[class^="ContributorList__AttributionValue"]`);
+							console.log();
+							barElem.style.background = `linear-gradient(to right, rgba(250, 100, 160, 0.4) ${percentageElm?.innerHTML},  rgba(0, 0, 0, 0.4) 0px)`;
 						}
 					}
 
