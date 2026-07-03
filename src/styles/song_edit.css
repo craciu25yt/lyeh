@@ -4,8 +4,14 @@ textarea[class^="TextInput-sc"] {
 }
 
 /*No dynamic way. have to fix per update bruh. Too lazy to js rn*/
-button[class*="jSZRoS"] {
+div[class^="LyricsEdit-desktop__Controls"] button:first-child {
     background-color: #56cd4d;
     color: black !important;
     border: 1px solid var(--lyeh-text-main) !important;
+}
+div[class^="LyricsEdit-desktop__Controls"] button:first-child span {
+    color: black !important;
+}
+div[class^="LyricsEdit-desktop__Controls"] button:first-child:hover {
+    background-color: rgb(86 169 50) !important;
 }

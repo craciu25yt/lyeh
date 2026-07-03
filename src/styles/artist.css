@@ -30,10 +30,10 @@ span[class^="LabelWithIcon__Container"] path {
 button[class^="DropdownList__LabeledButton"] {
     border-color: var(--lyeh-text-main);
 }
-button[class^="DropdownList__LabeledButton"]:hover {
+/*button[class^="DropdownList__LabeledButton"]:hover {
     background-color: rgba(250, 100, 160, 0.5) !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
+}*/
 
 button[class^="VotingActions__Button"][aria-pressed="true"] svg[class^="VotingActions__ThumbsUp"] path {
     fill: #4bbf38 !important;
@@ -111,9 +111,17 @@ li[class^="IqEarnersList__List"] {
 button[class^="PagingActions__PageButton"]:has([style*="background-color"]) {
     background-color: red;
 }*/
-/* genius just don't update your page 🙏 (will add js in future just too lazy rn)*/
+/* genius just don't update your page 🙏 (will add js in future just too lazy rn) | rn don't even know where that is lmao*/
 .iHfhfx {
     background-color: rgba(250, 100, 160, 0.5);
+}
+
+ul[class^="DropdownList__ItemsContainer"] {
+    background-color: #16141496;
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    overflow: hidden;
 }
 
 ul[class^="DropdownList__ItemsContainer"] {

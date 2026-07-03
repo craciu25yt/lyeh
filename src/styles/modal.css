@@ -1,5 +1,8 @@
-html {
+body {
     scroll-behavior: smooth;
+}
+body:has(div[class^="ReactModalPortal"] > div) {
+    scroll-behavior: auto !important;
 }
 
 div[class^="Modal-shared__ModalSharedContainer"] {

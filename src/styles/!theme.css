@@ -319,24 +319,72 @@ input {
 /* metadata */
 
 div[class^="ScrollableTabs__TabNavContainer"] {
-    background-color: rgba(0, 0, 0, 0.3) !important;
-    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(10px);
     border-radius: 15px 15px 0 0;
 }
 div[class^="ScrollableTabs__ContentArea"] {
-    background-color: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
+    position: relative;
+    background-color: transparent;
+}
+div[class^="ScrollableTabs__ContentArea"]::before {
+    content: "";
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    z-index: -1;
+    inset: 0;
+    backdrop-filter: blur(10px);
+    position: absolute;
 }
 h3[class^="ScrollableTabsSection__Title"],
 legend[class^="Field-shared__FieldLabel"] {
     color: var(--lyeh-text-main);
 }
 
+div[class^="TagInputMultiComponents"] {
+    background-color: transparent;
+}
+div[class^="css-"][class*="multiValue"] {
+    background-color: rgba(250, 100, 160, 0.4);
+    border-radius: 10px;
+}
+/*TagInputMultiComponents*/
+div[class^="ReactSelect-components"] {
+    color: var(--lyeh-text-main);
+}
+div[id^="react-select"] {
+    background-color: transparent !important;
+    backdrop-filter: blur(10px) !important;
+    color: white;
+}
+div[class^="css-"][class*="menu"] {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+div[class^="css-"][class*="option"]:hover {
+    background-color: rgba(250, 100, 160, 0.4) !important;
+}
+
+div[class^="RepeatableInputPair__Row-sc"] {
+    border: thin solid var(--lyeh-text-main);
+}
 /* USE NORMAL CLASSES HERE PLS 🙏 THS ON UPDATE WILL DIE*/
 div[class^="css-hfv4dh-singleValue"] {
     color: var(--lyeh-text-main);
 }
-
+div[class^="ScrollableTabsSection__HeaderActions"] path:last-child {
+    fill: black;
+}
+button[class^="IconButton-sc"][class*="Modal-desktop__SaveIconButton-sc"] {
+    background-color: rgb(86 169 50) !important;
+}
+button[class^="IconButton-sc"][class*="Modal-desktop__SaveIconButton-sc"] path {
+    fill: white !important;
+}
+label[class^="Modal-desktop__ButtonField"] button[aria-label="Save"]:hover {
+    background-color: rgb(106 189 70) !important;
+}
+label[class^="Modal-desktop__ButtonField"] button[aria-label="Cancel"]:hover {
+    background-color: rgba(250, 100, 160, 0.6) !important;
+}
 /* todo: order this 😭*/
 div[class^="LyricsHighlightTooltip__Content"] {
     background-color: #16141496;
@@ -372,6 +420,17 @@ div[class^="VotesModal__Container"] {
     backdrop-filter: blur(10px);
 }
 
+ul[class^="StickyToolbarDropdown__DropdownItems"] {
+    border-radius: 10px;
+    background-color: rgba(41, 36, 36, 0.4) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(10px);
+}
+li[class^="StickyToolbarDropdownItem__Container"]:hover {
+    background-color: rgba(250, 100, 160, 0.5);
+}
+
 /*
 Popup:
 border-radius: 10px;
@@ -383,6 +442,7 @@ layer:
 
 border: 1px solid rgba(255, 255, 255, 0.15);
 
+accent
 rgba(250, 100, 160, 0.4)
 
 */
