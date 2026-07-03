@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Genie
 // @namespace    npm/lyeh
-// @version      1.2.3
+// @version      1.3.0
 // @downloadURL  https://raw.githubusercontent.com/craciu25yt/lyeh/gh-pages/genie.user.js
 // @updateURL    https://raw.githubusercontent.com/craciu25yt/lyeh/gh-pages/genie.user.js
 // @match        https://genius.com/*
@@ -9,6 +9,7 @@
 // @connect      genius.com
 // @connect      images.genius.com
 // @connect      t2.genius.com
+// @connect      api.spotify.com
 // @grant        GM_addStyle
 // @grant        GM_deleteValue
 // @grant        GM_deleteValues
@@ -34,11 +35,11 @@
 			else (document.head || document.documentElement).appendChild(document.createElement("style")).append(c);
 		})(t);
 	};
-	_css(" [data-v-81c02cd1]::selection{color:#fff;background-color:#fa64a0b3}.overlay[data-v-81c02cd1]{z-index:99999;color:#f1f2f6;background:#0003;justify-content:center;align-items:center;display:flex;position:fixed;inset:0}.overlay[data-v-81c02cd1]:before{content:\"\";z-index:-1;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);will-change:backdrop-filter;position:absolute;inset:0}.box[data-v-81c02cd1]{-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);background:#0006;border:1px solid #ffffff26;border-radius:24px;min-width:320px;padding:48px 64px;position:relative;box-shadow:0 8px 64px #00000080,inset 0 1px #ffffff1a}.close[data-v-81c02cd1]{color:#ffffff80;cursor:pointer;background:0 0;border:none;padding:0;font-size:28px;line-height:1;position:absolute;top:12px;right:16px}.close[data-v-81c02cd1]:hover{color:#fff}.title[data-v-81c02cd1]{text-align:center;margin:0 0 16px;font-size:28px;font-weight:700}.error-box[data-v-81c02cd1]{color:#fff;white-space:pre;background-color:#00000080;border:10px;border-radius:10px;padding:15px}.lyeh-footer[data-v-81c02cd1]{color:#c2c2c2;text-shadow:1px 1px #000;margin-top:10px}a[data-v-81c02cd1]{color:#fff!important}.overlay[data-v-2838bb71]{z-index:99999;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);background:#0006;justify-content:center;align-items:center;display:flex;position:fixed;inset:0}.box[data-v-2838bb71]{-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);text-align:center;background:#ffffff14;border:1px solid #ffffff26;border-radius:24px;min-width:320px;padding:48px 64px;position:relative;box-shadow:0 8px 64px #00000080,inset 0 1px #ffffff1a}.close[data-v-2838bb71]{color:#ffffff80;cursor:pointer;background:0 0;border:none;padding:0;font-size:28px;line-height:1;position:absolute;top:12px;right:16px}.close[data-v-2838bb71]:hover{color:#fff}.title[data-v-2838bb71]{color:#fff;letter-spacing:-.02em;margin:0 0 16px;font-size:28px;font-weight:700}.version[data-v-2838bb71]{color:#fffc;justify-content:center;align-items:center;gap:12px;margin:0;font-size:18px;display:flex}.old[data-v-2838bb71]{opacity:.5;text-decoration:line-through}.arrow[data-v-2838bb71]{opacity:.6;font-size:22px}.new[data-v-2838bb71]{color:#fff;font-weight:600}[data-v-29841d6e]::selection{color:#fff;background-color:#fa64a0b3}body[data-v-29841d6e]{height:100%;margin:0;overflow:hidden}.overlay[data-v-29841d6e]{z-index:99999;color:#f1f2f6;background:#0003;justify-content:center;align-items:center;transition:display 1s;display:flex;position:fixed;inset:0}.overlay[data-v-29841d6e]:before{content:\"\";z-index:-1;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);will-change:backdrop-filter;position:absolute;inset:0}.box[data-v-29841d6e]{-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);background:#0006;border:1px solid #ffffff26;border-radius:10px;min-width:40vw;position:relative;box-shadow:0 8px 64px #00000080,inset 0 1px #ffffff1a}.bar[data-v-29841d6e]{border-bottom:1px solid #ffffff26;flex-direction:row;justify-content:space-between;padding:16px 20px;display:flex}.close[data-v-29841d6e]{color:#ffffff80;cursor:pointer;background:0 0;border:none;padding:0;font-size:28px;line-height:1}.close[data-v-29841d6e]:hover{color:#fff}.title[data-v-29841d6e]{text-align:center;font-size:20px;font-weight:700}.content[data-v-29841d6e]{padding:20px}.category-title[data-v-29841d6e]{font-size:18px;font-weight:700}.setting-label[data-v-29841d6e]{font-size:16px}.setting-label[data-disabled][data-v-29841d6e]{opacity:.4}.setting-row[data-v-29841d6e]{border-radius:10px;justify-content:space-between;align-items:center;padding:10px 10px 10px 20px;transition:all .1s cubic-bezier(.4,0,.2,1);display:flex;position:relative}.setting-row[data-v-29841d6e]:hover{background:#ffffff1a}.setting-row[data-disabled][data-v-29841d6e]:after{content:attr(data-tooltip);opacity:0;visibility:hidden;color:#fff;background-color:#1a1a1e;border:1px solid #ffffff26;border-radius:10px;padding:5px 10px;transition:opacity .15s,visibility .15s;position:absolute;bottom:105%;right:0;box-shadow:0 4px 12px #00000080}.setting-row[data-disabled][data-v-29841d6e]:hover:after{opacity:1;visibility:visible}.setting-info[data-v-29841d6e]{flex-direction:column;display:flex}.setting-description[data-disabled][data-v-29841d6e]{opacity:.5}.setting-description[data-v-29841d6e]{color:#c2c2c2;font-size:14px}.checkbox[data-v-29841d6e]{opacity:0;width:0;height:0}.setting-input-wrapper[data-disabled][data-v-29841d6e]{opacity:.5}.switch[data-v-29841d6e]{width:50px;height:26px;display:inline-block;position:relative}.button-slider[data-v-29841d6e]{cursor:pointer;background-color:#555;border-radius:26px;transition:background-color .2s;position:absolute;inset:0}.button-slider[data-v-29841d6e]:after{content:\"\";background-color:#fff;border-radius:50%;width:20px;height:20px;transition:transform .2s cubic-bezier(.4,0,.2,1);position:absolute;bottom:3px;left:3px}.switch input:checked+.button-slider[data-v-29841d6e]{background-color:#fa64a0b3}.switch input:checked+.button-slider[data-v-29841d6e]:after{transform:translate(24px)}.switch input:focus-visible+.button-slider[data-v-29841d6e]{box-shadow:0 0 0 2px #000,0 0 0 4px #fa64a0b3}.slider-bottom[data-v-29841d6e]{margin-top:10px}.slider-bottom[data-v-29841d6e],.slider[data-v-29841d6e]{appearance:none;width:var(--length);cursor:pointer;background-color:#0000;border-radius:16px;outline:none;height:15px;overflow:hidden}.slider-bottom[data-v-29841d6e]::-webkit-slider-runnable-track{background:#0006;border-radius:16px;height:15px}.slider[data-v-29841d6e]::-webkit-slider-runnable-track{background:#0006;border-radius:16px;height:15px}.slider-bottom[data-v-29841d6e]::-moz-range-track{background:0 0;border-radius:16px;height:15px}.slider[data-v-29841d6e]::-moz-range-track{background:0 0;border-radius:16px;height:15px}.slider-bottom[data-v-29841d6e]::-webkit-slider-thumb{appearance:none;background-color:#fff;border:2px solid #fa64a0b3;border-radius:50%;width:15px;height:15px;box-shadow:-407px 0 0 400px #fa64a0b3}.slider[data-v-29841d6e]::-webkit-slider-thumb{appearance:none;background-color:#fff;border:2px solid #fa64a0b3;border-radius:50%;width:15px;height:15px;box-shadow:-407px 0 0 400px #fa64a0b3}.slider-bottom[data-v-29841d6e]::-moz-range-thumb{background-color:#fff;border:1px solid #fa64a0b3;border-radius:50%;width:15px;height:15px;box-shadow:-407px 0 0 400px #fa64a0b3}.slider[data-v-29841d6e]::-moz-range-thumb{background-color:#fff;border:1px solid #fa64a0b3;border-radius:50%;width:15px;height:15px;box-shadow:-407px 0 0 400px #fa64a0b3}.slider-footer[data-v-29841d6e]{justify-content:space-between;margin-top:-4px;padding-top:2px;font-size:14px;display:flex}.slider-value[data-v-29841d6e],.slider-reset[data-v-29841d6e]{color:#c2c2c2!important}.slider-reset[data-v-29841d6e]:hover{color:#fff!important}.button[data-v-29841d6e]{background:#ffffff1a;border:1px solid #ffffff26;border-radius:10px;padding:10px 20px;box-shadow:0 4px 12px #00000080}.button[data-v-29841d6e]:hover{background:#fa64a066}\n/*$vite$:1*/ ");
-	_css(":root[data-lyeh-theme=dark]{--lyeh-bg-primary:#292424;--lyeh-bg-shadow:#1a1616;--lyeh-bg-secondary:#362f2f;--lyeh-bg-thirdy:#2e2828;--lyeh-accent:#ed4597;--lyeh-text-main:#f1f2f6;--lyeh-text-muted:#a4b0be;--accent-muted:#fa64a080;--lyeh-current-song-accent:#000;--lyeh-current-song-accent-secondary:#000;--artist-banner-url:linear-gradient(180deg, #1e1e2e 0%, #313244 50%, #1e1e2e 100%);--current-accent:#ffff64;--settings-player-width:40vh}body,div[class^=PageLayout__Container],main{transition:background-color 1s;background-color:var(--lyeh-bg-primary)!important;color:var(--lyeh-text-main)!important;fill:var(--lyeh-text-main)!important}path{fill:var(--lyeh-text-main)}div[class^=StickyNavLoggedIn__Container] path{fill:color-contrast(var(--current-accent))}div[class^=Lyrics__Container]{letter-spacing:-.01em!important;color:var(--lyeh-text-main)!important;font-size:1.15rem!important;line-height:1.7!important}div[class^=Lyrics__Container] a{border-bottom:1px dashed #ff47574d;transition:all .2s;-webkit-text-decoration-color:var(--lyeh-accent)!important;text-decoration-color:var(--lyeh-accent)!important}.rich_text_formatting a:hover{background-color:#fa64a080;border-radius:4px}div[class^=Lyrics__Container] a:hover{border-bottom:1px solid var(--lyeh-accent);background:#ff47571a}span[class^=ReferentFragment]{background:var(--lyeh-bg-secondary);color:var(--lyeh-text-main)!important}span[class^=ReferentFragment]:hover{border-bottom:1px solid var(--lyeh-accent);background:#fa64a0b3;color:var(--lyeh-text-main)!important}[class^=TextLabel],[class^=ContributorsCreditSong]{color:var(--lyeh-text-main)!important}a:not([class^=StickyNavSectionLink__StyledLink]){color:var(--lyeh-text-main)!important;-webkit-text-decoration:underline #ffffff80!important;text-decoration:underline #ffffff80!important}span{color:var(--lyeh-text-main)!important}div[class^=SongHeader-desktop__CoverArt] img{border-radius:10px}aside[class^=ContributorSidebar__Container]{box-shadow:5px 5px 5px var(--lyeh-bg-shadow);border-radius:15px;padding-right:14px;background-color:#16141496!important}div[class^=ContributorSidebarSection__Header],div[class^=ContributorSidebarMetadata]{color:var(--lyeh-text-main)}button[class^=Button__Container-sc]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}button[class^=Button__Container-sc]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}a[class^=Button__Container-sc]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}a[class^=Button__Container-sc]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}button[class^=ContributorActionTextbox]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}div[class^=ContributorSidebarSection__HeaderButtons] svg path:first-child{fill:var(--lyeh-text-main)!important}div[class^=ContributorSidebarSection__HeaderButtons] svg path:last-child{fill:var(--lyeh-bg-primary)!important}div[class^=PageGrid-desktop][class*=StickyToolbar__Container]{border-bottom:none;background-color:var(--lyeh-bg-primary)!important}button[class^=SmallButton__Container]{border-color:var(--lyeh-text-main);color:var(--lyeh-text-main)!important}button[class^=SmallButton__Container]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}a[class^=SmallButton__Container]{border-color:var(--lyeh-text-main);color:var(--lyeh-text-main)!important}a[class^=SmallButton__Container]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}svg[class^=LineItemActionIcon__Icon][data-action-name=recognized] path,svg[class^=LineItemActionIcon__Icon][data-action-name=accepted] path,svg[class^=LineItemActionIcon__Icon][data-action-name=hit_pageview_threshold] path,svg[class^=LineItemActionIcon__Icon][data-action-name=upvoted] path{fill:#4bbf38!important}div[class^=LineItemList__Container] path{fill:#9a9a9a!important}div[class^=LineItem__IqDifference]{color:#4bbf38!important}svg[class^=LineItemActionIcon__Icon][data-action-name=earned] path{fill:#c7ba18!important}span[class^=ContributorActionTextbox]{color:var(--lyeh-text-main)!important}[color=background\\.iqPoints]{color:#4bbf38!important}[color=background\\.negativeNumber]{color:#f03e26!important}div[class^=ContributorsCreditMarkedComplete__CompletedUsernameContainer]{color:var(--lyeh-text-main)!important}div[class^=TooltipShadow]{color:var(--lyeh-text-main);z-index:1;background-color:#0000;border-radius:15px;position:relative;overflow:hidden}div[class^=TooltipShadow]:before{content:\"\";filter:blur(2px)brightness(.5);z-index:-1;background-position:50%;background-size:cover;border:0;transition:all 1s;position:absolute;inset:0;transform:scale(1.1);background-image:var(--artist-banner-url)!important;border-radius:15px!important}div[class^=ArtistTooltip__Verified]{color:#000;text-align:center;background-color:#ffff64;margin-right:30%;font-size:.75rem;border-radius:15px!important}div[class^=TooltipShadow]:has([class^=ArtistTooltip__Verified]){box-shadow:1px 1px 20px #ffff6480!important}div[class^=TooltipShadow]:has([role=moderator]){box-shadow:1px 1px 20px #047ec680!important}div[class^=Placeholder__Container]{background-color:#fa64a0b3!important}span[class^=UserBadge__Iq]{border-radius:10px;padding:.125rem .225rem;color:#000!important;background-color:#ffff64cc!important}button{color:#fff!important}div[class^=UserBadge__Role-sc-]{align-items:center;padding:4px 0;transition:all .3s ease-in-out;display:inline-flex;overflow:hidden}span[class^=UserBadge__RoleLabel-sc-]{opacity:0;white-space:nowrap;max-width:0;margin-right:0;transition:max-width .3s ease-in-out,opacity .2s ease-in-out,margin .3s ease-in-out;display:inline-block}div[class^=UserBadge__Role-sc-]:hover span[class^=UserBadge__RoleLabel-sc-]{opacity:1;max-width:100px;margin-right:6px}span[class^=RoleIcon__Container-sc-]{flex-shrink:0;align-items:center;width:14px;height:14px;display:flex}span[class^=RoleIcon__Container-sc-] svg{width:100%;height:100%}div[class^=AlbumTracklist__Track]{color:var(--lyeh-text-main)}div[class^=PageGrid-desktop][class*=SongHeader-desktop__Container] :is(span,a,button,path){color:color-contrast(var(--current-accent))!important;fill:color-contrast(var(--current-accent))!important}div[class^=white_container]{background-color:#0000}span[class^=LineItemMessage__NoteBubble]{background-color:#fa64a0b3!important}input{caret-color:var(--lyeh-accent)}::selection{color:#fff;background-color:#fa64a0b3!important}div[class^=ScrollableTabs__TabNavContainer]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:15px 15px 0 0;background-color:#00000080!important}div[class^=ScrollableTabs__ContentArea]{background-color:#0000;position:relative}div[class^=ScrollableTabs__ContentArea]:before{content:\"\";z-index:-1;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);position:absolute;inset:0;background-color:#00000080!important}h3[class^=ScrollableTabsSection__Title],legend[class^=Field-shared__FieldLabel]{color:var(--lyeh-text-main)}div[class^=TagInputMultiComponents]{background-color:#0000}div[class^=css-][class*=multiValue]{background-color:#fa64a066;border-radius:10px}div[class^=ReactSelect-components]{color:var(--lyeh-text-main)}div[id^=react-select]{color:#fff;-webkit-backdrop-filter:blur(10px)!important;backdrop-filter:blur(10px)!important;background-color:#0000!important}div[class^=css-][class*=menu]{background-color:#fff3}div[class^=css-][class*=option]:hover{background-color:#fa64a066!important}div[class^=RepeatableInputPair__Row-sc]{border:thin solid var(--lyeh-text-main)}div[class^=css-hfv4dh-singleValue]{color:var(--lyeh-text-main)}div[class^=ScrollableTabsSection__HeaderActions] path:last-child{fill:#000}button[class^=IconButton-sc][class*=Modal-desktop__SaveIconButton-sc]{background-color:#56a932!important}button[class^=IconButton-sc][class*=Modal-desktop__SaveIconButton-sc] path{fill:#fff!important}label[class^=Modal-desktop__ButtonField] button[aria-label=Save]:hover{background-color:#6abd46!important}label[class^=Modal-desktop__ButtonField] button[aria-label=Cancel]:hover{background-color:#fa64a099!important}div[class^=LyricsHighlightTooltip__Content]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);background-color:#16141496;border:0;border-radius:10px;border:1px solid #fff3!important}div[class^=LyricsHighlightTooltip__Content]:hover{background-color:var(--accent-muted)!important}button[class^=LyricsHighlightTooltip__Container]:before{display:none}div[class^=LyricsHighlightTooltip__Content]:before:hover{background-color:var(--accent-muted)!important}span[class^=LyricsHighlightTooltip__IQ]{color:#40ff21!important}a[class^=LyricsHeader__TranslationLink]{background:0 0}a[class^=LyricsHeader__TranslationLink]:hover{background-color:var(--accent-muted)!important}div[class^=VotesModal__Container]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);background-color:#29242466;border-radius:10px}ul[class^=StickyToolbarDropdown__DropdownItems]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:10px;color:#fff!important;background-color:#29242466!important;border:1px solid #ffffff26!important}li[class^=StickyToolbarDropdownItem__Container]:hover{background-color:#fa64a080}");
+	_css(" [data-v-9a0dfe8c]::selection{color:#fff;background-color:#fa64a0b3}.overlay[data-v-9a0dfe8c]{z-index:99999;color:#f1f2f6;background:#0003;justify-content:center;align-items:center;display:flex;position:fixed;inset:0}.overlay[data-v-9a0dfe8c]:before{content:\"\";z-index:-1;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);will-change:backdrop-filter;position:absolute;inset:0}.box[data-v-9a0dfe8c]{-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);background:#0006;border:1px solid #ffffff26;border-radius:24px;min-width:320px;padding:48px 64px;position:relative;box-shadow:0 8px 64px #00000080,inset 0 1px #ffffff1a}.close[data-v-9a0dfe8c]{color:#ffffff80;cursor:pointer;background:0 0;border:none;padding:0;font-size:28px;line-height:1;position:absolute;top:12px;right:16px}.close[data-v-9a0dfe8c]:hover{color:#fff}.title[data-v-9a0dfe8c]{text-align:center;margin:0 0 16px;font-size:28px;font-weight:700}.error-box[data-v-9a0dfe8c]{color:#fff;white-space:pre;background-color:#00000080;border:10px;border-radius:10px;padding:15px}.lyeh-footer[data-v-9a0dfe8c]{color:#c2c2c2;text-shadow:1px 1px #000;margin-top:10px}a[data-v-9a0dfe8c]{color:#fff!important}.overlay[data-v-2838bb71]{z-index:99999;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);background:#0006;justify-content:center;align-items:center;display:flex;position:fixed;inset:0}.box[data-v-2838bb71]{-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);text-align:center;background:#ffffff14;border:1px solid #ffffff26;border-radius:24px;min-width:320px;padding:48px 64px;position:relative;box-shadow:0 8px 64px #00000080,inset 0 1px #ffffff1a}.close[data-v-2838bb71]{color:#ffffff80;cursor:pointer;background:0 0;border:none;padding:0;font-size:28px;line-height:1;position:absolute;top:12px;right:16px}.close[data-v-2838bb71]:hover{color:#fff}.title[data-v-2838bb71]{color:#fff;letter-spacing:-.02em;margin:0 0 16px;font-size:28px;font-weight:700}.version[data-v-2838bb71]{color:#fffc;justify-content:center;align-items:center;gap:12px;margin:0;font-size:18px;display:flex}.old[data-v-2838bb71]{opacity:.5;text-decoration:line-through}.arrow[data-v-2838bb71]{opacity:.6;font-size:22px}.new[data-v-2838bb71]{color:#fff;font-weight:600}[data-v-037a9574]::selection{color:#fff;background-color:#fa64a0b3}body[data-v-037a9574]{height:100%;margin:0;overflow:hidden}.overlay[data-v-037a9574]{z-index:99999;color:#f1f2f6;background:#0003;justify-content:center;align-items:center;transition:display 1s;display:flex;position:fixed;inset:0}.overlay[data-v-037a9574]:before{content:\"\";z-index:-1;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);will-change:backdrop-filter;position:absolute;inset:0}.box[data-v-037a9574]{-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);background:#0006;border:1px solid #ffffff26;border-radius:10px;min-width:40vw;position:relative;box-shadow:0 8px 64px #00000080,inset 0 1px #ffffff1a}.bar[data-v-037a9574]{border-bottom:1px solid #ffffff26;flex-direction:row;justify-content:space-between;padding:16px 20px;display:flex}.close[data-v-037a9574]{color:#ffffff80;cursor:pointer;background:0 0;border:none;padding:0;font-size:28px;line-height:1}.close[data-v-037a9574]:hover{color:#fff}.title[data-v-037a9574]{text-align:center;font-size:20px;font-weight:700}.content[data-v-037a9574]{padding:20px}.category-title[data-v-037a9574]{font-size:18px;font-weight:700}.setting-label[data-v-037a9574]{font-size:16px}.setting-label[data-disabled][data-v-037a9574]{opacity:.4}.setting-row[data-v-037a9574]{border-radius:10px;justify-content:space-between;align-items:center;padding:10px 10px 10px 20px;transition:all .1s cubic-bezier(.4,0,.2,1);display:flex;position:relative}.setting-row[data-v-037a9574]:hover{background:#ffffff1a}.setting-row[data-disabled][data-v-037a9574]:after{content:attr(data-tooltip);opacity:0;visibility:hidden;color:#fff;background-color:#1a1a1e;border:1px solid #ffffff26;border-radius:10px;padding:5px 10px;transition:opacity .15s,visibility .15s;position:absolute;bottom:105%;right:0;box-shadow:0 4px 12px #00000080}.setting-row[data-disabled][data-v-037a9574]:hover:after{opacity:1;visibility:visible}.setting-info[data-v-037a9574]{flex-direction:column;display:flex}.setting-description[data-disabled][data-v-037a9574]{opacity:.5}.setting-description[data-v-037a9574]{color:#c2c2c2;font-size:14px}.checkbox[data-v-037a9574]{opacity:0;width:0;height:0}.setting-input-wrapper[data-disabled][data-v-037a9574]{opacity:.5}.switch[data-v-037a9574]{width:50px;height:26px;display:inline-block;position:relative}.button-slider[data-v-037a9574]{cursor:pointer;background-color:#555;border-radius:26px;transition:background-color .2s;position:absolute;inset:0}.button-slider[data-v-037a9574]:after{content:\"\";background-color:#fff;border-radius:50%;width:20px;height:20px;transition:transform .2s cubic-bezier(.4,0,.2,1);position:absolute;bottom:3px;left:3px}.switch input:checked+.button-slider[data-v-037a9574]{background-color:#fa64a0b3}.switch input:checked+.button-slider[data-v-037a9574]:after{transform:translate(24px)}.switch input:focus-visible+.button-slider[data-v-037a9574]{box-shadow:0 0 0 2px #000,0 0 0 4px #fa64a0b3}.slider-bottom[data-v-037a9574]{margin-top:10px}.slider-bottom[data-v-037a9574],.slider[data-v-037a9574]{appearance:none;width:var(--length);cursor:pointer;background-color:#0000;border-radius:16px;outline:none;height:15px;overflow:hidden}.slider-bottom[data-v-037a9574]::-webkit-slider-runnable-track{background:#0006;border-radius:16px;height:15px}.slider[data-v-037a9574]::-webkit-slider-runnable-track{background:#0006;border-radius:16px;height:15px}.slider-bottom[data-v-037a9574]::-moz-range-track{background:0 0;border-radius:16px;height:15px}.slider[data-v-037a9574]::-moz-range-track{background:0 0;border-radius:16px;height:15px}.slider-bottom[data-v-037a9574]::-webkit-slider-thumb{appearance:none;background-color:#fff;border:2px solid #fa64a0b3;border-radius:50%;width:15px;height:15px;box-shadow:-407px 0 0 400px #fa64a0b3}.slider[data-v-037a9574]::-webkit-slider-thumb{appearance:none;background-color:#fff;border:2px solid #fa64a0b3;border-radius:50%;width:15px;height:15px;box-shadow:-407px 0 0 400px #fa64a0b3}.slider-bottom[data-v-037a9574]::-moz-range-thumb{background-color:#fff;border:1px solid #fa64a0b3;border-radius:50%;width:15px;height:15px;box-shadow:-407px 0 0 400px #fa64a0b3}.slider[data-v-037a9574]::-moz-range-thumb{background-color:#fff;border:1px solid #fa64a0b3;border-radius:50%;width:15px;height:15px;box-shadow:-407px 0 0 400px #fa64a0b3}.slider-footer[data-v-037a9574]{justify-content:space-between;margin-top:-4px;padding-top:2px;font-size:14px;display:flex}.slider-value[data-v-037a9574],.slider-reset[data-v-037a9574]{color:#c2c2c2!important}.slider-reset[data-v-037a9574]:hover{color:#fff!important}.button[data-v-037a9574]{background:#ffffff1a;border:1px solid #ffffff26;border-radius:10px;padding:10px 20px;box-shadow:0 4px 12px #00000080}.button[data-v-037a9574]:hover{background:#fa64a066}.spotify-container[data-v-c9b152f2]{z-index:50;width:var(--settings-player-width);-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);background-color:#15101080;border:1px solid #ffffff26;border-radius:10px;align-items:center;height:7.5vh;padding:7px;display:flex;position:fixed;bottom:20px;left:50%;transform:translate(-50%)}.spotify-player[data-v-c9b152f2]{flex-direction:row;align-items:center;gap:12px;width:100%;height:100%;display:flex}.cover-wrapper[data-v-c9b152f2]{height:100%;padding:1px}.player-cover[data-v-c9b152f2]{border-radius:5px;width:100%;height:100%}.logo-wrapper[data-v-c9b152f2]{height:40%;padding:1px 20px 1px 1px}.spotify-logo[data-v-c9b152f2]{fill:#fff;border-radius:5px;width:100%;height:100%}.spotify-metadata[data-v-c9b152f2]{flex-direction:column;flex:1;justify-content:center;min-width:0;max-width:100px;line-height:1.1;display:flex}.song-name[data-v-c9b152f2],.song-artists[data-v-c9b152f2]{white-space:nowrap;text-overflow:ellipsis;width:100%;font-size:15px;overflow:hidden}.song-artists[data-v-c9b152f2]{color:#ffffffb3;font-size:11px}.playback-button[data-v-c9b152f2]{cursor:pointer;width:40px;height:40px;padding:2px}.progress-container[data-v-c9b152f2]{flex-grow:1;align-items:center;gap:10px;margin-right:12px;display:flex}.time-text[data-v-c9b152f2]{color:#ffffffb3;white-space:nowrap;font-family:sans-serif;font-size:11px}.progress-slider[data-v-c9b152f2]{appearance:none;cursor:pointer;background:#fff3;border-radius:2px;outline:none;width:100%;height:3px;transition:background .1s}.progress-slider[data-v-c9b152f2]::-moz-range-thumb{background:#fff;border:none;border-radius:50%;width:12px;height:12px;transition:transform .1s}\n/*$vite$:1*/ ");
+	_css(":root{--lyeh-bg-primary:#292424;--lyeh-bg-shadow:#1a1616;--lyeh-bg-secondary:#362f2f;--lyeh-bg-thirdy:#2e2828;--lyeh-accent:#ed4597;--lyeh-text-main:#f1f2f6;--lyeh-text-muted:#a4b0be;--accent-muted:#fa64a080;--lyeh-current-song-accent:#000;--lyeh-current-song-accent-secondary:#000;--artist-banner-url:linear-gradient(180deg, #1e1e2e 0%, #313244 50%, #1e1e2e 100%);--current-accent:#ffff64;--settings-player-width:40vh;--settings-spotify:flex}body,div[class^=PageLayout__Container],main{transition:background-color 1s;background-color:var(--lyeh-bg-primary)!important;color:var(--lyeh-text-main)!important;fill:var(--lyeh-text-main)!important}path{fill:var(--lyeh-text-main)}div[class^=StickyNavLoggedIn__Container] path{fill:color-contrast(var(--current-accent))}div[class^=Lyrics__Container]{letter-spacing:-.01em!important;color:var(--lyeh-text-main)!important;font-size:1.15rem!important;line-height:1.7!important}div[class^=Lyrics__Container] a{border-bottom:1px dashed #ff47574d;transition:all .2s;-webkit-text-decoration-color:var(--lyeh-accent)!important;text-decoration-color:var(--lyeh-accent)!important}.rich_text_formatting a:hover{background-color:#fa64a080;border-radius:4px}div[class^=Lyrics__Container] a:hover{border-bottom:1px solid var(--lyeh-accent);background:#ff47571a}span[class^=ReferentFragment]{background:var(--lyeh-bg-secondary);color:var(--lyeh-text-main)!important}span[class^=ReferentFragment]:hover{border-bottom:1px solid var(--lyeh-accent);background:#fa64a0b3;color:var(--lyeh-text-main)!important}[class^=TextLabel],[class^=ContributorsCreditSong]{color:var(--lyeh-text-main)!important}a:not([class^=StickyNavSectionLink__StyledLink]){color:var(--lyeh-text-main)!important;-webkit-text-decoration:underline #ffffff80!important;text-decoration:underline #ffffff80!important}span{color:var(--lyeh-text-main)!important}div[class^=SongHeader-desktop__CoverArt] img{border-radius:10px}aside[class^=ContributorSidebar__Container]{box-shadow:5px 5px 5px var(--lyeh-bg-shadow);border-radius:15px;padding-right:14px;background-color:#16141496!important}div[class^=ContributorSidebarSection__Header],div[class^=ContributorSidebarMetadata]{color:var(--lyeh-text-main)}button[class^=Button__Container-sc]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}button[class^=Button__Container-sc]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}a[class^=Button__Container-sc]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}a[class^=Button__Container-sc]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}button[class^=ContributorActionTextbox]{border:1px solid var(--lyeh-text-main);color:var(--lyeh-text-main)!important}div[class^=ContributorSidebarSection__HeaderButtons] svg path:first-child{fill:var(--lyeh-text-main)!important}div[class^=ContributorSidebarSection__HeaderButtons] svg path:last-child{fill:var(--lyeh-bg-primary)!important}div[class^=PageGrid-desktop][class*=StickyToolbar__Container]{border-bottom:none;background-color:var(--lyeh-bg-primary)!important}button[class^=SmallButton__Container]{border-color:var(--lyeh-text-main);color:var(--lyeh-text-main)!important}button[class^=SmallButton__Container]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}a[class^=SmallButton__Container]{border-color:var(--lyeh-text-main);color:var(--lyeh-text-main)!important}a[class^=SmallButton__Container]:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}svg[class^=LineItemActionIcon__Icon][data-action-name=recognized] path,svg[class^=LineItemActionIcon__Icon][data-action-name=accepted] path,svg[class^=LineItemActionIcon__Icon][data-action-name=hit_pageview_threshold] path,svg[class^=LineItemActionIcon__Icon][data-action-name=upvoted] path{fill:#4bbf38!important}div[class^=LineItemList__Container] path{fill:#9a9a9a!important}div[class^=LineItem__IqDifference]{color:#4bbf38!important}svg[class^=LineItemActionIcon__Icon][data-action-name=earned] path{fill:#c7ba18!important}span[class^=ContributorActionTextbox]{color:var(--lyeh-text-main)!important}[color=background\\.iqPoints]{color:#4bbf38!important}[color=background\\.negativeNumber]{color:#f03e26!important}div[class^=ContributorsCreditMarkedComplete__CompletedUsernameContainer]{color:var(--lyeh-text-main)!important}div[class^=TooltipShadow]{color:var(--lyeh-text-main);z-index:1;background-color:#0000;border-radius:15px;position:relative;overflow:hidden}div[class^=TooltipShadow]:before{content:\"\";filter:blur(2px)brightness(.5);z-index:-1;background-position:50%;background-size:cover;border:0;transition:all 1s;position:absolute;inset:0;transform:scale(1.1);background-image:var(--artist-banner-url)!important;border-radius:15px!important}div[class^=ArtistTooltip__Verified]{color:#000;text-align:center;background-color:#ffff64;margin-right:30%;font-size:.75rem;border-radius:15px!important}div[class^=TooltipShadow]:has([class^=ArtistTooltip__Verified]){box-shadow:1px 1px 20px #ffff6480!important}div[class^=TooltipShadow]:has([role=moderator]){box-shadow:1px 1px 20px #047ec680!important}div[class^=Placeholder__Container]{background-color:#fa64a0b3!important}span[class^=UserBadge__Iq]{border-radius:10px;padding:.125rem .225rem;color:#000!important;background-color:#ffff64cc!important}button{color:#fff!important}div[class^=UserBadge__Role-sc-]{align-items:center;padding:4px 0;transition:all .3s ease-in-out;display:inline-flex;overflow:hidden}span[class^=UserBadge__RoleLabel-sc-]{opacity:0;white-space:nowrap;max-width:0;margin-right:0;transition:max-width .3s ease-in-out,opacity .2s ease-in-out,margin .3s ease-in-out;display:inline-block}div[class^=UserBadge__Role-sc-]:hover span[class^=UserBadge__RoleLabel-sc-]{opacity:1;max-width:100px;margin-right:6px}span[class^=RoleIcon__Container-sc-]{flex-shrink:0;align-items:center;width:14px;height:14px;display:flex}span[class^=RoleIcon__Container-sc-] svg{width:100%;height:100%}div[class^=AlbumTracklist__Track]{color:var(--lyeh-text-main)}div[class^=PageGrid-desktop][class*=SongHeader-desktop__Container] :is(span,a,button,path){color:color-contrast(var(--current-accent))!important;fill:color-contrast(var(--current-accent))!important}div[class^=white_container]{background-color:#0000}span[class^=LineItemMessage__NoteBubble]{background-color:#fa64a0b3!important}input{caret-color:var(--lyeh-accent)}::selection{color:#fff;background-color:#fa64a0b3!important}div[class^=ScrollableTabs__TabNavContainer]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:15px 15px 0 0;background-color:#00000080!important}div[class^=ScrollableTabs__ContentArea]{background-color:#0000;position:relative}div[class^=ScrollableTabs__ContentArea]:before{content:\"\";z-index:-1;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);position:absolute;inset:0;background-color:#00000080!important}h3[class^=ScrollableTabsSection__Title],legend[class^=Field-shared__FieldLabel]{color:var(--lyeh-text-main)}div[class^=TagInputMultiComponents]{background-color:#0000}div[class^=css-][class*=multiValue]{background-color:#fa64a066;border-radius:10px}div[class^=ReactSelect-components]{color:var(--lyeh-text-main)}div[id^=react-select]{color:#fff;-webkit-backdrop-filter:blur(10px)!important;backdrop-filter:blur(10px)!important;background-color:#0000!important}div[class^=css-][class*=menu]{background-color:#fff3}div[class^=css-][class*=option]:hover{background-color:#fa64a066!important}div[class^=RepeatableInputPair__Row-sc]{border:thin solid var(--lyeh-text-main)}div[class^=css-hfv4dh-singleValue]{color:var(--lyeh-text-main)}div[class^=ScrollableTabsSection__HeaderActions] path:last-child{fill:#000}button[class^=IconButton-sc][class*=Modal-desktop__SaveIconButton-sc]{background-color:#56a932!important}button[class^=IconButton-sc][class*=Modal-desktop__SaveIconButton-sc] path{fill:#fff!important}label[class^=Modal-desktop__ButtonField] button[aria-label=Save]:hover{background-color:#6abd46!important}label[class^=Modal-desktop__ButtonField] button[aria-label=Cancel]:hover{background-color:#fa64a099!important}div[class^=LyricsHighlightTooltip__Content]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);background-color:#16141496;border:0;border-radius:10px;border:1px solid #fff3!important}div[class^=LyricsHighlightTooltip__Content]:hover{background-color:var(--accent-muted)!important}button[class^=LyricsHighlightTooltip__Container]:before{display:none}div[class^=LyricsHighlightTooltip__Content]:before:hover{background-color:var(--accent-muted)!important}span[class^=LyricsHighlightTooltip__IQ]{color:#40ff21!important}a[class^=LyricsHeader__TranslationLink]{background:0 0}a[class^=LyricsHeader__TranslationLink]:hover{background-color:var(--accent-muted)!important}div[class^=VotesModal__Container]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);background-color:#29242466;border-radius:10px}ul[class^=StickyToolbarDropdown__DropdownItems]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:10px;color:#fff!important;background-color:#29242466!important;border:1px solid #ffffff26!important}li[class^=StickyToolbarDropdownItem__Container]:hover{background-color:#fa64a080}");
 	_css("body{scroll-behavior:smooth}body:has(div[class^=ReactModalPortal]>div){scroll-behavior:auto!important}div[class^=Modal-shared__ModalSharedContainer]{background-color:#0000}div[class^=ContributionsScholars__Container]{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);background-image:none;border-radius:10px 10px 0 0;background-color:#000000b3!important}div[class^=RecentActivity__Container]{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);background-color:#0000001a}div[class^=LineItem__ItemRow]{background-color:#16141496;border:0;border-radius:10px;margin-top:8px;border:1px solid #fff3!important}div[class^=LineItem__ItemRow]:hover{background-color:#161414;transition:all .2s cubic-bezier(.4,0,.2,1)}div[class^=Annotation__Container]{color:var(--lyeh-text-main)}div[class^=LineItemList__Container],div[class^=LineItemList__Container]>div{background:0 0!important}body[class^=act-embed\\ cont-searches]{padding:20px;background-color:#0000!important}.mini_card{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);border:1px solid #7d7d7d;border-radius:10px;background-color:#29242466!important}mini-song-card .mini_card{padding:10px}.mini_card path{fill:var(--lyeh-text-main)!important}.mini_card:hover{background-color:#16141496!important}.mini_card-lyric_excerpt span{color:#d6d6d6!important;background-color:#fa64a080!important}div[class^=mini_card-thumbnail]{border-radius:10px}a[class^=full_width_button]{background-color:#0000!important}div[class^=thumbnail_grid]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);border:1px solid #7d7d7d;border-radius:10px;background-color:#29242466!important}div[class^=thumbnail_grid-grid_element]{padding:5px}div[class^=thumbnail_grid-grid_element]:hover{background-color:#16141496!important}.vertical_album_card:hover{background-color:unset!important}li[class^=ContributorList__ListItem]{border-radius:10px;border-bottom:none!important}li[class^=ContributorList__ListItem]:not(:last-child){margin-bottom:3px!important}div[class^=Attribution__Author]{color:var(--lyeh-text-main)}");
 	_css("h4[class^=SiteCommandPalettePage__PageContainer],[class^=SiteCommandPaletteItem__Title],div[class^=SiteCommandPalettePage__PageContainer] h4{color:var(--lyeh-text-main)!important}div[class^=SiteCommandPalettePage__PageContainer] [class^=command-palette-list-item]{margin-bottom:2px;border-radius:15px!important}input#command-palette-search-input[type=text]{color:#fff!important;-webkit-text-fill-color:#fff!important}.command-palette div[id^=headlessui-dialog-panel-]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);background-color:#151a1a80!important;background-image:none!important;border-radius:15px!important}.command-palette [class*=bg-gray-900][class*=bg-opacity-80]{background-color:#0000}html:has(.command-palette){overflow:visible!important}");
-	_css("div[class^=apple_music_player-container]{background-color:#0000;border:0!important}body[ng-app=genius\\.apple_music_player]{border-radius:10px;padding:0;display:block;background-color:#0000!important}div[class=apple_music_player-player]{-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);background-color:#15101080;border:1px solid #ffffff26;border-radius:10px;padding:5px}div[class^=apple_music_player-player-info]{flex-direction:column;justify-content:center;display:flex}div[class^=apple_music_player-player-info-title]{padding:0 0 0 5px;font-size:1rem;line-height:1.2;margin:0!important}div[class^=apple_music_player-player-info-artist]{padding:0 0 0 5px;font-size:.8rem;line-height:1.2;margin:0!important}div[class^=apple_music_player-player-song_art]{justify-content:center;align-items:center;width:60px;height:60px;display:flex;position:static}div[class^=apple_music_player-seekbar]:before{background-color:var(--lyeh-text-main)}div[class^=apple_music_player-player-seekbar-dashed]{border-bottom:2px dashed var(--lyeh-text-main)}.cover_art-image{border-radius:5px}.cover_art{background-color:#0000!important}.apple_music_player-seekbar-scrubber-circle{background-color:var(--lyeh-text-main)!important}div[class^=AppleMusicPlayer-desktop__IframeContainer]{width:var(--settings-player-width);margin:0;grid-column:page-start/page-end!important;justify-self:center!important;position:relative!important}.apple_music_player-root.apple_music_player--desktop{padding:0!important}");
+	_css("div[class^=apple_music_player-container]{background-color:#0000;border:0!important}body[ng-app=genius\\.apple_music_player]{border-radius:10px;padding:0;display:block;background-color:#0000!important}div[class=apple_music_player-player]{-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);background-color:#15101080;border:1px solid #ffffff26;border-radius:10px;padding:5px}div[class^=apple_music_player-player-info]{flex-direction:column;justify-content:center;display:flex}div[class^=apple_music_player-player-info-title]{padding:0 0 0 5px;font-size:1rem;line-height:1.2;margin:0!important}div[class^=apple_music_player-player-info-artist]{padding:0 0 0 5px;font-size:.8rem;line-height:1.2;margin:0!important}div[class^=apple_music_player-player-song_art]{justify-content:center;align-items:center;width:60px;height:60px;display:flex;position:static}div[class^=apple_music_player-seekbar]:before{background-color:var(--lyeh-text-main)}div[class^=apple_music_player-player-seekbar-dashed]{border-bottom:2px dashed var(--lyeh-text-main)}.cover_art-image{border-radius:5px}.cover_art{background-color:#0000!important}.apple_music_player-seekbar-scrubber-circle{background-color:var(--lyeh-text-main)!important}div[class^=AppleMusicPlayer-desktop__IframeContainer]{width:var(--settings-player-width);margin:0;grid-column:page-start/page-end!important;justify-self:center!important;position:relative!important}.apple_music_player-root.apple_music_player--desktop{padding:0!important}[class^=SongPage__BottomSticky-sc]{display:var(--settings-spotify)!important}");
 	_css("textarea[class^=TextInput-sc]{color:var(--lyeh-text-main);border:1px solid var(--lyeh-text-main)!important}div[class^=LyricsEdit-desktop__Controls] button:first-child{background-color:#56cd4d;color:#000!important;border:1px solid var(--lyeh-text-main)!important}div[class^=LyricsEdit-desktop__Controls] button:first-child span{color:#000!important}div[class^=LyricsEdit-desktop__Controls] button:first-child:hover{background-color:#56a932!important}");
 	_css("div[class^=styleAnchors__PageHeaderDropdownMenu]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--lyeh-text-main);background-color:#29242466;border-radius:10px;top:3rem!important}div[class^=styleAnchors__PageHeaderDropdownMenu][class*=PageHeaderDropdown-desktop__Container]:has([src*=\"/inboxes/messages_inbox?embed=true\"]){width:40vw!important}div[class*=styleAnchors__PageHeaderDropdownMenu][class*=PageHeaderDropdown-desktop__Container]{width:35vw!important}div[aria-label^=User\\ Menu]~div[class*=styleAnchors__PageHeaderDropdownMenu]{width:10vw!important}[class^=PageHeaderMenu__Title][class*=PageHeaderMenu__Item]:hover{color:var(--lyeh-text-main);transition:background-color .3s;background-color:#fa64a0b3!important}div[class^=PageHeaderInbox-desktop__Label]{display:none!important}form[class^=StickyNavSearch-desktop__Form]{background-color:var(--lyeh-bg-primary);border-radius:15px}input[class^=StickyNavSearch-desktop__Input]{background-color:var(--lyeh-bg-primary);justify-content:center;margin-left:15px;color:#fff!important;-webkit-text-fill-color:#fff!important}div[class^=styleAnchors__PageHeaderDropdownMenu] div[class^=LineItemList__Container]{margin:20px}div[class^=LineItemDetail__Container]{background-color:#16141496!important}div[class^=LyricsDiffsSection__Container]{background-color:#0000!important}div[class=lyeh__ItemParent]:has([class^=LineItemDetail__Container]) [class^=LineItem__ItemRow]{border-radius:10px 10px 0 0;border-bottom:none!important}div[class=lyeh__ItemParent]:has([class^=LineItemDetail__Container]) [class^=LineItemDetail__Container]{border-radius:0 0 10px 10px;color:var(--lyeh-text-main)!important;border:1px solid #fff3!important}div[class^=ExpandableDiff__Lines] ins{background-color:#13ff004a!important}div[class^=ExpandableDiff__Lines] del{background-color:#ff00004a!important}div[class^=DetailSection__SectionWrapper]{background-color:#0000!important}div[class^=DetailSection__SectionWrapper]:first-child{margin-top:10px;background-color:#0000!important}div[class^=DetailSection-shared]{background-color:#0000!important}a[class^=MiniCard__Link]{border:1px solid #fff9;border-radius:10px;padding:.5rem;background-color:#16141496!important}a[class^=MiniCard__Link]:hover{transition:all .2s cubic-bezier(.4,0,.2,1);background-color:#fa64a0b3!important}div[class*=MiniCard__Thumbnail]{border-radius:10px}div[class^=Referent__FragmentContainer],a[class^=Referent__FragmentHighlight]{background-color:#0000}a[class^=UnreviewedAnnotation__Unreviewed],div[class^=UnreviewedAnnotation__Unreviewed]{border-radius:4px;background:0 0!important}div[class^=dashed_background_message]{text-align:center;border:1px solid #ff1464;border-radius:4px;background:0 0!important}body[class^=act-messages_inbox]{background-color:#0000!important}div[class^=feed_dropdown-item]{border-radius:10px;margin:10px;background-color:#16141496!important;border:1px solid #fff3!important}div[class^=feed_dropdown-item]:hover{transition:all .2s cubic-bezier(.4,0,.2,1);background-color:#161414!important}.modal_window-content{background-color:#0000!important}.modal_window-content p{background-color:#fa64a080;border-radius:5px;padding:5px;border:1px solid #ffffff4d!important}.u-dark_overlay:before{background-color:#16141496!important}.conversation-compose_area{background-color:#0000!important}textarea[class^=square_input]{color:#fff!important;background-color:#0000!important;border:1px solid #ffffff4d!important;border-radius:10px!important;padding:5px 10px!important}textarea[class^=square_input]:focus{transition:all .2s cubic-bezier(.4,0,.2,1);box-shadow:inset 0 0 .3em #fa64a080!important}.square_button{color:var(--lyeh-text-main)!important;background-color:#161414!important;border:1px solid #ffffff4d!important;border-radius:10px!important;padding:5px 10px!important}.square_button:hover{background-color:#fa64a080!important;transition:all .2s cubic-bezier(.4,0,.2,1)!important}span[class*=text_label--purple]{background-color:#0000;border:none;border-color:none!important}div[class=conversation] span[class*=text_label]:not([class*=text_label--purple]){background-color:#fa64a080;border-radius:4px;padding:3px;border-bottom:1px!important}div[class^=MetadataChangesSection__Container]{background:0 0;padding:0}div[class^=LineItem__EventCountBadge]{color:#fff;border:1px solid #7d7d7d;background-color:#0006!important}div[class^=StickyNavSearch-desktop__Icon] path{fill:#fff!important}body[class^=\"act-iq_inbox cont-inboxes snarly\"]{background-color:#0000!important}div[class^=contribution_opportunity]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:none;border-radius:10px;background-color:#16141430!important}input[class^=square_input],[class^=tags_input]{background-color:#0000!important}span[class^=square_item_and_iq] span[class^=square_button],span[class^=square_item_and_iq] button[class^=square_button]{z-index:10;background:#141414!important}span[class^=square_item_and_iq] span[class^=square_button]:hover,span[class^=square_item_and_iq] button[class^=square_button]:hover{background:var(--lyeh-accent)!important}");
 	_css("h2{color:var(--lyeh-text-main)!important}nav[class^=StickyNav-desktop__Container]:has(~div[class^=Profile__Container]){background-color:var(--current-accent);transition:all .5s cubic-bezier(.4,0,.2,1)!important}nav[class^=StickyNav-desktop__Container]:has(~div[class^=Profile__Container]) :is(a,span,path){fill:contrast-color(var(--current-accent));color:contrast-color(var(--current-accent));text-decoration:none!important;transition:all .5s cubic-bezier(.4,0,.2,1)!important}nav[class^=StickyNav-desktop__Container]:has(~div[class^=Profile__Container]) div[class^=PageHeaderMenu__Iq]{color:contrast-color(var(--current-accent))!important}main[class*=ProfileContent-desktop__PageGrid] path{fill:var(--lyeh-text-main)!important}div[class^=DiscographyItem__Info]{color:var(--lyeh-text-main)!important}span[class^=LabelWithIcon__Container] path{fill:var(--lyeh-text-main)!important}button[class^=DropdownList__LabeledButton]{border-color:var(--lyeh-text-main)}button[class^=VotingActions__Button][aria-pressed=true] svg[class^=VotingActions__ThumbsUp] path{fill:#4bbf38!important}button[class^=VotingActions__Button][aria-pressed=true] svg[class^=VotingActions__ThumbsDown] path{fill:#bf4538!important}a[class^=DiscographyItem__Container]{border-radius:10px;padding:3px}a[class^=DiscographyItem__Container]:hover{background-color:#16141496;border:1px solid #fff9;scale:1.1;transition:all .4s cubic-bezier(.4,0,.2,1)!important}div[class^=SizedImage__Container]{border-radius:8px}div[class^=PopularSongs__Container],div[class^=PopularAlbums__Container]{border:1px solid #fff9;border-radius:10px;background-color:#16141496!important}button[class*=ProfileContent-desktop__FeaturedButton]{background-color:#0000}h3[class^=VerifiedBadge__VerifiedBadgeContainer-sc]{background-color:var(--current-accent);color:#000;fill:#fff;border-radius:10px;padding:2px 6px;color:contrast-color(var(--current-accent))!important;transition:all .5s cubic-bezier(.4,0,.2,1)!important}h3[class^=VerifiedBadge__VerifiedBadgeContainer-sc] svg{fill:contrast-color(var(--current-accent));transition:all .4s cubic-bezier(.4,0,.2,1)!important}h3[class^=VerifiedBadge__VerifiedBadgeContainer-sc] path{fill:contrast-color(contrast-color(var(--current-accent)))!important}div[class^=ArtistAvatar__Container]{border-color:var(--current-accent);transition:all .5s cubic-bezier(.4,0,.2,1)!important}ul[class^=DiscographyItemList]{gap:1rem;overflow:visible}a[class*=OptOutButton__Container-sc],button[class*=OptOutButtonWithFeedbackModal__SmallButton-sc]{display:none}hr[class^=ProfileContent-desktop__Divider]{border-color:#fff3}div[class^=CollaboratorEntry__Container],li[class^=IqEarnersList__List]{border-color:#fff3!important}.iHfhfx{background-color:#fa64a080}ul[class^=DropdownList__ItemsContainer]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);background-color:#16141496;border:1px solid #fff9;border-radius:10px;overflow:hidden}a[class^=ProfilesDropdown__SocialLink]:hover{background-color:#fa64a080}span[class^=DropdownList__Caret]{background-color:var(--lyeh-text-main)!important}div[class^=QuestionAnswerList__List]{gap:10px}a[class^=QuestionAnswerList__ItemContainer]{column-gap:10px;border:1px solid var(--lyeh-text-main)!important;border-radius:10px!important}div[class^=AllAlbumsModal__Contents],div[class^=AllSongsModal__Contents]{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);background-color:#00000080;border-radius:10px}");
@@ -5542,9 +5543,9 @@ self.onmessage = function (e) {
 		if (isString(container)) return document.querySelector(container);
 		return container;
 	}
-	var _hoisted_1$2 = { class: "box" };
-	var _hoisted_2$2 = { class: "title" };
-	var _hoisted_3$2 = { class: "error-box" };
+	var _hoisted_1$3 = { class: "box" };
+	var _hoisted_2$3 = { class: "title" };
+	var _hoisted_3$3 = { class: "error-box" };
 	var error_vue_vue_type_script_setup_true_lang_default = defineComponent({
 		__name: "error",
 		setup(__props) {
@@ -5553,7 +5554,7 @@ self.onmessage = function (e) {
 			const state = ref("");
 			function handler(e) {
 				console.vLog("Error received", e);
-				error.value = e.detail.err.error.stack;
+				error.value = e.detail.err.error?.stack || e.detail.err.message || "Unknown script error";
 				state.value = e.detail.state;
 				visible.value = true;
 			}
@@ -5571,13 +5572,13 @@ self.onmessage = function (e) {
 					key: 0,
 					class: "overlay",
 					onClick: withModifiers(dismiss, ["self"])
-				}, [createBaseVNode("div", _hoisted_1$2, [
+				}, [createBaseVNode("div", _hoisted_1$3, [
 					createBaseVNode("button", {
 						class: "close",
 						onClick: dismiss
 					}, "×"),
-					createBaseVNode("h2", _hoisted_2$2, "Lyeh encountered an error while " + toDisplayString(state.value), 1),
-					createBaseVNode("div", _hoisted_3$2, [createBaseVNode("span", null, toDisplayString(error.value), 1)]),
+					createBaseVNode("h2", _hoisted_2$3, "Lyeh encountered an error while " + toDisplayString(state.value), 1),
+					createBaseVNode("div", _hoisted_3$3, [createBaseVNode("span", null, toDisplayString(error.value), 1)]),
 					_cache[0] || (_cache[0] = createBaseVNode("text", { class: "lyeh-footer" }, [createTextVNode("If the issue persists, please "), createBaseVNode("a", {
 						href: "https://github.com/craciu25yt/lyeh/issues",
 						target: "_blank",
@@ -5592,11 +5593,11 @@ self.onmessage = function (e) {
 		for (const [key, val] of props) target[key] = val;
 		return target;
 	};
-	var error_default = _plugin_vue_export_helper_default(error_vue_vue_type_script_setup_true_lang_default, [["__scopeId", "data-v-81c02cd1"]]);
-	var _hoisted_1$1 = { class: "box" };
-	var _hoisted_2$1 = { class: "version" };
-	var _hoisted_3$1 = { class: "old" };
-	var _hoisted_4$1 = { class: "new" };
+	var error_default = _plugin_vue_export_helper_default(error_vue_vue_type_script_setup_true_lang_default, [["__scopeId", "data-v-9a0dfe8c"]]);
+	var _hoisted_1$2 = { class: "box" };
+	var _hoisted_2$2 = { class: "version" };
+	var _hoisted_3$2 = { class: "old" };
+	var _hoisted_4$2 = { class: "new" };
 	var update_default = _plugin_vue_export_helper_default(defineComponent({
 		__name: "update",
 		setup(__props) {
@@ -5622,72 +5623,81 @@ self.onmessage = function (e) {
 					key: 0,
 					class: "overlay",
 					onClick: withModifiers(dismiss, ["self"])
-				}, [createBaseVNode("div", _hoisted_1$1, [
+				}, [createBaseVNode("div", _hoisted_1$2, [
 					createBaseVNode("button", {
 						class: "close",
 						onClick: dismiss
 					}, "×"),
 					_cache[1] || (_cache[1] = createBaseVNode("h2", { class: "title" }, "Lyeh — Updated", -1)),
-					createBaseVNode("p", _hoisted_2$1, [
-						createBaseVNode("span", _hoisted_3$1, toDisplayString(oldVersion.value), 1),
+					createBaseVNode("p", _hoisted_2$2, [
+						createBaseVNode("span", _hoisted_3$2, toDisplayString(oldVersion.value), 1),
 						_cache[0] || (_cache[0] = createBaseVNode("span", { class: "arrow" }, "→", -1)),
-						createBaseVNode("span", _hoisted_4$1, toDisplayString(newVersion.value), 1)
+						createBaseVNode("span", _hoisted_4$2, toDisplayString(newVersion.value), 1)
 					])
 				])])) : createCommentVNode("", true);
 			};
 		}
 	}), [["__scopeId", "data-v-2838bb71"]]);
-	var settingsSchema = [{
-		id: "general",
-		title: "General",
-		items: [
-			{
-				id: "light-theme",
-				label: "Light theme",
-				type: "boolean",
-				default: false,
-				description: "Enables the light theme",
-				disabled: true,
-				tooltip: "Light theme is not available at the moment"
-			},
-			{
-				id: "explode",
-				label: "Explode",
-				type: "boolean",
-				default: false,
-				description: "instant combustion"
-			},
-			{
-				id: "player-width",
-				label: "Player width",
-				type: "slider",
-				default: 70,
-				description: "Modifies Apple's player width",
-				min: 30,
-				length: 50,
-				format: "$!%"
-			},
-			{
-				id: "pepe",
-				label: "Bottom slider",
-				type: "slider_bottom",
-				default: 70,
-				description: "xd",
-				length: 72,
-				disabled: true,
-				tooltip: "I love genius"
-			}
-		]
-	}, {
-		id: "Advanced",
-		title: "Advanced",
-		items: [{
-			id: "clear-cache",
-			label: "Clear cache",
-			description: "Clears all Lyeh's cache (image accents...)",
-			type: "button"
-		}]
-	}];
+	var settingsSchema = [
+		{
+			id: "general",
+			title: "General",
+			items: [
+				{
+					id: "light-theme",
+					label: "Light theme",
+					type: "boolean",
+					default: false,
+					description: "Enables the light theme",
+					disabled: true,
+					tooltip: "Light theme is not available at the moment"
+				},
+				{
+					id: "explode",
+					label: "Explode",
+					type: "boolean",
+					default: false,
+					description: "instant combustion"
+				},
+				{
+					id: "player-width",
+					label: "Player width",
+					type: "slider",
+					default: 70,
+					description: "Modifies Apple's player width",
+					min: 30,
+					length: 50,
+					format: "$!%"
+				}
+			]
+		},
+		{
+			id: "spotify",
+			title: "Spotify",
+			items: [{
+				id: "spotify",
+				label: "Use Spotify",
+				description: "Replaces Apple Music with Spotify",
+				type: "boolean_callback",
+				default: false
+			}, {
+				id: "spotify-link",
+				label: "Spotify link",
+				description: "Links your spotify account",
+				type: "button"
+			}]
+		},
+		{
+			id: "advanced",
+			title: "Advanced",
+			items: [{
+				id: "clear-cache",
+				label: "Clear cache",
+				description: "Clears all Lyeh's cache (image accents...)",
+				type: "button"
+			}]
+		}
+	];
 	var _GM_deleteValues = (() => typeof GM_deleteValues != "undefined" ? GM_deleteValues : void 0)();
 	var _GM_getValue = (() => typeof GM_getValue != "undefined" ? GM_getValue : void 0)();
 	var _GM_getValues = (() => typeof GM_getValues != "undefined" ? GM_getValues : void 0)();
@@ -5695,16 +5705,17 @@ self.onmessage = function (e) {
 	var _GM_listValues = (() => typeof GM_listValues != "undefined" ? GM_listValues : void 0)();
 	var _GM_setValue = (() => typeof GM_setValue != "undefined" ? GM_setValue : void 0)();
 	var _GM_xmlhttpRequest = (() => typeof GM_xmlhttpRequest != "undefined" ? GM_xmlhttpRequest : void 0)();
-	var _hoisted_1 = { class: "box" };
-	var _hoisted_2 = { class: "content" };
-	var _hoisted_3 = { class: "category-title" };
-	var _hoisted_4 = { class: "setting-list" };
-	var _hoisted_5 = ["data-disabled", "data-tooltip"];
-	var _hoisted_6 = { class: "setting-info" };
-	var _hoisted_7 = ["for", "data-disabled"];
-	var _hoisted_8 = ["for", "data-disabled"];
-	var _hoisted_9 = ["data-disabled"];
-	var _hoisted_10 = [
+	var _unsafeWindow = (() => typeof unsafeWindow != "undefined" ? unsafeWindow : void 0)();
+	var _hoisted_1$1 = { class: "box" };
+	var _hoisted_2$1 = { class: "content" };
+	var _hoisted_3$1 = { class: "category-title" };
+	var _hoisted_4$1 = { class: "setting-list" };
+	var _hoisted_5$1 = ["data-disabled", "data-tooltip"];
+	var _hoisted_6$1 = { class: "setting-info" };
+	var _hoisted_7$1 = ["for", "data-disabled"];
+	var _hoisted_8$1 = ["for", "data-disabled"];
+	var _hoisted_9$1 = ["data-disabled"];
+	var _hoisted_10$1 = [
 		"id",
 		"onUpdate:modelValue",
 		"onInput",
@@ -5713,24 +5724,35 @@ self.onmessage = function (e) {
 		"max",
 		"step"
 	];
-	var _hoisted_11 = {
+	var _hoisted_11$1 = {
 		key: 1,
 		class: "slider-footer"
 	};
-	var _hoisted_12 = { class: "slider-value" };
-	var _hoisted_13 = ["onClick", "disabled"];
+	var _hoisted_12$1 = { class: "slider-value" };
+	var _hoisted_13$1 = ["onClick", "disabled"];
 	var _hoisted_14 = ["data-disabled"];
-	var _hoisted_15 = {
+	var _hoisted_15 = ["onClick"];
+	var _hoisted_16 = {
 		key: 1,
 		class: "switch"
 	};
-	var _hoisted_16 = [
+	var _hoisted_17 = [
 		"id",
 		"onUpdate:modelValue",
 		"onChange",
 		"disabled"
 	];
-	var _hoisted_17 = [
+	var _hoisted_18 = {
+		key: 2,
+		class: "switch"
+	};
+	var _hoisted_19 = [
+		"id",
+		"onUpdate:modelValue",
+		"onChange",
+		"disabled"
+	];
+	var _hoisted_20 = [
 		"id",
 		"onUpdate:modelValue",
 		"onInput",
@@ -5739,20 +5761,18 @@ self.onmessage = function (e) {
 		"max",
 		"step"
 	];
-	var _hoisted_18 = {
-		key: 3,
+	var _hoisted_21 = {
+		key: 4,
 		class: "slider-footer"
 	};
-	var _hoisted_19 = { class: "slider-value" };
-	var _hoisted_20 = ["onClick", "disabled"];
+	var _hoisted_22 = { class: "slider-value" };
+	var _hoisted_23 = ["onClick", "disabled"];
 	var settings_default = _plugin_vue_export_helper_default(defineComponent({
 		__name: "settings",
 		setup(__props) {
 			const visible = ref(false);
 			function saveSetting(key, value, format = void 0) {
-				console.log(value);
 				if (format) value = format.replace("$!", value);
-				console.log(value);
 				_GM_setValue(`lyeh:settings:${key}`, JSON.stringify(value));
 				document.documentElement.style.setProperty(`--settings-${key}`, value);
 			}
@@ -5766,7 +5786,44 @@ self.onmessage = function (e) {
 				});
 				return acc;
 			}, {}));
-			console.log(settingsState);
+			function buttonCallback(id) {
+				if (id == "clear-cache") clearCache();
+				if (id == "spotify-link") spotify();
+			}
+			function sliderCallback(item) {
+				if (item.id == "spotify") {
+					saveSetting(item.id, settingsState[item.id]);
+					window.location.reload();
+				}
+			}
+			function spotify() {
+				const authUrl = `https://accounts.spotify.com/authorize?client_id=a0f9b43f17be4465855b20ac8b00206e&response_type=code&redirect_uri=${encodeURIComponent("https://lyeh.auchen.net/api/oauth2/callback")}&scope=streaming%20user-read-playback-state%20user-modify-playback-state%20user-read-email%20user-read-private`;
+				const width = 500;
+				const height = 750;
+				const left = window.screenX + (window.outerWidth - width) / 2;
+				const top = window.screenY + (window.outerHeight - height) / 2.5;
+				window.open(authUrl, "Spotify Login", `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`);
+				const handleMessage = (event) => {
+					if (event.origin != "https://lyeh.auchen.net" && event.origin != "http://127.0.0.1:8080") return;
+					if (event.data && event.data.type === "GENIE_SPOTIFY_TOKENS") {
+						const { access_token, refresh_token, expires_in } = event.data.tokens;
+						_GM_setValue("spotify:access_token", access_token);
+						_GM_setValue("spotify:refresh_token", refresh_token);
+						_GM_setValue("spotify:expiration", Date.now() + expires_in * 1e3);
+						console.vLog("Spotify successfully connected to Genie!");
+						const request = new XMLHttpRequest();
+						request.open("GET", "https://api.spotify.com/v1/me", false);
+						request.setRequestHeader("Authorization", `Bearer ${access_token}`);
+						request.send(null);
+						if (request.status === 200) {
+							const me = JSON.parse(request.responseText);
+							console.log(me);
+						} else console.error(`Request failed with status: ${request.status}`);
+						window.removeEventListener("message", handleMessage);
+					}
+				};
+				window.addEventListener("message", handleMessage);
+			}
 			function clearCache() {
 				console.vLog("Clearing cache...");
 				const allStorage = _GM_getValues(_GM_listValues());
@@ -5797,10 +5854,10 @@ self.onmessage = function (e) {
 					key: 0,
 					class: "overlay",
 					onClick: withModifiers(dismiss, ["self"])
-				}, [createBaseVNode("div", _hoisted_1, [createBaseVNode("div", { class: "bar" }, [_cache[2] || (_cache[2] = createBaseVNode("span", { class: "title" }, "Settings", -1)), createBaseVNode("button", {
+				}, [createBaseVNode("div", _hoisted_1$1, [createBaseVNode("div", { class: "bar" }, [_cache[1] || (_cache[1] = createBaseVNode("span", { class: "title" }, "Settings", -1)), createBaseVNode("button", {
 					class: "close",
 					onClick: dismiss
-				}, [..._cache[1] || (_cache[1] = [createBaseVNode("svg", {
+				}, [..._cache[0] || (_cache[0] = [createBaseVNode("svg", {
 					width: "18",
 					height: "18",
 					viewBox: "0 0 32 32",
@@ -5809,27 +5866,27 @@ self.onmessage = function (e) {
 					d: "M31.098 29.794L16.955 15.65 31.097 1.51 29.683.093 15.54 14.237 1.4.094-.016 1.508 14.126 15.65-.016 29.795l1.414 1.414L15.54 17.065l14.144 14.143",
 					fill: "currentColor",
 					"fill-rule": "evenodd"
-				})], -1)])])]), createBaseVNode("div", _hoisted_2, [(openBlock(true), createElementBlock(Fragment, null, renderList(unref(settingsSchema), (category) => {
+				})], -1)])])]), createBaseVNode("div", _hoisted_2$1, [(openBlock(true), createElementBlock(Fragment, null, renderList(unref(settingsSchema), (category) => {
 					return openBlock(), createElementBlock("div", {
 						key: category.id,
 						class: "category-row"
-					}, [createBaseVNode("h3", _hoisted_3, toDisplayString(category.title), 1), createBaseVNode("div", _hoisted_4, [(openBlock(true), createElementBlock(Fragment, null, renderList(category.items, (item) => {
+					}, [createBaseVNode("h3", _hoisted_3$1, toDisplayString(category.title), 1), createBaseVNode("div", _hoisted_4$1, [(openBlock(true), createElementBlock(Fragment, null, renderList(category.items, (item) => {
 						return openBlock(), createElementBlock("div", {
 							key: item.id,
 							class: "setting-row",
 							"data-disabled": item.disabled || null,
 							"data-tooltip": item.disabled ? item.tooltip : null
-						}, [createBaseVNode("div", _hoisted_6, [
+						}, [createBaseVNode("div", _hoisted_6$1, [
 							createBaseVNode("label", {
 								for: item.id,
 								class: "setting-label",
 								"data-disabled": item.disabled || null
-							}, toDisplayString(item.label), 9, _hoisted_7),
+							}, toDisplayString(item.label), 9, _hoisted_7$1),
 							createBaseVNode("text", {
 								for: item.description,
 								class: "setting-description",
 								"data-disabled": item.disabled || null
-							}, toDisplayString(item.description), 9, _hoisted_8),
+							}, toDisplayString(item.description), 9, _hoisted_8$1),
 							item.type == "slider_bottom" ? (openBlock(), createElementBlock("div", {
 								key: 0,
 								class: "setting-input-wrapper",
@@ -5845,8 +5902,8 @@ self.onmessage = function (e) {
 								min: item.min,
 								max: item.max,
 								step: item.step
-							}, null, 44, _hoisted_10), [[vModelText, settingsState[item.id]]])], 8, _hoisted_9)) : createCommentVNode("", true),
-							item.type == "slider_bottom" ? (openBlock(), createElementBlock("div", _hoisted_11, [createBaseVNode("span", _hoisted_12, toDisplayString(settingsState[item.id]), 1), settingsState[item.id] != item.default ? (openBlock(), createElementBlock("button", {
+							}, null, 44, _hoisted_10$1), [[vModelText, settingsState[item.id]]])], 8, _hoisted_9$1)) : createCommentVNode("", true),
+							item.type == "slider_bottom" ? (openBlock(), createElementBlock("div", _hoisted_11$1, [createBaseVNode("span", _hoisted_12$1, toDisplayString(settingsState[item.id]), 1), settingsState[item.id] != item.default ? (openBlock(), createElementBlock("button", {
 								key: 0,
 								class: "slider-reset",
 								onClick: ($event) => {
@@ -5854,7 +5911,7 @@ self.onmessage = function (e) {
 									settingsState[item.id] = item.default;
 								},
 								disabled: item.disabled
-							}, " reset ", 8, _hoisted_13)) : createCommentVNode("", true)])) : createCommentVNode("", true)
+							}, " reset ", 8, _hoisted_13$1)) : createCommentVNode("", true)])) : createCommentVNode("", true)
 						]), createBaseVNode("div", {
 							class: "setting-input-wrapper",
 							"data-disabled": item.disabled || null
@@ -5862,18 +5919,26 @@ self.onmessage = function (e) {
 							item.type == "button" ? (openBlock(), createElementBlock("button", {
 								key: 0,
 								class: "button",
-								onClick: _cache[0] || (_cache[0] = ($event) => clearCache())
-							}, toDisplayString(item.label), 1)) : createCommentVNode("", true),
-							item.type == "boolean" ? (openBlock(), createElementBlock("label", _hoisted_15, [withDirectives(createBaseVNode("input", {
+								onClick: ($event) => buttonCallback(item.id)
+							}, toDisplayString(item.label), 9, _hoisted_15)) : createCommentVNode("", true),
+							item.type == "boolean" ? (openBlock(), createElementBlock("label", _hoisted_16, [withDirectives(createBaseVNode("input", {
 								id: item.id,
 								type: "checkbox",
 								"onUpdate:modelValue": ($event) => settingsState[item.id] = $event,
 								onChange: ($event) => saveSetting(item.id, settingsState[item.id], item.format),
 								class: "checkbox",
 								disabled: item.disabled
-							}, null, 40, _hoisted_16), [[vModelCheckbox, settingsState[item.id]]]), _cache[3] || (_cache[3] = createBaseVNode("span", { class: "button-slider" }, null, -1))])) : createCommentVNode("", true),
+							}, null, 40, _hoisted_17), [[vModelCheckbox, settingsState[item.id]]]), _cache[2] || (_cache[2] = createBaseVNode("span", { class: "button-slider" }, null, -1))])) : createCommentVNode("", true),
+							item.type == "boolean_callback" ? (openBlock(), createElementBlock("label", _hoisted_18, [withDirectives(createBaseVNode("input", {
+								id: item.id,
+								type: "checkbox",
+								"onUpdate:modelValue": ($event) => settingsState[item.id] = $event,
+								onChange: ($event) => sliderCallback(item),
+								class: "checkbox",
+								disabled: item.disabled
+							}, null, 40, _hoisted_19), [[vModelCheckbox, settingsState[item.id]]]), _cache[3] || (_cache[3] = createBaseVNode("span", { class: "button-slider" }, null, -1))])) : createCommentVNode("", true),
 							item.type == "slider" ? withDirectives((openBlock(), createElementBlock("input", {
-								key: 2,
+								key: 3,
 								id: item.id,
 								type: "range",
 								"onUpdate:modelValue": ($event) => settingsState[item.id] = $event,
@@ -5884,8 +5949,8 @@ self.onmessage = function (e) {
 								min: item.min,
 								max: item.max,
 								step: item.step
-							}, null, 44, _hoisted_17)), [[vModelText, settingsState[item.id]]]) : createCommentVNode("", true),
-							item.type == "slider" ? (openBlock(), createElementBlock("div", _hoisted_18, [createBaseVNode("span", _hoisted_19, toDisplayString(item.format ? item.format.replace("$!", settingsState[item.id]) : settingsState[item.id]), 1), settingsState[item.id] != item.default ? (openBlock(), createElementBlock("button", {
+							}, null, 44, _hoisted_20)), [[vModelText, settingsState[item.id]]]) : createCommentVNode("", true),
+							item.type == "slider" ? (openBlock(), createElementBlock("div", _hoisted_21, [createBaseVNode("span", _hoisted_22, toDisplayString(item.format ? item.format.replace("$!", settingsState[item.id]) : settingsState[item.id]), 1), settingsState[item.id] != item.default ? (openBlock(), createElementBlock("button", {
 								key: 0,
 								class: "slider-reset",
 								onClick: ($event) => {
@@ -5893,22 +5958,228 @@ self.onmessage = function (e) {
 									settingsState[item.id] = item.default;
 								},
 								disabled: item.disabled
-							}, " reset ", 8, _hoisted_20)) : createCommentVNode("", true)])) : createCommentVNode("", true)
-						], 8, _hoisted_14)], 8, _hoisted_5);
+							}, " reset ", 8, _hoisted_23)) : createCommentVNode("", true)])) : createCommentVNode("", true)
+						], 8, _hoisted_14)], 8, _hoisted_5$1);
 					}), 128))])]);
 				}), 128))])])])) : createCommentVNode("", true);
 			};
 		}
-	}), [["__scopeId", "data-v-29841d6e"]]);
+	}), [["__scopeId", "data-v-037a9574"]]);
+	var _hoisted_1 = {
+		key: 0,
+		class: "spotify-container"
+	};
+	var _hoisted_2 = { class: "spotify-player" };
+	var _hoisted_3 = { class: "cover-wrapper" };
+	var _hoisted_4 = ["src"];
+	var _hoisted_5 = { class: "spotify-metadata" };
+	var _hoisted_6 = { class: "song-name" };
+	var _hoisted_7 = { class: "song-artists" };
+	var _hoisted_8 = {
+		key: 0,
+		viewBox: "0 0 44 44",
+		fill: "currentColor",
+		xmlns: "http://www.w3.org/2000/svg"
+	};
+	var _hoisted_9 = {
+		key: 1,
+		class: "btn-icon",
+		viewBox: "0 0 56 56",
+		fill: "currentColor",
+		xmlns: "http://www.w3.org/2000/svg"
+	};
+	var _hoisted_10 = { class: "progress-container" };
+	var _hoisted_11 = { class: "time-text" };
+	var _hoisted_12 = ["max", "value"];
+	var _hoisted_13 = { class: "time-text" };
+	var spotifyplayer_default = _plugin_vue_export_helper_default(defineComponent({
+		__name: "spotifyplayer",
+		setup(__props) {
+			const { unsafeWindow } = typeof GM !== "undefined" ? GM : { unsafeWindow: window };
+			const display = ref(false);
+			const isReady = ref(false);
+			const isPlaying = ref(false);
+			const songName = ref("");
+			const songArtists = ref("");
+			const songCover = ref("");
+			let spotifyArtists = null;
+			const position = ref(0);
+			const currentTrack = ref(null);
+			const currentState = ref(null);
+			let player = null;
+			async function getValidToken() {
+				const expiresAt = await _GM_getValue("spotify:expiration", 0);
+				let accessToken = await _GM_getValue("spotify:access_token");
+				if (Date.now() > expiresAt) {
+					const refreshToken = await _GM_getValue("spotify:refresh_token");
+					if (!refreshToken) return null;
+					try {
+						const data = await (await fetch(`https://lyeh.auchen.net/api/oauth2/refresh?refresh_token=${refreshToken}`, { method: "POST" })).json();
+						accessToken = data.access_token;
+						_GM_setValue("spotify:access_token", accessToken);
+						_GM_setValue("spotify:expiration", Date.now() + data.expires_in * 1e3);
+					} catch (e) {
+						console.error("Genie failed token rotation:", e);
+						return null;
+					}
+				}
+				return accessToken;
+			}
+			async function initPlayer() {
+				const SpotifyNamespace = unsafeWindow.Spotify;
+				if (!SpotifyNamespace) return;
+				if (!await getValidToken()) return;
+				player = new SpotifyNamespace.Player({
+					name: "Genius (Lyeh)",
+					getOAuthToken: async (cb) => {
+						cb(await getValidToken());
+					},
+					volume: .5
+				});
+				if (!player) return;
+				player.addListener("ready", async ({ device_id }) => {
+					_GM_setValue("spotify:device_id", device_id);
+					isReady.value = true;
+					const token = await getValidToken();
+					await fetch("https://api.spotify.com/v1/me/player", {
+						method: "PUT",
+						headers: {
+							Authorization: `Bearer ${token}`,
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({
+							device_ids: [device_id],
+							play: false
+						})
+					});
+					const data = await (await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(`track:${songName.value} ${spotifyArtists}`)}&type=track&limit=1`, { headers: {
+						Authorization: `Bearer ${token}`,
+						"Content-Type": "application/json"
+					} })).json();
+					await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
+						method: "PUT",
+						headers: {
+							Authorization: `Bearer ${token}`,
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({ uris: [data.tracks.items[0].uri] })
+					});
+					player.togglePlay();
+					isReady.value = true;
+				});
+				player.addListener("not_ready", ({ device_id }) => {
+					isReady.value = false;
+				});
+				player.addListener("player_state_changed", (state) => {
+					if (!state) return;
+					isPlaying.value = !state.paused;
+					currentTrack.value = state.track_window.current_track;
+					currentState.value = state;
+					position.value = state.position;
+				});
+				player.addListener("initialization_error", ({ message }) => console.error(message));
+				player.addListener("authentication_error", ({ message }) => console.error(message));
+				player.addListener("account_error", ({ message }) => console.error(message));
+				player.connect();
+			}
+			const formatTime = (ms) => {
+				if (!ms) return "0:00";
+				const totalSeconds = Math.floor(ms / 1e3);
+				return `${Math.floor(totalSeconds / 60)}:${(totalSeconds % 60).toString().padStart(2, "0")}`;
+			};
+			function togglePlayback() {
+				if (player) {
+					player.togglePlay();
+					return;
+				}
+				initPlayer();
+			}
+			async function seek(value) {
+				if (!player) return;
+				await player.seek(value);
+				position.value = value;
+			}
+			let interval = null;
+			watch(isPlaying, (playing) => {
+				if (interval) {
+					clearInterval(interval);
+					interval = null;
+				}
+				if (playing) {
+					let lastTick = performance.now();
+					interval = window.setInterval(() => {
+						const now = performance.now();
+						position.value += now - lastTick;
+						lastTick = now;
+					}, 100);
+				}
+			});
+			function init(data) {
+				console.vLog("display", data);
+				display.value = true;
+				songName.value = data.detail.name;
+				songArtists.value = data.detail.artists.join(", ");
+				songCover.value = data.detail.image;
+				data.detail.appleMusicID;
+				data.detail.artists.join(" ");
+				spotifyArtists = data.detail.artists.map((artist) => `artist:${artist.trim()}`).join(" ");
+			}
+			onMounted(() => {
+				if (unsafeWindow.Spotify) {} else {
+					window.addEventListener("lyeh:spotify:ready", () => {
+						isReady.value = true;
+					}, { once: true });
+					window.addEventListener("lyeh:spotify:display", init, { once: true });
+				}
+			});
+			onBeforeUnmount(() => {
+				window.removeEventListener("lyeh:spotify:ready", initPlayer);
+				if (player) player.disconnect();
+			});
+			return (_ctx, _cache) => {
+				return display.value ? (openBlock(), createElementBlock("div", _hoisted_1, [createBaseVNode("div", _hoisted_2, [
+					createBaseVNode("div", _hoisted_3, [createBaseVNode("img", {
+						class: "player-cover",
+						src: songCover.value,
+						alt: ""
+					}, null, 8, _hoisted_4)]),
+					createBaseVNode("div", _hoisted_5, [createBaseVNode("span", _hoisted_6, toDisplayString(songName.value || "Error"), 1), createBaseVNode("span", _hoisted_7, toDisplayString(songArtists.value || "Error"), 1)]),
+					createBaseVNode("button", {
+						onClick: togglePlayback,
+						class: "playback-button"
+					}, [isPlaying.value ? (openBlock(), createElementBlock("svg", _hoisted_8, [..._cache[1] || (_cache[1] = [createBaseVNode("path", { d: "M13 13H19V31H13V13ZM25 13H31V31H25V13Z" }, null, -1)])])) : (openBlock(), createElementBlock("svg", _hoisted_9, [..._cache[2] || (_cache[2] = [createBaseVNode("path", { d: "M48 27.6667L18 11V44.3333L48 27.6667Z" }, null, -1)])]))]),
+					createBaseVNode("div", _hoisted_10, [
+						createBaseVNode("span", _hoisted_11, toDisplayString(formatTime(position.value)), 1),
+						createBaseVNode("input", {
+							type: "range",
+							class: "progress-slider",
+							min: "0",
+							max: currentTrack.value?.duration_ms,
+							value: position.value,
+							onInput: _cache[0] || (_cache[0] = (e) => seek(Number(e.target.value)))
+						}, null, 40, _hoisted_12),
+						createBaseVNode("span", _hoisted_13, toDisplayString(formatTime(currentTrack.value?.duration_ms)), 1)
+					]),
+					_cache[3] || (_cache[3] = createBaseVNode("div", { class: "logo-wrapper" }, [createBaseVNode("img", {
+						class: "spotify-logo",
+						src: "https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Full_Logo_RGB_White.png",
+						alt: ""
+					})], -1))
+				])])) : createCommentVNode("", true);
+			};
+		}
+	}), [["__scopeId", "data-v-c9b152f2"]]);
 	var app_default = defineComponent({
 		__name: "app",
 		setup(__props) {
 			console.vLog("Initializing vue");
+			console.vLog("Initialized!");
 			return (_ctx, _cache) => {
 				return openBlock(), createElementBlock(Fragment, null, [
 					createVNode(error_default),
 					createVNode(update_default),
-					createVNode(settings_default)
+					createVNode(settings_default),
+					createVNode(spotifyplayer_default)
 				], 64);
 			};
 		}
@@ -5917,14 +6188,20 @@ self.onmessage = function (e) {
 	var banners = new Map();
 	var covers = new Map();
 	var coverAccent = new Map();
+	var currentPage = "";
 	var COOKIE_NAME = "_genius_release_opt_in_add_song";
 	var MAX_AGE = 3600 * 24 * 60;
+	var trackingData;
 	var state = "injecting";
 	var Genie = class {
 		constructor() {
 			this.init();
 		}
 		init() {
+			if (window.top !== window.self) {
+				console.log("iframe detected, exitting out");
+				return;
+			}
 			console.realLog = console.log;
 			console.realLog;
 			Object.defineProperty(console, "log", {
@@ -5935,6 +6212,9 @@ self.onmessage = function (e) {
 			});
 			Object.defineProperty(console, "vLog", { get: () => {
 				return console.realLog.bind(console, "%cLyeh%c %cVue", "background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px", "", "background-color: #42b883; color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px");
+			} });
+			Object.defineProperty(console, "sLog", { get: () => {
+				return console.realLog.bind(console, "%cLyeh%c %cSpotify", "background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px", "", "background-color: #1ED760; color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px");
 			} });
 			console.log("Launching 🚀!");
 			state = "launching";
@@ -5955,23 +6235,25 @@ self.onmessage = function (e) {
 					state
 				} }));
 			});
-			if (window.top !== window.self) {
-				console.log("iframe detected, exitting out");
-				if (document.readyState == "loading") window.addEventListener("DOMContentLoaded", () => {
-					setTimeout(() => {}, 4e3);
-				});
-				else setTimeout(() => {}, 4e3);
-			}
 			console.log("Loading settings...");
 			for (const category of settingsSchema) for (const setting of category.items) {
 				const value = _GM_getValue(`lyeh:settings:${setting.id}`);
 				let settingValue = value ? JSON.parse(value) : setting.default;
 				if (!value && setting.format) settingValue = setting.format.replace("$!", settingValue);
-				console.log(`--settings-${setting.id}`, value);
+				if (setting.id == "spotify") {
+					console.log("ji");
+					if (settingValue) {
+						console.log("je");
+						document.documentElement.style.setProperty(`--settings-spotify`, "none");
+					} else {
+						console.log("ju");
+						document.documentElement.style.setProperty(`--settings-spotify`, "flex");
+					}
+					continue;
+				}
 				document.documentElement.style.setProperty(`--settings-${setting.id}`, settingValue);
 			}
 			console.log("Settings loaded!");
-			document.documentElement.dataset.lyehTheme = "dark";
 			const url = new URL(window.location.href);
 			if (url.pathname.startsWith("/artists/")) {
 				if (url.searchParams.get("react") != "1") {
@@ -5997,13 +6279,6 @@ self.onmessage = function (e) {
 				console.log(event.ctrlKey, event.key);
 				if (event.ctrlKey && event.key == "") debugger;
 			});
-			const originalFetch = window.fetch;
-			window.fetch = function(...args) {
-				const response = originalFetch.apply(this, args);
-				const url = args[0];
-				if (typeof url === "string" && url.includes("/api/inboxes/main_activity_inbox/line_items/")) {}
-				return response;
-			};
 			state = "pre-starting";
 		}
 		isMounted = false;
@@ -6021,9 +6296,7 @@ self.onmessage = function (e) {
 			new MutationObserver(async (mutations) => {
 				for (const mutation of mutations) for (const node of mutation.addedNodes) {
 					if (!(node instanceof HTMLElement)) continue;
-					const menu = node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`);
-					console.log(node);
-					if (menu && node.querySelector("a[href=\"/forums\"]")) {
+					if (node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`) && node.querySelector("a[href=\"/forums\"]")) {
 						const placeholder = document.createElement("button");
 						placeholder.className = "PageHeaderMenu__Title-sc-jiji PageHeaderMenu__Item-sc-holi gzRYgj";
 						placeholder.style.padding = "0.75 rem";
@@ -6062,7 +6335,6 @@ self.onmessage = function (e) {
 							if (!Class) continue;
 							const barElem = node.getElementsByClassName(Class)[0];
 							const percentageElm = barElem.querySelector(`[class^="ContributorList__AttributionValue"]`);
-							console.log();
 							barElem.style.background = `linear-gradient(to right, rgba(250, 100, 160, 0.4) ${percentageElm?.innerHTML},  rgba(0, 0, 0, 0.4) 0px)`;
 						}
 					}
@@ -6071,7 +6343,6 @@ self.onmessage = function (e) {
 						if (!Class) continue;
 						const barElem = node.getElementsByClassName(Class)[0];
 						const percentageElm = barElem.querySelector(`[class^="ContributorList__AttributionValue"]`);
-						console.log();
 						barElem.style.background = `linear-gradient(to right, rgba(250, 100, 160, 0.4) ${percentageElm?.innerHTML},  rgba(0, 0, 0, 0.4) 0px)`;
 					}
 					if (node.querySelector("[class*=\"SongHeader\"]")) this.transformHeader(node);
@@ -6081,14 +6352,33 @@ self.onmessage = function (e) {
 				subtree: true
 			});
 		}
+		mountSpotify() {
+			console.log("mounting spotiy");
+			window.dispatchEvent(new CustomEvent("lyeh:spotify:display", { detail: {
+				name: trackingData.songPage.trackingData.Title,
+				artists: trackingData.songPage.trackingData["Primary Artists"],
+				image: covers.get("https://genius.com" + trackingData.songPage.path),
+				appleMusicID: trackingData.entities.songs[trackingData.songPage.song].appleMusicId
+			} }));
+			_unsafeWindow.onSpotifyWebPlaybackSDKReady = () => {
+				console.log("Spotify Web Playback SDK is fully ready.");
+				window.dispatchEvent(new CustomEvent("lyeh:spotify:ready"));
+			};
+			if (!_unsafeWindow.Spotify) {
+				const spotify = document.createElement("script");
+				spotify.src = "https://sdk.scdn.co/spotify-player.js";
+				spotify.async = true;
+				document.head.appendChild(spotify);
+			}
+		}
 		startup() {
 			state = "starting";
 			this.observeDOM();
 			this.extractSongData();
 			this.mountVue();
+			if (currentPage == "songPage" && JSON.parse(_GM_getValue("lyeh:settings:spotify"))) this.mountSpotify();
 			const cacheVersion = _GM_getValue("lyeh:version");
 			const version = _GM_info.script.version;
-			console.log("VERSIOOON", version, cacheVersion);
 			if (!cacheVersion) _GM_setValue("lyeh:version", version);
 			else {
 				const cacheParts = cacheVersion.split(".");
@@ -6099,7 +6389,6 @@ self.onmessage = function (e) {
 				const major = versionParts[0];
 				const minor = versionParts[1];
 				const path = versionParts[2];
-				console.log(cacheMajor, major);
 				if (cacheMajor != major) {
 					console.log("version missmatch");
 					window.dispatchEvent(new CustomEvent("lyeh:version-mismatch", { detail: {
@@ -6131,19 +6420,17 @@ self.onmessage = function (e) {
 			headerElement.classList.add("bleh-custom-header");
 		}
 		extractSongData() {
-			const trackingData = window.__PRELOADED_STATE__ || null;
+			trackingData = window.__PRELOADED_STATE__ || null;
 			if (trackingData) {
 				console.log("Genius Metadata captured:", trackingData);
+				currentPage = trackingData.currentPage;
 				for (const [_, data] of Object.entries(trackingData.entities.artists || {})) if (data.headerImageUrl) banners.set(data.url, data.headerImageUrl);
 				for (const [_, data] of Object.entries(trackingData.entities.user || {})) if (data.headerImageUrl) banners.set(data.url, data.headerImageUrl);
 				for (const [_, data] of Object.entries(trackingData.entities.songs || {})) if (data.songArtImageThumbnailUrl) {
 					covers.set(data.url, data.songArtImageThumbnailUrl);
 					coverAccent.set(data.url, this.getAccentCache(data.url, data.songArtImageThumbnailUrl));
 				}
-				for (const [_, data] of Object.entries(trackingData.entities.albums || {})) if (data.coverArtThumbnailUrl) {
-					coverAccent.set(data.url, this.getAccentCache(data.url, data.coverArtThumbnailUrl));
-					console.log("setted", data.url);
-				}
+				for (const [_, data] of Object.entries(trackingData.entities.albums || {})) if (data.coverArtThumbnailUrl) coverAccent.set(data.url, this.getAccentCache(data.url, data.coverArtThumbnailUrl));
 			}
 		}
 		getAccent(img) {
@@ -6194,10 +6481,8 @@ self.onmessage = function (e) {
 				if (!e || !e.target) return;
 				const songAnchor = e.target.closest("a[class^=\"DiscographyItem__Container\"]");
 				if (songAnchor) {
-					console.log(songAnchor);
 					const songUrl = songAnchor.href;
 					const swatches = await coverAccent.get(songUrl);
-					console.log(swatches);
 					if (swatches) {
 						const { l, c, h } = swatches;
 						const accentColor = `oklch(${l} ${c} ${h})`;
