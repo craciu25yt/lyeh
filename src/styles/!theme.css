@@ -1,5 +1,6 @@
 /* Inject global theme configurations directly */
-:root[data-lyeh-theme="dark"] {
+/*[data-lyeh-theme="dark"]*/
+:root {
     --lyeh-bg-primary: #292424;
     --lyeh-bg-shadow: #1a1616;
     --lyeh-bg-secondary: #362f2f;

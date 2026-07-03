@@ -39,6 +39,10 @@ class Genie {
 	}
 
 	private init() {
+		if (window.top !== window.self) {
+			console.log("iframe detected, exitting out");
+			return;
+		}
 		console.realLog = console.log;
 		let geniusLogger = console.realLog;
 		Object.defineProperty(console, "log", {
@@ -90,21 +94,6 @@ class Genie {
 			}
 		});
 
-		// find a way to optimize apple's injection
-		if (window.top !== window.self) {
-			console.log("iframe detected, exitting out");
-			if (document.readyState == "loading") {
-				window.addEventListener("DOMContentLoaded", () => {
-					setTimeout(() => {
-						return;
-					}, 4000);
-				});
-			} else {
-				setTimeout(() => {
-					return;
-				}, 4000);
-			}
-		}
 		console.log("Loading settings...");
 		for (const category of settingsSchema) {
 			for (const setting of category.items) {
@@ -113,7 +102,6 @@ class Genie {
 				if (!value && setting.format) {
 					settingValue = setting.format.replace("$!", settingValue);
 				}
-				console.log(`--settings-${setting.id}`, value);
 				// if (setting.format) {
 				// 	settingValue = setting.format.replace("$!", settingValue);
 				// }
@@ -122,7 +110,7 @@ class Genie {
 		}
 		console.log("Settings loaded!");
 
-		document.documentElement.dataset.lyehTheme = "dark";
+		//document.documentElement.dataset.lyehTheme = "dark";
 
 		const url = new URL(window.location.href);
 		if (url.pathname.startsWith("/artists/")) {
@@ -161,25 +149,25 @@ class Genie {
 				}
 			});
 		}
-		const originalFetch = window.fetch;
-		window.fetch = function (...args) {
-			const response = originalFetch.apply(this, args);
-			const url = args[0];
+		// const originalFetch = window.fetch;
+		// window.fetch = function (...args) {
+		// 	const response = originalFetch.apply(this, args);
+		// 	const url = args[0];
 
-			//if (typeof url === "string" && url.includes("/api/artists/")) {
-			//	console.log("intercepting");
-			//	// Extract the artist ID synchronously from the URL string right away
-			//	// Example: /api/artists/463998 -> matches[1] = "463998"
-			//	const match = url.match(/\/api\/artists\/(\d+)/);
-			//	if (match && match[1]) {
-			//		lastFetchedArtistId = match[1];
-			//	}
-			//}
-			if (typeof url === "string" && url.includes("/api/inboxes/main_activity_inbox/line_items/")) {
-			}
-			//console.log(response);
-			return response;
-		};
+		// 	//if (typeof url === "string" && url.includes("/api/artists/")) {
+		// 	//	console.log("intercepting");
+		// 	//	// Extract the artist ID synchronously from the URL string right away
+		// 	//	// Example: /api/artists/463998 -> matches[1] = "463998"
+		// 	//	const match = url.match(/\/api\/artists\/(\d+)/);
+		// 	//	if (match && match[1]) {
+		// 	//		lastFetchedArtistId = match[1];
+		// 	//	}
+		// 	//}
+		// 	if (typeof url === "string" && url.includes("/api/inboxes/main_activity_inbox/line_items/")) {
+		// 	}
+		// 	//console.log(response);
+		// 	return response;
+		// };
 		state = "pre-starting";
 	}
 	private isMounted = false;
@@ -242,7 +230,6 @@ class Genie {
 					if (!(node instanceof HTMLElement)) continue;
 
 					const menu = node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`);
-					console.log(node);
 					if (menu && node.querySelector('a[href="/forums"]')) {
 						const placeholder = document.createElement("button");
 						placeholder.className = "PageHeaderMenu__Title-sc-jiji PageHeaderMenu__Item-sc-holi gzRYgj";
@@ -304,7 +291,6 @@ class Genie {
 							}
 							const barElem = node.getElementsByClassName(Class)[0];
 							const percentageElm = barElem.querySelector(`[class^="ContributorList__AttributionValue"]`);
-							console.log();
 							barElem.style.background = `linear-gradient(to right, rgba(250, 100, 160, 0.4) ${percentageElm?.innerHTML},  rgba(0, 0, 0, 0.4) 0px)`;
 						}
 					}
@@ -316,7 +302,6 @@ class Genie {
 							}
 							const barElem = node.getElementsByClassName(Class)[0];
 							const percentageElm = barElem.querySelector(`[class^="ContributorList__AttributionValue"]`);
-							console.log();
 							barElem.style.background = `linear-gradient(to right, rgba(250, 100, 160, 0.4) ${percentageElm?.innerHTML},  rgba(0, 0, 0, 0.4) 0px)`;
 						}
 					}
@@ -335,13 +320,22 @@ class Genie {
 
 		this.observeDOM();
 		this.extractSongData();
+		console.log("mounting spotiy");
+		unsafeWindow.onSpotifyWebPlaybackSDKReady = () => {
+			console.log("Spotify Web Playback SDK is fully ready.");
+			window.dispatchEvent(new CustomEvent("lyeh:spotify:ready"));
+		};
+		if (!unsafeWindow.Spotify) {
+			const spotify = document.createElement("script");
+			spotify.src = "https://sdk.scdn.co/spotify-player.js";
+			spotify.async = true;
+			document.head.appendChild(spotify);
+		}
 
 		this.mountVue();
-
 		const cacheVersion = GM_getValue("lyeh:version");
 		const version = GM_info.script.version;
 
-		console.log("VERSIOOON", version, cacheVersion);
 		if (!cacheVersion) {
 			GM_setValue("lyeh:version", version);
 		} else {
@@ -354,7 +348,6 @@ class Genie {
 			const major = versionParts[0];
 			const minor = versionParts[1];
 			const path = versionParts[2];
-			console.log(cacheMajor, major);
 
 			// todo: big (now's) noti for major, small noti like windows on minor/path. Also show what changed
 			if (cacheMajor != major) {
@@ -419,7 +412,6 @@ class Genie {
 			for (const [_, data] of Object.entries(trackingData.entities.albums || {}) as [string, any]) {
 				if (data.coverArtThumbnailUrl) {
 					coverAccent.set(data.url, this.getAccentCache(data.url, data.coverArtThumbnailUrl));
-					console.log("setted", data.url);
 				}
 			}
 		}
@@ -489,10 +481,8 @@ class Genie {
 				'a[class^="DiscographyItem__Container"]',
 			) as HTMLAnchorElement; // I really fucking hate typescript
 			if (songAnchor) {
-				console.log(songAnchor);
 				const songUrl = songAnchor.href;
 				const swatches = await coverAccent.get(songUrl);
-				console.log(swatches);
 				if (swatches) {
 					const { l, c, h } = swatches;
 					const accentColor = `oklch(${l} ${c} ${h})`;
@@ -527,3 +517,8 @@ declare global {
 		vLog(...content: any[]): void;
 	}
 }
+
+declare const unsafeWindow: Window & {
+	onSpotifyWebPlaybackSDKReady?: () => void;
+	Spotify?: any;
+};

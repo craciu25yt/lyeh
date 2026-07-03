@@ -73,3 +73,7 @@ div[class^="AppleMusicPlayer-desktop__IframeContainer"] {
 .apple_music_player-root.apple_music_player--desktop {
     padding: 0 !important;
 }
+
+.apple_music_player-player {
+    display: none !important;
+}

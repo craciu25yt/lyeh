@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import monkey from "vite-plugin-monkey";
 import vue from "@vitejs/plugin-vue";
 import pkg from "./package.json";
+import basicSsl from "@vitejs/plugin-basic-ssl";
 export default defineConfig(({ command }) => ({
 	plugins: [
 		monkey({
@@ -26,12 +27,16 @@ export default defineConfig(({ command }) => ({
 					"GM_listValues",
 					"unsafeWindow",
 				],
-				connect: ["genius.com", "images.genius.com", "t2.genius.com"],
+				connect: ["genius.com", "images.genius.com", "t2.genius.com", "api.spotify.com"],
 				"run-at": "document-start",
 				updateURL: "https://raw.githubusercontent.com/craciu25yt/lyeh/gh-pages/genie.user.js",
 				downloadURL: "https://raw.githubusercontent.com/craciu25yt/lyeh/gh-pages/genie.user.js",
 			},
 		}),
 		vue(),
+		basicSsl(),
 	],
+	server: {
+		https: true,
+	},
 }));

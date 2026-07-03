@@ -21,8 +21,9 @@ const error = ref("");
 const state = ref("");
 
 function handler(e: CustomEvent<{ err: Error }>) {
-    console.vLog("Error received", e);
-    error.value = e.detail.err.error.stack;
+	console.vLog("Error received", e);
+	error.value = e.detail.err.error?.stack || e.detail.err.message || "Unknown script error";
+
     state.value = e.detail.state;
     visible.value = true;
 }

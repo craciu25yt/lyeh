@@ -57,7 +57,7 @@
 							<!-- wrapper -->
 
 							<div class="setting-input-wrapper" :data-disabled="item.disabled || null">
-								<button v-if="item.type == 'button'" class="button" @click="clearCache()">{{ item.label }}</button>
+								<button v-if="item.type == 'button'" class="button" @click="buttonCallback(item.id)">{{ item.label }}</button>
 
 								<label v-if="item.type == 'boolean'" class="switch">
 									<input
@@ -116,11 +116,9 @@ import { GM_deleteValue, GM_deleteValues, GM_getValue, GM_getValues, GM_listValu
 const visible = ref(false);
 
 function saveSetting(key: string, value: any, format: string | undefined = undefined) {
-	console.log(value);
 	if (format) {
 		value = format.replace("$!", value);
 	}
-	console.log(value);
 
 	GM_setValue(`lyeh:settings:${key}`, JSON.stringify(value));
 	document.documentElement.style.setProperty(`--settings-${key}`, value);
@@ -142,8 +140,55 @@ const settingsState = reactive<Record<string, any>>(
 		{} as Record<string, any>,
 	),
 );
-console.log(settingsState);
+function buttonCallback(id: string) {
+	if (id == "clear-cache") {
+		clearCache();
+	}
+	if (id == "spotify") {
+		spotify();
+	}
+}
+function spotify() {
+	const authUrl = `https://accounts.spotify.com/authorize?client_id=a0f9b43f17be4465855b20ac8b00206e&response_type=code&redirect_uri=${encodeURIComponent("http://127.0.0.1:8080/callback")}&scope=streaming%20user-read-playback-state%20user-modify-playback-state%20user-read-email%20user-read-private`;
+	const width = 500;
+	const height = 750;
+	const left = window.screenX + (window.outerWidth - width) / 2;
+	const top = window.screenY + (window.outerHeight - height) / 2.5;
+	const popup = window.open(authUrl, "Spotify Login", `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`);
+	const handleMessage = (event: MessageEvent) => {
+		if (event.origin !== "http://127.0.0.1:8080") return;
 
+		if (event.data && event.data.type === "GENIE_SPOTIFY_TOKENS") {
+			const { access_token, refresh_token, expires_in } = event.data.tokens;
+
+			GM_setValue("spotify:access_token", access_token);
+			GM_setValue("spotify:refresh_token", refresh_token);
+			GM_setValue("spotify:expiration", Date.now() + expires_in * 1000);
+
+			console.vLog("Spotify successfully connected to Genie!");
+			const request = new XMLHttpRequest();
+
+			// The third parameter (false) makes the request synchronous
+			request.open("GET", "https://api.spotify.com/v1/me", false);
+
+			// Set your headers
+			request.setRequestHeader("Authorization", `Bearer ${access_token}`);
+
+			// Send the request (this will block execution until the response is received)
+			request.send(null);
+
+			if (request.status === 200) {
+				const me = JSON.parse(request.responseText);
+				console.log(me);
+			} else {
+				console.error(`Request failed with status: ${request.status}`);
+			}
+			window.removeEventListener("message", handleMessage);
+		}
+	};
+
+	window.addEventListener("message", handleMessage);
+}
 function clearCache() {
 	console.vLog("Clearing cache...");
 	const allStorage = GM_getValues(GM_listValues());

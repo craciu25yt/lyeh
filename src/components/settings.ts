@@ -77,6 +77,12 @@ export const settingsSchema: SettingCategory[] = [
 				description: "Clears all Lyeh's cache (image accents...)",
 				type: "button",
 			},
+			{
+				id: "spotify",
+				label: "Spotify link",
+				description: "Links your spotify account",
+				type: "button",
+			},
 		],
 	},
 ];
