@@ -70,6 +70,10 @@
 									/>
 									<span class="button-slider"></span>
 								</label>
+								<label v-if="item.type == 'boolean_callback'" class="switch">
+									<input :id="item.id" type="checkbox" v-model="settingsState[item.id]" @change="sliderCallback(item)" class="checkbox" :disabled="item.disabled" />
+									<span class="button-slider"></span>
+								</label>
 
 								<input
 									v-if="item.type == 'slider'"
@@ -144,19 +148,25 @@ function buttonCallback(id: string) {
 	if (id == "clear-cache") {
 		clearCache();
 	}
-	if (id == "spotify") {
+	if (id == "spotify-link") {
 		spotify();
 	}
 }
+function sliderCallback(item: any) {
+	if (item.id == "spotify") {
+		saveSetting(item.id, settingsState[item.id]);
+		window.location.reload();
+	}
+}
 function spotify() {
-	const authUrl = `https://accounts.spotify.com/authorize?client_id=a0f9b43f17be4465855b20ac8b00206e&response_type=code&redirect_uri=${encodeURIComponent("http://127.0.0.1:8080/callback")}&scope=streaming%20user-read-playback-state%20user-modify-playback-state%20user-read-email%20user-read-private`;
+	const authUrl = `https://accounts.spotify.com/authorize?client_id=a0f9b43f17be4465855b20ac8b00206e&response_type=code&redirect_uri=${encodeURIComponent("https://lyeh.auchen.net/api/oauth2/callback")}&scope=streaming%20user-read-playback-state%20user-modify-playback-state%20user-read-email%20user-read-private`;
 	const width = 500;
 	const height = 750;
 	const left = window.screenX + (window.outerWidth - width) / 2;
 	const top = window.screenY + (window.outerHeight - height) / 2.5;
 	const popup = window.open(authUrl, "Spotify Login", `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`);
 	const handleMessage = (event: MessageEvent) => {
-		if (event.origin !== "http://127.0.0.1:8080") return;
+		if (event.origin != "https://lyeh.auchen.net" && event.origin != "http://127.0.0.1:8080") return;
 
 		if (event.data && event.data.type === "GENIE_SPOTIFY_TOKENS") {
 			const { access_token, refresh_token, expires_in } = event.data.tokens;

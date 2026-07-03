@@ -27,11 +27,13 @@ const covers = new Map<string, string>();
 const coverAccent = new Map<string, Promise<any>>();
 const progressBarRegex = /linear-gradient\(to right,\s*[^)]+\)\s*([\d.]+%)/;
 
+let currentPage = "";
 import { settingsSchema } from "./components/settings";
 // lil skid. I love u genius devs don't sue me <3
 const COOKIE_NAME = "_genius_release_opt_in_add_song";
 const MAX_AGE = 60 * 60 * 24 * 60;
 
+let trackingData: any;
 let state = "injecting";
 class Genie {
 	constructor() {
@@ -63,6 +65,15 @@ class Genie {
 				const lyeh =
 					"background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
 				return console.realLog.bind(console, "%cLyeh%c %cVue", lyeh, "", vue);
+			},
+		});
+		Object.defineProperty(console, "sLog", {
+			get: () => {
+				const vue =
+					"background-color: #1ED760; color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
+				const lyeh =
+					"background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
+				return console.realLog.bind(console, "%cLyeh%c %cSpotify", lyeh, "", vue);
 			},
 		});
 
@@ -105,6 +116,19 @@ class Genie {
 				// if (setting.format) {
 				// 	settingValue = setting.format.replace("$!", settingValue);
 				// }
+				if (setting.id == "spotify") {
+					console.log("ji");
+					if (settingValue) {
+						console.log("je");
+
+						document.documentElement.style.setProperty(`--settings-spotify`, "none");
+					} else {
+						console.log("ju");
+
+						document.documentElement.style.setProperty(`--settings-spotify`, "flex");
+					}
+					continue;
+				}
 				document.documentElement.style.setProperty(`--settings-${setting.id}`, settingValue);
 			}
 		}
@@ -315,12 +339,20 @@ class Genie {
 
 		observer.observe(document.body, { childList: true, subtree: true });
 	}
-	private startup() {
-		state = "starting";
-
-		this.observeDOM();
-		this.extractSongData();
+	private mountSpotify() {
 		console.log("mounting spotiy");
+		// Im a genius - edit: apple music alrd did that lmao
+		window.dispatchEvent(
+			new CustomEvent("lyeh:spotify:display", {
+				detail: {
+					name: trackingData.songPage.trackingData.Title,
+					artists: trackingData.songPage.trackingData["Primary Artists"],
+					image: covers.get("https://genius.com" + trackingData.songPage.path),
+					appleMusicID: trackingData.entities.songs[trackingData.songPage.song].appleMusicId,
+				},
+			}),
+		);
+
 		unsafeWindow.onSpotifyWebPlaybackSDKReady = () => {
 			console.log("Spotify Web Playback SDK is fully ready.");
 			window.dispatchEvent(new CustomEvent("lyeh:spotify:ready"));
@@ -331,8 +363,17 @@ class Genie {
 			spotify.async = true;
 			document.head.appendChild(spotify);
 		}
+	}
+	private startup() {
+		state = "starting";
 
+		this.observeDOM();
+		this.extractSongData();
 		this.mountVue();
+		if (currentPage == "songPage" && JSON.parse(GM_getValue("lyeh:settings:spotify"))) {
+			this.mountSpotify();
+		}
+
 		const cacheVersion = GM_getValue("lyeh:version");
 		const version = GM_info.script.version;
 
@@ -386,9 +427,10 @@ class Genie {
 	}
 
 	private extractSongData() {
-		const trackingData = (window as any).__PRELOADED_STATE__ || null;
+		trackingData = (window as any).__PRELOADED_STATE__ || null;
 		if (trackingData) {
 			console.log("Genius Metadata captured:", trackingData);
+			currentPage = trackingData.currentPage;
 			for (const [_, data] of Object.entries(trackingData.entities.artists || {}) as [string, any]) {
 				if (data.headerImageUrl) {
 					//console.log(data.url, data.headerImageUrl);
@@ -515,6 +557,7 @@ declare global {
 	interface Console {
 		realLog(...content: any[]): void;
 		vLog(...content: any[]): void;
+		sLog(...content: any[]): void;
 	}
 }
 

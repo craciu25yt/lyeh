@@ -1,15 +1,14 @@
 <template>
-	<div class="spotify-container">
-		<div v-if="loading">Initializing Spotify Core...</div>
-		<div v-else-if="!isReady">Failed to connect to Spotify device</div>
+	<div v-if="display" class="spotify-container">
+		<!-- <div v-if="!isReady">Failed to connect to Spotify device</div> -->
 
-		<div v-else class="spotify-player">
+		<div class="spotify-player">
 			<div class="cover-wrapper">
-				<img class="player-cover" :src="currentState?.track_window.current_track.album.images[0]?.url" alt="" />
+				<img class="player-cover" :src="songCover" alt="" />
 			</div>
 			<div class="spotify-metadata">
-				<span class="song-name">{{ currentTrack?.name || "No track loaded" }}</span>
-				<span class="song-artists">{{ currentTrack?.artists.map((a) => a.name).join(", ") }}</span>
+				<span class="song-name">{{ songName || "Error" }}</span>
+				<span class="song-artists">{{ songArtists || "Error" }}</span>
 			</div>
 
 			<button @click="togglePlayback" class="playback-button">
@@ -157,14 +156,22 @@
 <script setup lang="ts">
 /// <reference types="@types/spotify-web-playback-sdk" />
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
-import { GM_deleteValue, GM_deleteValues, GM_getValue, GM_getValues, GM_listValues, GM_setValue } from "$";
+import { GM_getValue, GM_setValue } from "$";
 
 //@ts-ignore
 const { unsafeWindow } = typeof GM !== "undefined" ? GM : { unsafeWindow: window };
 
-const loading = ref(true);
-const isReady = ref(false);
+const display = ref(false); // stage 1, if lyric page, stright show
+const isReady = ref(false); // stage 2, after sdk is launched, allow
 const isPlaying = ref(false);
+
+const songName = ref("");
+const songArtists = ref("");
+const songCover = ref("");
+
+let spotifyArtists: Object | null = null;
+let itunesArtists: String | null = null;
+let appleMusicID: String | null = null;
 
 const position = ref(0);
 const currentTrack = ref<Spotify.Track | null>(null);
@@ -176,11 +183,11 @@ async function getValidToken() {
 	let accessToken = await GM_getValue("spotify:access_token");
 
 	if (Date.now() > expiresAt) {
-		const refreshToken = await GM_getValue("spotify_refresh_token");
+		const refreshToken = await GM_getValue("spotify:refresh_token");
 		if (!refreshToken) return null;
 
 		try {
-			const res = await fetch(`http://127.0.0.1:8080/refresh?refresh_token=${refreshToken}`, { method: "POST" });
+			const res = await fetch(`https://lyeh.auchen.net/api/oauth2/refresh?refresh_token=${refreshToken}`, { method: "POST" });
 			const data = await res.json();
 			accessToken = data.access_token;
 			GM_setValue("spotify:access_token", accessToken);
@@ -194,18 +201,16 @@ async function getValidToken() {
 }
 
 async function initPlayer() {
-	// Reference the Player constructor from the raw window context
 	const SpotifyNamespace = unsafeWindow.Spotify;
 	if (!SpotifyNamespace) return;
 
 	const token = await getValidToken();
 	if (!token) {
-		loading.value = false;
 		return;
 	}
 
 	player = new SpotifyNamespace.Player({
-		name: "Genie",
+		name: "Genius (Lyeh)",
 		getOAuthToken: async (cb: any) => {
 			cb(await getValidToken());
 		},
@@ -214,9 +219,8 @@ async function initPlayer() {
 	if (!player) return;
 
 	player.addListener("ready", async ({ device_id }) => {
-		GM_setValue("spotify_device_id", device_id);
+		GM_setValue("spotify:device_id", device_id);
 		isReady.value = true;
-		loading.value = false;
 		const token = await getValidToken();
 
 		await fetch("https://api.spotify.com/v1/me/player", {
@@ -230,9 +234,36 @@ async function initPlayer() {
 				play: false,
 			}),
 		});
+		//const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(`${songName.value} ${itunesArtists}`)}&media=music&entity=song&limit=1`);
+		//const res = await fetch(`https://itunes.apple.com/lookup?id=${appleMusicID}`);
+		//const data = await res.json();
+		//console.log(data, appleMusicID);
+		//if (data.resultCount != 1) {
+		//	console.sLog("Failed to query song from iTunes via id. Attempting via Name");
+		//}
+		const res = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(`track:${songName.value} ${spotifyArtists}`)}&type=track&limit=1`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json",
+			},
+		});
+		const data = await res.json();
+
+		await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${device_id}`, {
+			method: "PUT",
+			headers: {
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				// Use "uris" (array) for specific tracks, or "context_uri" for albums/playlists
+				uris: [data.tracks.items[0].uri],
+			}),
+		});
+
+		player.togglePlay();
 
 		isReady.value = true;
-		loading.value = false;
 	});
 	player.addListener("not_ready", ({ device_id }) => {
 		isReady.value = false;
@@ -263,7 +294,11 @@ const formatTime = (ms: number | undefined) => {
 };
 
 function togglePlayback() {
-	if (player) player.togglePlay();
+	if (player) {
+		player.togglePlay();
+		return;
+	}
+	initPlayer();
 }
 
 async function seek(value: number) {
@@ -291,14 +326,30 @@ watch(isPlaying, (playing) => {
 		}, 100);
 	}
 });
+function init(data: CustomEvent<{ name: string; artists: Array<string>; image: string; appleMusicID: string }>) {
+	console.vLog("display", data);
+	display.value = true;
+	songName.value = data.detail.name;
+	songArtists.value = data.detail.artists.join(", ");
+	songCover.value = data.detail.image;
 
+	appleMusicID = data.detail.appleMusicID;
+
+	itunesArtists = data.detail.artists.join(" ");
+	spotifyArtists = data.detail.artists.map((artist) => `artist:${artist.trim()}`).join(" ");
+}
 onMounted(() => {
-	// Check if main.ts already completed execution and booted the SDK
 	if (unsafeWindow.Spotify) {
-		initPlayer();
+		//initPlayer();
 	} else {
-		// Otherwise, wait for the global initialization event
-		window.addEventListener("lyeh:spotify:ready", initPlayer, { once: true });
+		window.addEventListener(
+			"lyeh:spotify:ready",
+			() => {
+				isReady.value = true;
+			},
+			{ once: true },
+		);
+		window.addEventListener("lyeh:spotify:display", init as EventListener, { once: true });
 	}
 });
 

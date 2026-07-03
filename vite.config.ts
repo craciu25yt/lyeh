@@ -10,7 +10,7 @@ export default defineConfig(({ command }) => ({
 			userscript: {
 				name: "Genie",
 				namespace: "npm/lyeh",
-				version: "1.2.3",
+				version: "1.3.0",
 				match: ["https://genius.com/*"],
 				exclude: ["*://assets.genius.com/javascripts/compiled/apple_music*"],
 				grant: [

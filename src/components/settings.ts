@@ -2,7 +2,7 @@
 interface BaseSliderItem {
 	id: string;
 	label: string;
-	type: "boolean" | "text" | "number" | "color" | "button" | "slider" | "slider_bottom";
+	type: "boolean" | "text" | "number" | "color" | "button" | "boolean_callback" | "slider" | "slider_bottom";
 	default?: any;
 	description: string;
 	disabled?: boolean;
@@ -18,7 +18,7 @@ interface SliderSettingItem extends BaseSliderItem {
 }
 
 interface StandardSettingsItem extends BaseSliderItem {
-	type: "boolean" | "text" | "number" | "color" | "button";
+	type: "boolean" | "text" | "number" | "color" | "button" | "boolean_callback";
 }
 
 export type SettingsItem = StandardSettingsItem | SliderSettingItem;
@@ -55,32 +55,35 @@ export const settingsSchema: SettingCategory[] = [
 				length: 50,
 				format: "$!%",
 			},
+		],
+	},
+	{
+		id: "spotify",
+		title: "Spotify",
+		items: [
 			{
-				id: "pepe",
-				label: "Bottom slider",
-				type: "slider_bottom",
-				default: 70,
-				description: "xd",
-				length: 72,
-				disabled: true,
-				tooltip: "I love genius",
+				id: "spotify",
+				label: "Use Spotify",
+				description: "Replaces Apple Music with Spotify",
+				type: "boolean_callback",
+				default: false,
+			},
+			{
+				id: "spotify-link",
+				label: "Spotify link",
+				description: "Links your spotify account",
+				type: "button",
 			},
 		],
 	},
 	{
-		id: "Advanced",
+		id: "advanced",
 		title: "Advanced",
 		items: [
 			{
 				id: "clear-cache",
 				label: "Clear cache",
 				description: "Clears all Lyeh's cache (image accents...)",
-				type: "button",
-			},
-			{
-				id: "spotify",
-				label: "Spotify link",
-				description: "Links your spotify account",
 				type: "button",
 			},
 		],

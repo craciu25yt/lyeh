@@ -74,6 +74,6 @@ div[class^="AppleMusicPlayer-desktop__IframeContainer"] {
     padding: 0 !important;
 }
 
-.apple_music_player-player {
-    display: none !important;
+[class^="SongPage__BottomSticky-sc"] {
+    display: var(--settings-spotify) !important;
 }

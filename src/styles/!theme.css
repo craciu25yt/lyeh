@@ -20,6 +20,7 @@
     );
     --current-accent: rgb(255, 255, 100);
     --settings-player-width: 40vh;
+    --settings-spotify: flex;
 }
 
 /* Overwrite the structural layout safely */
