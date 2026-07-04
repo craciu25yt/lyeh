@@ -2,6 +2,19 @@
 
 // This definition is based on the API reference of Greasemonkey.
 // http://wiki.greasespot.net/Greasemonkey_Manual:API
+
+interface GeniusUser {
+	id: number;
+	login: string;
+	avatar_url: string;
+	iq: { total: string };
+	profile_path: string;
+}
+
+interface Window {
+	CURRENT_USER: GeniusUser;
+}
+
 declare module "$" {
 	////////////////
 	// Global variable

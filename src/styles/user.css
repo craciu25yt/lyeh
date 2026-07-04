@@ -25,6 +25,13 @@ a[class^="profile_contribution"] {
     border-radius: 10px;
     padding: 20px;
 }
+.profile_contribution {
+    background-color: #16141496 !important;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: var(--lyeh-text-main) !important;
+    border-radius: 10px;
+    padding: 20px;
+}
 a[class^="referent"] {
     background-color: transparent !important;
 }
@@ -64,10 +71,16 @@ profile-user-pane .white_container {
     max-width: 1480px;
 }
 .profile_identity-iq {
-    background-color: rgba(255, 255, 100, 0.8) !important;
+    background-color: rgba(255, 255, 100, 0.9) !important;
     color: black !important;
     border-radius: 10px;
-    padding: 0.125rem 0.225rem !important;
+    padding: 5px 10px !important;
+}
+span[class^="user_badge-iq"] {
+    background-color: rgba(255, 255, 100, 0.9) !important;
+    color: black !important;
+    border-radius: 5px;
+    padding: 0px 5px !important;
 }
 
 .header-action-label {
@@ -76,7 +89,7 @@ profile-user-pane .white_container {
 
 .feed_dropdown {
     border-radius: 10px !important;
-    background-color: rgba(41, 36, 36, 0.4) !important;
+    background-color: rgba(25, 36, 36, 0.4) !important;
     backdrop-filter: blur(10px);
     color: var(--lyeh-text-main) !important;
     top: 3rem !important;
@@ -97,4 +110,33 @@ profile-user-pane .white_container {
     color: white !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
     backdrop-filter: blur(10px);
+}
+
+/* Lyeh */
+
+.lyeh-tag {
+    background-color: rgba(250, 100, 160, 0.5);
+    color: #dddddd !important;
+    font-weight: bold;
+    padding: 1px 6px;
+    border-radius: 4px;
+}
+
+.lyeh-injected-title {
+    color: #9a9a9a !important;
+}
+
+form[class^="global_search"] input {
+    background-color: var(--lyeh-bg-primary);
+    border-radius: 15px;
+    color: white;
+    text-align: center; /* Centers horizontally */
+}
+form[class^="global_search"] input::placeholder {
+    color: white;
+    font-size: 90%;
+}
+
+.referent_container--inverse {
+    background-color: transparent !important;
 }

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.0
+- Contributions tab in user profiles
+- Fixed Spotify Player UI in Chrome-Based browsers
+- Now on hover a text with a annotation highlights all realted ones 
+- User profile UI Fixes
+
 ## 1.4.0
 - Synced lyrics integrated (with spotify)
 

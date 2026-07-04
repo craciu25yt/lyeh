@@ -152,6 +152,16 @@
 	background: #ffffff;
 	transition: transform 0.1s ease;
 }
+.progress-slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: #ffffff;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+	transition: transform 0.1s ease;
+}
 </style>
 <script setup lang="ts">
 /// <reference types="@types/spotify-web-playback-sdk" />

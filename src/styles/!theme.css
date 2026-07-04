@@ -47,7 +47,7 @@ div[class^="Lyrics__Container"] {
 
 div[class^="Lyrics__Container"] a {
     text-decoration-color: var(--lyeh-accent) !important;
-    border-bottom: 1px dashed rgba(255, 71, 87, 0.3);
+    /*border-bottom: 1px dashed rgba(255, 71, 87, 0.3);*/
     transition: all 0.2s ease;
 }
 
@@ -56,20 +56,15 @@ div[class^="Lyrics__Container"] a {
     background-color: rgba(250, 100, 160, 0.5);
 }
 
-div[class^="Lyrics__Container"] a:hover {
-    background: rgba(255, 71, 87, 0.1);
-    border-bottom: 1px solid var(--lyeh-accent);
-}
-
 span[class^="ReferentFragment"] {
     background: var(--lyeh-bg-secondary);
     color: var(--lyeh-text-main) !important;
     z-index: 1;
 }
 
-span[class^="ReferentFragment"]:hover {
-    background: rgba(250, 100, 160, 0.7);
-    border-bottom: 1px solid var(--lyeh-accent);
+.lyeh-linked-hover {
+    background: rgba(250, 100, 160, 0.3) !important;
+    /*border-bottom: 1px solid var(--lyeh-accent);*/
     color: var(--lyeh-text-main) !important;
 }
 
@@ -185,6 +180,12 @@ div[data-testid="song-header"][data-testid="song-header"] {
 [class^="StickyNavSectionLink__StyledLink"] {
     color: contrast-color(var(--lyeh-current-song-accent)) !important;
 } */
+div[class^="StickyNavScrollTopLink__Container"] span {
+    color: color-contrast(var(--current-accent)) !important;
+}
+div[class^="StickyNavSections-sc"] a {
+    border-radius: 5px;
+}
 [color="background.iqPoints"] {
     color: #4bbf38 !important;
 }

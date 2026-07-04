@@ -11,6 +11,8 @@ import "./styles/user.css";
 import "./styles/home.css";
 import "./styles/add_song.css";
 
+import Heatmap from "./components/Heatmap.vue";
+
 import "./styles/art_extractor.css";
 import { getColorSync, getSwatches, getSwatchesSync } from "colorthief";
 
@@ -151,14 +153,9 @@ class Genie {
 				// 	settingValue = setting.format.replace("$!", settingValue);
 				// }
 				if (setting.id == "spotify") {
-					console.log("ji");
 					if (settingValue) {
-						console.log("je");
-
 						document.documentElement.style.setProperty(`--settings-spotify`, "none");
 					} else {
-						console.log("ju");
-
 						document.documentElement.style.setProperty(`--settings-spotify`, "flex");
 					}
 					continue;
@@ -184,6 +181,11 @@ class Genie {
 				url.searchParams.set("react", "1");
 				window.location.replace(url.toString());
 			}
+			this.mouseEvents();
+		}
+		const lyricPageRegex = /^\/[^\/]+-lyrics\/?$/m;
+		console.log(url.pathname);
+		if (lyricPageRegex.test(url.pathname)) {
 			this.mouseEvents();
 		}
 		if (url.pathname.startsWith("/new")) {
@@ -286,6 +288,34 @@ class Genie {
 			for (const mutation of mutations) {
 				for (const node of mutation.addedNodes) {
 					if (!(node instanceof HTMLElement)) continue;
+					const bioContainer = node.matches("profile-user-pane")
+						? document.querySelector(`profile-user-pane > div[class^="white_container"]`)
+						: null;
+					if (bioContainer && !document.getElementById("lyeh-heatmap")) {
+						const githubSkid = document.createElement("div");
+						githubSkid.className = "white_container";
+						githubSkid.id = "lyeh-heatmap"; // not sure if this is called heatmap btw
+
+						const titleContainer = document.createElement("div"); // reuse genius tag
+						titleContainer.classList = "u-horizontal_margins u-vertical_margins";
+						titleContainer.style.display = "flex";
+						titleContainer.style.alignItems = "center";
+						titleContainer.style.gap = "8px";
+
+						const lyehTag = document.createElement("span");
+						lyehTag.textContent = "Lyeh";
+						lyehTag.classList = "lyeh-tag";
+						const title = document.createElement("span");
+						title.textContent = "Activity";
+						title.classList = "lyeh-injected-title";
+						titleContainer.appendChild(lyehTag);
+						titleContainer.appendChild(title);
+
+						bioContainer.insertAdjacentElement("afterend", githubSkid);
+						bioContainer.insertAdjacentElement("afterend", titleContainer);
+
+						createApp(Heatmap).mount(githubSkid);
+					}
 
 					const menu = node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`);
 					if (menu && node.querySelector('a[href="/forums"]')) {
@@ -408,21 +438,26 @@ class Genie {
 		if (currentPage == "songPage" && JSON.parse(GM_getValue("lyeh:settings:spotify"))) {
 			this.mountSpotify();
 		}
+		const url = new URL(window.location.href);
+		// const userRegex = /^\/[^\/-]+\/?$/;
+
+		// if (userRegex.test(url.pathname)) {
+		// }
 
 		const cacheVersion = GM_getValue("lyeh:version");
-			const version = GM_info.script.version;
+		const version = GM_info.script.version;
 
-			if (!cacheVersion) {
-				GM_setValue("lyeh:version", version);
-			} else if (cacheVersion !== version) {
-				const entries = parseChangelog(CHANGELOG, cacheVersion, version);
-				window.dispatchEvent(
-					new CustomEvent("lyeh:version-mismatch", {
-						detail: { oldVersion: cacheVersion, newVersion: version, entries },
-					}),
-				);
-				GM_setValue("lyeh:version", version);
-			}
+		if (!cacheVersion) {
+			GM_setValue("lyeh:version", version);
+		} else if (cacheVersion !== version) {
+			const entries = parseChangelog(CHANGELOG, cacheVersion, version);
+			window.dispatchEvent(
+				new CustomEvent("lyeh:version-mismatch", {
+					detail: { oldVersion: cacheVersion, newVersion: version, entries },
+				}),
+			);
+			GM_setValue("lyeh:version", version);
+		}
 		state = "running";
 	}
 	private transformHeader(headerElement: HTMLElement) {
@@ -523,6 +558,17 @@ class Genie {
 	private mouseEvents() {
 		document.addEventListener("mouseover", async (e) => {
 			if (!e || !e.target) return;
+
+			//@ts-ignore
+			const link = e.target.closest('a[class^="ReferentFragment"]');
+			if (link) {
+				const href = link.getAttribute("href");
+
+				document
+					.querySelectorAll(`a[href="${href}"] span[class^="ReferentFragment"]`)
+					.forEach((span) => span.classList.add("lyeh-linked-hover"));
+			}
+
 			const songAnchor = (e.target as Element).closest(
 				'a[class^="DiscographyItem__Container"]',
 			) as HTMLAnchorElement; // I really fucking hate typescript
