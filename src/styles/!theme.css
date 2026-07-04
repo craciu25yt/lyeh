@@ -64,6 +64,7 @@ div[class^="Lyrics__Container"] a:hover {
 span[class^="ReferentFragment"] {
     background: var(--lyeh-bg-secondary);
     color: var(--lyeh-text-main) !important;
+    z-index: 1;
 }
 
 span[class^="ReferentFragment"]:hover {
@@ -433,6 +434,9 @@ li[class^="StickyToolbarDropdownItem__Container"]:hover {
     background-color: rgba(250, 100, 160, 0.5);
 }
 
+div[class^="TagInput__Container"] div[class^="css"][class*="-control"] {
+    border-color: var(--lyeh-text-main) !important;
+}
 /*
 Popup:
 border-radius: 10px;

@@ -155,7 +155,7 @@
 </style>
 <script setup lang="ts">
 /// <reference types="@types/spotify-web-playback-sdk" />
-import { ref, onMounted, onBeforeUnmount, watch } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue";
 import { GM_getValue, GM_setValue } from "$";
 
 //@ts-ignore
@@ -169,14 +169,33 @@ const songName = ref("");
 const songArtists = ref("");
 const songCover = ref("");
 
+let lyrics: Array<Object | string> | null = null;
 let spotifyArtists: Object | null = null;
 let itunesArtists: String | null = null;
+let lrclibArtist: String | null = null;
 let appleMusicID: String | null = null;
 
 const position = ref(0);
 const currentTrack = ref<Spotify.Track | null>(null);
 const currentState = ref<Spotify.PlaybackState | null>(null);
 let player: Spotify.Player | null = null;
+
+const syncedLines = ref<{ time: number; text: string }[]>([]);
+const lineMap = ref(new Map<number, HTMLElement>());
+const currentLineIndex = computed(() => {
+	const pos = position.value;
+	const lines = syncedLines.value;
+	if (!lines.length) return -1;
+	let idx = -1;
+	for (let i = 0; i < lines.length; i++) {
+		if (lines[i].time <= pos) {
+			idx = i;
+		} else {
+			break;
+		}
+	}
+	return idx;
+});
 
 async function getValidToken() {
 	const expiresAt = await GM_getValue("spotify:expiration", 0);
@@ -223,6 +242,19 @@ async function initPlayer() {
 		isReady.value = true;
 		const token = await getValidToken();
 
+		const cache = GM_getValue(`cache:lyrics:${appleMusicID}`);
+		let lrclibReq: Promise<Response> | null = null;
+
+		let lrclib;
+
+		if (!cache) {
+			// lrc takes its time, so let it run in the background
+			lrclibReq = fetch(`https://lrclib.net/api/get?artist_name=${lrclibArtist}&track_name=${songName.value.replace(" ", "+")}`);
+		} else {
+			lrclib = cache;
+		}
+
+		//----
 		await fetch("https://api.spotify.com/v1/me/player", {
 			method: "PUT",
 			headers: {
@@ -234,6 +266,7 @@ async function initPlayer() {
 				play: false,
 			}),
 		});
+
 		//const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(`${songName.value} ${itunesArtists}`)}&media=music&entity=song&limit=1`);
 		//const res = await fetch(`https://itunes.apple.com/lookup?id=${appleMusicID}`);
 		//const data = await res.json();
@@ -260,9 +293,55 @@ async function initPlayer() {
 				uris: [data.tracks.items[0].uri],
 			}),
 		});
+		player!.togglePlay();
+		//----
+		let cleanLyrics = [];
+		let currentLineBuffer = "";
+		for (const line of lyrics!) {
+			//@ts-ignore
+			if (line && line.tag === "br") {
+				const finishedLine = currentLineBuffer.trim();
+				if (finishedLine && !finishedLine.startsWith("[")) {
+					cleanLyrics.push(finishedLine);
+				}
+				currentLineBuffer = ""; // Flush the buffer
+				continue;
+			}
 
-		player.togglePlay();
+			if (typeof line === "string" && line.startsWith("[")) {
+				continue;
+			}
 
+			const text = clearText(line);
+			if (text) currentLineBuffer += text;
+		}
+		console.log(cleanLyrics);
+		if (lrclibReq) {
+			const response = await lrclibReq;
+			const data = await response.json();
+			GM_setValue(`cache:lyrics:${appleMusicID}`, data);
+			lrclib = data;
+			console.log;
+		}
+		let syncedLyrics = null;
+		if (lrclib.syncedLyrics) {
+			syncedLyrics = lrclib.syncedLyrics.split("\n") || null;
+		}
+		const validLyrics = [];
+		let i = 0;
+		for (const line of syncedLyrics) {
+			if (!cleanLyrics[i]) break;
+			const similar = similarity(line.split("]")[1], cleanLyrics[i]);
+			console.log(similar, line.split("]")[1], cleanLyrics[i]);
+			if (similar > 0.4) {
+				i++;
+				validLyrics.push(line);
+			}
+		}
+
+		console.log(validLyrics);
+		syncedLines.value = parseSyncedLyrics(syncedLyrics);
+		wrapAndInject();
 		isReady.value = true;
 	});
 	player.addListener("not_ready", ({ device_id }) => {
@@ -300,7 +379,26 @@ function togglePlayback() {
 	}
 	initPlayer();
 }
+const ALLOWED_TAGS = new Set(["i", "b", "strong", "em", "span", "a"]);
 
+function clearText(node: any): string | null {
+	if (typeof node == "string") {
+		return node.trim() == "" ? null : node;
+	}
+	if (node && typeof node == "object" && node.children) {
+		if (node.tag && !ALLOWED_TAGS.has(node.tag)) return null;
+
+		let text = "";
+		for (let i = 0; i < node.children.length; i++) {
+			const result = clearText(node.children[i]);
+			if (result) {
+				text += result;
+			}
+		}
+		return text || null;
+	}
+	return null;
+}
 async function seek(value: number) {
 	if (!player) return;
 
@@ -326,16 +424,118 @@ watch(isPlaying, (playing) => {
 		}, 100);
 	}
 });
-function init(data: CustomEvent<{ name: string; artists: Array<string>; image: string; appleMusicID: string }>) {
+
+function parseSyncedLyrics(lines: string[] | null): { time: number; text: string }[] {
+	if (!lines) return [];
+	const result: { time: number; text: string }[] = [];
+	for (const line of lines) {
+		const match = line.match(/^\[(\d+):(\d+)\.(\d+)\](.*)/);
+		if (!match) continue;
+		const minutes = parseInt(match[1]);
+		const seconds = parseInt(match[2]);
+		let millis = parseInt(match[3]);
+		if (match[3].length === 2) millis *= 10;
+		const time = minutes * 60000 + seconds * 1000 + millis;
+		result.push({ time, text: match[4].trim() });
+	}
+	return result;
+}
+
+let lineMapBuilt = false;
+function wrapAndInject() {
+	if (lineMapBuilt) return;
+	const container = document.querySelector('[data-lyrics-container="true"]');
+	if (!container) return;
+	const p = container.querySelector("p");
+	if (!p) return;
+	const map = new Map<number, HTMLElement>();
+	const nodes = Array.from(p.childNodes);
+	let currentRun: Node[] = [];
+	const runs: Node[][] = [];
+	for (const node of nodes) {
+		if (node instanceof HTMLElement && node.tagName === "BR") {
+			runs.push(currentRun);
+			currentRun = [];
+		} else {
+			currentRun.push(node);
+		}
+	}
+	runs.push(currentRun);
+	const spans: HTMLElement[] = [];
+	for (const run of runs) {
+		if (run.length === 0) continue;
+		const span = document.createElement("span");
+		span.className = "synced-line";
+		const parent = run[0].parentNode!;
+		parent.insertBefore(span, run[0]);
+		for (const node of run) {
+			span.appendChild(node);
+		}
+		spans.push(span);
+	}
+	const synced = syncedLines.value;
+	const used = new Set<number>();
+	let scanStart = 0;
+
+	for (let syncedIdx = 0; syncedIdx < synced.length; syncedIdx++) {
+		if (scanStart >= spans.length) break;
+		const syncedText = synced[syncedIdx].text.toLowerCase().trim();
+		if (!syncedText) continue;
+
+		let bestScore = 0;
+		let bestIdx = -1;
+
+		for (let j = scanStart; j < spans.length; j++) {
+			if (used.has(j)) continue;
+			const domText = spans[j].textContent?.trim()?.toLowerCase() || "";
+			if (!domText) continue;
+
+			if (domText.includes(syncedText) || syncedText.includes(domText)) {
+				bestScore = 1;
+				bestIdx = j;
+				break;
+			}
+			const score = similarity(syncedText, domText);
+			if (score > bestScore) {
+				bestScore = score;
+				bestIdx = j;
+			}
+		}
+
+		if (bestScore > 0.3 && bestIdx >= 0) {
+			map.set(syncedIdx, spans[bestIdx]);
+			used.add(bestIdx);
+			if (bestIdx === scanStart) {
+				while (used.has(scanStart)) scanStart++;
+			}
+		}
+	}
+	lineMap.value = map;
+	lineMapBuilt = true;
+}
+
+function highlightLine(idx: number) {
+	document.querySelectorAll(".synced-line.current-line").forEach((el) => el.classList.remove("current-line"));
+	const el = lineMap.value.get(idx);
+	if (el) el.classList.add("current-line");
+}
+watch(currentLineIndex, (idx) => {
+	if (idx < 0) return;
+	highlightLine(idx);
+});
+function init(data: CustomEvent<{ name: string; artists: Array<string>; image: string; appleMusicID: string; lyrics: Array<any> }>) {
 	console.vLog("display", data);
 	display.value = true;
 	songName.value = data.detail.name;
 	songArtists.value = data.detail.artists.join(", ");
 	songCover.value = data.detail.image;
 
+	lyrics = data.detail.lyrics[0].children;
+
 	appleMusicID = data.detail.appleMusicID;
 
 	itunesArtists = data.detail.artists.join(" ");
+	lrclibArtist = data.detail.artists[0];
 	spotifyArtists = data.detail.artists.map((artist) => `artist:${artist.trim()}`).join(" ");
 }
 onMounted(() => {
@@ -359,4 +559,42 @@ onBeforeUnmount(() => {
 		player.disconnect();
 	}
 });
+
+// skidded from D-Security. Idk where it came from
+function similarity(s1: string, s2: string) {
+	let longer = s1;
+	let shorter = s2;
+	if (s1.length < s2.length) {
+		longer = s2;
+		shorter = s1;
+	}
+	const longerLength = longer.length;
+	if (longerLength == 0) {
+		return 1.0;
+	}
+	return (longerLength - editDistance(longer, shorter)) / longerLength;
+}
+function editDistance(s1: string, s2: string) {
+	s1 = s1.toLowerCase();
+	s2 = s2.toLowerCase();
+
+	const costs = new Array();
+	for (let i = 0; i <= s1.length; i++) {
+		let lastValue = i;
+		for (let j = 0; j <= s2.length; j++) {
+			if (i == 0) {
+				costs[j] = j;
+			} else if (j > 0) {
+				let newValue = costs[j - 1];
+				if (s1.charAt(i - 1) != s2.charAt(j - 1)) {
+					newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+				}
+				costs[j - 1] = lastValue;
+				lastValue = newValue;
+			}
+		}
+		if (i > 0) costs[s2.length] = lastValue;
+	}
+	return costs[s2.length];
+}
 </script>

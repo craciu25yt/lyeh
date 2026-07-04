@@ -77,3 +77,42 @@ div[class^="AppleMusicPlayer-desktop__IframeContainer"] {
 [class^="SongPage__BottomSticky-sc"] {
     display: var(--settings-spotify) !important;
 }
+
+/* Lyhe's player */
+
+.synced-line::before {
+    opacity: 1;
+    content: "";
+    position: absolute;
+
+    top: -5px;
+    bottom: -5px;
+    left: -10px;
+    right: -10px;
+
+    z-index: -1 !important;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background-color: rgba(250, 100, 160, 0.4);
+
+    /* Hide by default and set up the transition */
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.current-line {
+    position: relative;
+    display: inline-block;
+    z-index: 10 !important;
+    scale: 1.02 !important;
+    font-size: 20px;
+
+    transition: scale 0.4s ease-in-out;
+}
+.current-line::before {
+    opacity: 1;
+}
+
+.current-line a span {
+    background-color: unset;
+}

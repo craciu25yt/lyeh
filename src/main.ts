@@ -16,6 +16,7 @@ import { getColorSync, getSwatches, getSwatchesSync } from "colorthief";
 
 import { createApp } from "vue";
 import App from "./app.vue";
+import CHANGELOG from "../CHANGELOG.md?raw";
 //@ts-ignore
 import { GM_xmlhttpRequest, GM_getValue, GM_setValue, GM_info, unsafeWindow } from "$";
 
@@ -35,6 +36,39 @@ const MAX_AGE = 60 * 60 * 24 * 60;
 
 let trackingData: any;
 let state = "injecting";
+
+interface ChangelogEntry {
+	title: string;
+	items: string[];
+}
+
+function parseChangelog(md: string, fromVersion: string, toVersion: string): ChangelogEntry[] {
+	const sectionRegex = /##\s+(\S+)\n([\s\S]*?)(?=##\s+\S+|\s*$)/g;
+	const sections: { version: string; items: string[] }[] = [];
+	let m;
+	while ((m = sectionRegex.exec(md)) !== null) {
+		const items = m[2]
+			.trim()
+			.split("\n")
+			.map((l) => l.replace(/^[-*]\s*/, "").trim())
+			.filter(Boolean);
+		sections.push({ version: m[1], items });
+	}
+
+	const fromIdx = sections.findIndex((s) => s.version === fromVersion);
+	const toIdx = sections.findIndex((s) => s.version === toVersion);
+	if (toIdx === -1) return [];
+
+	const start = toIdx;
+	const end = fromIdx === -1 ? toIdx : Math.min(fromIdx - 1, sections.length - 1);
+
+	const result: ChangelogEntry[] = [];
+	for (let i = start; i <= end; i++) {
+		result.push({ title: sections[i].version, items: sections[i].items });
+	}
+	return result;
+}
+
 class Genie {
 	constructor() {
 		this.init();
@@ -349,6 +383,7 @@ class Genie {
 					artists: trackingData.songPage.trackingData["Primary Artists"],
 					image: covers.get("https://genius.com" + trackingData.songPage.path),
 					appleMusicID: trackingData.entities.songs[trackingData.songPage.song].appleMusicId,
+					lyrics: trackingData.songPage.lyricsData.body.children,
 				},
 			}),
 		);
@@ -375,50 +410,19 @@ class Genie {
 		}
 
 		const cacheVersion = GM_getValue("lyeh:version");
-		const version = GM_info.script.version;
+			const version = GM_info.script.version;
 
-		if (!cacheVersion) {
-			GM_setValue("lyeh:version", version);
-		} else {
-			const cacheParts = cacheVersion.split(".");
-			const cacheMajor = cacheParts[0];
-			const cacheMinor = cacheParts[1];
-			const cachePath = cacheParts[2];
-
-			const versionParts = version.split(".");
-			const major = versionParts[0];
-			const minor = versionParts[1];
-			const path = versionParts[2];
-
-			// todo: big (now's) noti for major, small noti like windows on minor/path. Also show what changed
-			if (cacheMajor != major) {
-				console.log("version missmatch");
+			if (!cacheVersion) {
+				GM_setValue("lyeh:version", version);
+			} else if (cacheVersion !== version) {
+				const entries = parseChangelog(CHANGELOG, cacheVersion, version);
 				window.dispatchEvent(
 					new CustomEvent("lyeh:version-mismatch", {
-						detail: { oldVersion: cacheVersion, newVersion: version },
+						detail: { oldVersion: cacheVersion, newVersion: version, entries },
 					}),
 				);
 				GM_setValue("lyeh:version", version);
 			}
-			if (cacheMinor != minor) {
-				console.log("version missmatch");
-				window.dispatchEvent(
-					new CustomEvent("lyeh:version-mismatch", {
-						detail: { oldVersion: cacheVersion, newVersion: version },
-					}),
-				);
-				GM_setValue("lyeh:version", version);
-			}
-			if (cachePath != path) {
-				console.log("version missmatch");
-				window.dispatchEvent(
-					new CustomEvent("lyeh:version-mismatch", {
-						detail: { oldVersion: cacheVersion, newVersion: version },
-					}),
-				);
-				GM_setValue("lyeh:version", version);
-			}
-		}
 		state = "running";
 	}
 	private transformHeader(headerElement: HTMLElement) {

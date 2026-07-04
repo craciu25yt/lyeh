@@ -8,6 +8,14 @@
                 <span class="arrow">&rarr;</span>
                 <span class="new">{{ newVersion }}</span>
             </p>
+            <div v-if="entries.length" class="changelog">
+                <div v-for="entry in entries" :key="entry.title" class="entry">
+                    <h3 class="entry-title">{{ entry.title }}</h3>
+                    <ul class="entry-items">
+                        <li v-for="(item, i) in entry.items" :key="i">{{ item }}</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -15,13 +23,20 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
 
+interface ChangelogEntry {
+    title: string;
+    items: string[];
+}
+
 const visible = ref(false);
 const oldVersion = ref("");
 const newVersion = ref("");
+const entries = ref<ChangelogEntry[]>([]);
 
-function handler(e: CustomEvent<{ oldVersion: string; newVersion: string }>) {
+function handler(e: CustomEvent<{ oldVersion: string; newVersion: string; entries: ChangelogEntry[] }>) {
     oldVersion.value = e.detail.oldVersion;
     newVersion.value = e.detail.newVersion;
+    entries.value = e.detail.entries || [];
     visible.value = true;
 }
 
@@ -112,5 +127,42 @@ onUnmounted(() => {
 .new {
     font-weight: 600;
     color: #fff;
+}
+
+.changelog {
+    margin-top: 24px;
+    max-height: 300px;
+    overflow-y: auto;
+    text-align: left;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 16px;
+}
+
+.entry {
+    margin-bottom: 16px;
+}
+
+.entry:last-child {
+    margin-bottom: 0;
+}
+
+.entry-title {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.entry-items {
+    margin: 0;
+    padding-left: 20px;
+    list-style: disc;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.6;
+}
+
+.entry-items li {
+    margin-bottom: 2px;
 }
 </style>
