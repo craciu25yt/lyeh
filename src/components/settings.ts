@@ -58,21 +58,15 @@ export const settingsSchema: SettingCategory[] = [
 		],
 	},
 	{
-		id: "spotify",
-		title: "Spotify",
+		id: "youtube",
+		title: "YouTube",
 		items: [
 			{
-				id: "spotify",
-				label: "Use Spotify",
-				description: "Replaces Apple Music with Spotify",
+				id: "youtube",
+				label: "Use YouTube",
+				description: "Replaces Apple Music with YouTube audio",
 				type: "boolean_callback",
 				default: false,
-			},
-			{
-				id: "spotify-link",
-				label: "Spotify link",
-				description: "Links your spotify account",
-				type: "button",
 			},
 		],
 	},

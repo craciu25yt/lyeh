@@ -75,7 +75,7 @@ div[class^="AppleMusicPlayer-desktop__IframeContainer"] {
 }
 
 [class^="SongPage__BottomSticky-sc"] {
-    display: var(--settings-spotify) !important;
+    display: var(--settings-youtube) !important;
 }
 
 /* Lyhe's player */

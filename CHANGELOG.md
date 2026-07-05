@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.0
+- Removed Spotify Player (screw spotify dev programme)
+- Added YouTube Player
+
 ## 1.5.0
 - Contributions tab in user profiles
 - Fixed Spotify Player UI in Chrome-Based browsers

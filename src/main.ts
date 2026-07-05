@@ -45,7 +45,7 @@ interface ChangelogEntry {
 }
 
 function parseChangelog(md: string, fromVersion: string, toVersion: string): ChangelogEntry[] {
-	const sectionRegex = /##\s+(\S+)\n([\s\S]*?)(?=##\s+\S+|\s*$)/g;
+		const sectionRegex = /##\s+(.+)\n([\s\S]*?)(?=##\s+|\s*$)/g;
 	const sections: { version: string; items: string[] }[] = [];
 	let m;
 	while ((m = sectionRegex.exec(md)) !== null) {
@@ -62,7 +62,23 @@ function parseChangelog(md: string, fromVersion: string, toVersion: string): Cha
 	if (toIdx === -1) return [];
 
 	const start = toIdx;
-	const end = fromIdx === -1 ? toIdx : Math.min(fromIdx - 1, sections.length - 1);
+	let end: number;
+	if (fromIdx !== -1) {
+		end = Math.min(fromIdx - 1, sections.length - 1);
+	} else {
+		end = sections.length - 1;
+		for (let i = toIdx; i < sections.length; i++) {
+			const sv = sections[i].version;
+			const pa = sv.split(".").map(Number);
+			const pb = fromVersion.split(".").map(Number);
+			let le = true;
+			for (let j = 0; j < 3; j++) {
+				if ((pa[j] || 0) > (pb[j] || 0)) { le = false; break; }
+				if ((pa[j] || 0) < (pb[j] || 0)) { le = true; break; }
+			}
+			if (le) { end = i - 1; break; }
+		}
+	}
 
 	const result: ChangelogEntry[] = [];
 	for (let i = start; i <= end; i++) {
@@ -103,13 +119,13 @@ class Genie {
 				return console.realLog.bind(console, "%cLyeh%c %cVue", lyeh, "", vue);
 			},
 		});
-		Object.defineProperty(console, "sLog", {
+		Object.defineProperty(console, "yLog", {
 			get: () => {
-				const vue =
-					"background-color: #1ED760; color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
+				const yt =
+					"background-color: #FF0000; color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
 				const lyeh =
 					"background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
-				return console.realLog.bind(console, "%cLyeh%c %cSpotify", lyeh, "", vue);
+				return console.realLog.bind(console, "%cLyeh%c %cYouTube", lyeh, "", yt);
 			},
 		});
 
@@ -152,11 +168,11 @@ class Genie {
 				// if (setting.format) {
 				// 	settingValue = setting.format.replace("$!", settingValue);
 				// }
-				if (setting.id == "spotify") {
+				if (setting.id == "youtube") {
 					if (settingValue) {
-						document.documentElement.style.setProperty(`--settings-spotify`, "none");
+						document.documentElement.style.setProperty(`--settings-youtube`, "none");
 					} else {
-						document.documentElement.style.setProperty(`--settings-spotify`, "flex");
+						document.documentElement.style.setProperty(`--settings-youtube`, "flex");
 					}
 					continue;
 				}
@@ -403,30 +419,33 @@ class Genie {
 
 		observer.observe(document.body, { childList: true, subtree: true });
 	}
-	private mountSpotify() {
-		console.log("mounting spotiy");
-		// Im a genius - edit: apple music alrd did that lmao
+	private mountYouTube() {
+		console.log("mounting YouTube");
 		window.dispatchEvent(
-			new CustomEvent("lyeh:spotify:display", {
+			new CustomEvent("lyeh:youtube:display", {
 				detail: {
 					name: trackingData.songPage.trackingData.Title,
 					artists: trackingData.songPage.trackingData["Primary Artists"],
 					image: covers.get("https://genius.com" + trackingData.songPage.path),
 					appleMusicID: trackingData.entities.songs[trackingData.songPage.song].appleMusicId,
+					youtubeUrl: trackingData.entities.songs[trackingData.songPage.song].youtubeUrl,
 					lyrics: trackingData.songPage.lyricsData.body.children,
 				},
 			}),
 		);
 
-		unsafeWindow.onSpotifyWebPlaybackSDKReady = () => {
-			console.log("Spotify Web Playback SDK is fully ready.");
-			window.dispatchEvent(new CustomEvent("lyeh:spotify:ready"));
-		};
-		if (!unsafeWindow.Spotify) {
-			const spotify = document.createElement("script");
-			spotify.src = "https://sdk.scdn.co/spotify-player.js";
-			spotify.async = true;
-			document.head.appendChild(spotify);
+		if (typeof YT === "undefined" || !YT.Player) {
+			const tag = document.createElement("script");
+			tag.src = "https://www.youtube.com/iframe_api";
+			tag.async = true;
+			document.head.appendChild(tag);
+
+			unsafeWindow.onYouTubeIframeAPIReady = () => {
+				console.yLog("YouTube IFrame API ready.");
+				window.dispatchEvent(new CustomEvent("lyeh:youtube:ready"));
+			};
+		} else {
+			window.dispatchEvent(new CustomEvent("lyeh:youtube:ready"));
 		}
 	}
 	private startup() {
@@ -435,8 +454,8 @@ class Genie {
 		this.observeDOM();
 		this.extractSongData();
 		this.mountVue();
-		if (currentPage == "songPage" && JSON.parse(GM_getValue("lyeh:settings:spotify"))) {
-			this.mountSpotify();
+		if (currentPage == "songPage" && JSON.parse(GM_getValue("lyeh:settings:youtube"))) {
+			this.mountYouTube();
 		}
 		const url = new URL(window.location.href);
 		// const userRegex = /^\/[^\/-]+\/?$/;
@@ -466,37 +485,37 @@ class Genie {
 	}
 
 	private extractSongData() {
-		trackingData = (window as any).__PRELOADED_STATE__ || null;
-		if (trackingData) {
-			console.log("Genius Metadata captured:", trackingData);
-			currentPage = trackingData.currentPage;
-			for (const [_, data] of Object.entries(trackingData.entities.artists || {}) as [string, any]) {
-				if (data.headerImageUrl) {
-					//console.log(data.url, data.headerImageUrl);
-					banners.set(data.url, data.headerImageUrl);
-				}
+		trackingData = (unsafeWindow as any).__PRELOADED_STATE__ || null;
+		if (!trackingData) return;
+		console.log("Genius Metadata captured:", trackingData);
+		currentPage = trackingData.currentPage;
+		for (const [_, data] of Object.entries(trackingData.entities.artists || {}) as [string, any]) {
+			if (data.headerImageUrl) {
+				//console.log(data.url, data.headerImageUrl);
+				banners.set(data.url, data.headerImageUrl);
 			}
-			for (const [_, data] of Object.entries(trackingData.entities.user || {}) as [string, any]) {
-				if (data.headerImageUrl) {
-					//console.log(data.url, data.headerImageUrl);
-					banners.set(data.url, data.headerImageUrl);
-				}
+		}
+		for (const [_, data] of Object.entries(trackingData.entities.user || {}) as [string, any]) {
+			if (data.headerImageUrl) {
+				//console.log(data.url, data.headerImageUrl);
+				banners.set(data.url, data.headerImageUrl);
 			}
-			for (const [_, data] of Object.entries(trackingData.entities.songs || {}) as [string, any]) {
-				/* lets work with 300x300 instead of 1000x1000 */
-				if (data.songArtImageThumbnailUrl) {
-					covers.set(data.url, data.songArtImageThumbnailUrl);
-					coverAccent.set(data.url, this.getAccentCache(data.url, data.songArtImageThumbnailUrl));
-				}
+		}
+		for (const [_, data] of Object.entries(trackingData.entities.songs || {}) as [string, any]) {
+			/* lets work with 300x300 instead of 1000x1000 */
+			if (data.songArtImageThumbnailUrl) {
+				covers.set(data.url, data.songArtImageThumbnailUrl);
+				coverAccent.set(data.url, this.getAccentCache(data.url, data.songArtImageThumbnailUrl));
 			}
+		}
 
-			for (const [_, data] of Object.entries(trackingData.entities.albums || {}) as [string, any]) {
-				if (data.coverArtThumbnailUrl) {
-					coverAccent.set(data.url, this.getAccentCache(data.url, data.coverArtThumbnailUrl));
-				}
+		for (const [_, data] of Object.entries(trackingData.entities.albums || {}) as [string, any]) {
+			if (data.coverArtThumbnailUrl) {
+				coverAccent.set(data.url, this.getAccentCache(data.url, data.coverArtThumbnailUrl));
 			}
 		}
 	}
+
 	private getAccent(img: HTMLImageElement) {
 		console.log("running accent");
 		const color = getSwatchesSync(img);
@@ -607,11 +626,11 @@ declare global {
 	interface Console {
 		realLog(...content: any[]): void;
 		vLog(...content: any[]): void;
-		sLog(...content: any[]): void;
+		yLog(...content: any[]): void;
 	}
 }
 
 declare const unsafeWindow: Window & {
-	onSpotifyWebPlaybackSDKReady?: () => void;
-	Spotify?: any;
+	onYouTubeIframeAPIReady?: () => void;
+	YT?: any;
 };
