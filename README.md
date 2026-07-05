@@ -12,11 +12,10 @@ https://github.com/user-attachments/assets/c93ba9b7-adee-4753-8725-516c803908a7
 
 ## Features
 - Custom Genius UI, based on Glass and Dark Mode (further themes coming soon)
-- Spotify Support and Synced Lyrics <sup>1</sup>
+- YouTube Support and Synced Lyrics
 - Customizable settings
 - User contribution heatmap
 
-<sup>1 Spotify Premium is required</sup> 
 
 Note: Suggestions are welcome! You can open an [issue](https://github.com/craciu25yt/lyeh/issues) or contact me through Discord `craciu25yt` (you can also tag me in the official Genius Discord)
 
