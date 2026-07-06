@@ -26,6 +26,7 @@ div[class^="LineItem__ItemRow"] {
     background-color: #16141496;
     /*box-shadow: 8px 8px 12px black;*/
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
+
     border: 0;
     border-radius: 10px;
     margin-top: 8px;
@@ -49,16 +50,23 @@ body[class^="act-embed cont-searches"] {
     background-color: transparent !important;
     padding: 20px;
 }
+mini-article-card a {
+    border-radius: 10px 0 0 10px;
+    background-color: #141414 !important;
+}
 
 .mini_card {
-    border: 1px solid rgb(125 125 125);
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+
     border-radius: 10px;
-    background-color: rgba(41, 36, 36, 0.4) !important;
+    background-color: #16141496 !important;
     backdrop-filter: blur(10px);
     color: var(--lyeh-text-main);
+    padding: 10px;
 }
 mini-song-card .mini_card {
     padding: 10px;
+    background-color: #16141496 !important;
 }
 .mini_card path {
     fill: var(--lyeh-text-main) !important;
@@ -73,14 +81,20 @@ mini-song-card .mini_card {
 div[class^="mini_card-thumbnail"] {
     border-radius: 10px;
 }
+div[class^="mini_card-thumbnail"] path:first-child {
+    fill: #16141496 !important;
+}
 a[class^="full_width_button"] {
     background-color: transparent !important;
 }
+mini-video-card a {
+    padding: 10px !important;
+}
 
 div[class^="thumbnail_grid"] {
-    border: 1px solid rgb(125 125 125);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 10px;
-    background-color: rgba(41, 36, 36, 0.4) !important;
+    background-color: #16141496 !important;
     backdrop-filter: blur(10px);
     color: var(--lyeh-text-main);
 }

@@ -431,8 +431,23 @@ ul[class^="StickyToolbarDropdown__DropdownItems"] {
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
     backdrop-filter: blur(10px);
 }
+li[class^="StickyToolbarDropdownItem__Container"]:last-child {
+    border-bottom-left-radius: 9px;
+    border-bottom-right-radius: 9px;
+}
+
+/* Match the top corners on the first item just in case */
+li[class^="StickyToolbarDropdownItem__Container"]:first-child {
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+}
 li[class^="StickyToolbarDropdownItem__Container"]:hover {
     background-color: rgba(250, 100, 160, 0.5);
+}
+li[class^="StickyToolbarDropdownItem__Container"]::before {
+    background-color: white !important;
+    border-color: white !important;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
 }
 
 div[class^="TagInput__Container"] div[class^="css"][class*="-control"] {

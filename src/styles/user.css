@@ -140,3 +140,7 @@ form[class^="global_search"] input::placeholder {
 .referent_container--inverse {
     background-color: transparent !important;
 }
+
+scrollable-data[repeat-with="leaderboard_row"] div {
+    border: none !important;
+}

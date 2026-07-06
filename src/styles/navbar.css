@@ -3,6 +3,8 @@ div[class^="styleAnchors__PageHeaderDropdownMenu"] {
     border-radius: 10px;
     background-color: rgba(41, 36, 36, 0.4);
     backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
     color: var(--lyeh-text-main);
     top: 3rem !important;
 }
@@ -21,8 +23,11 @@ div[aria-label^="User Menu"] ~ div[class*="styleAnchors__PageHeaderDropdownMenu"
 }
 /* Me */
 
+[class^="PageHeaderMenu__Title"][class*="PageHeaderMenu__Item"] {
+    border: none;
+}
 [class^="PageHeaderMenu__Title"][class*="PageHeaderMenu__Item"]:hover {
-    background-color: rgba(250, 100, 160, 0.7) !important;
+    background-color: rgba(250, 100, 160, 0.4) !important;
     color: var(--lyeh-text-main);
     transition: background-color 0.3s;
 }

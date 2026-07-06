@@ -17,3 +17,7 @@ div[class^="SongCredits__Columns"] div {
 a[class^="SongTags__Tag"] {
     border-color: var(--lyeh-text-main) !important;
 }
+
+div[class^="TracklistOffsetContainer"] {
+    color: white !important;
+}

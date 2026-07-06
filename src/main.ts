@@ -146,6 +146,7 @@ class Genie {
 
 			// scribe guy fix your thing and stop sending my data to ai pls
 			if (source.includes("chrome-extension://") && !source.includes("lyeh")) return;
+			if (source.includes("api.js?onload=cloudflare")) return;
 			console.log("error unu", document.readyState);
 			if (document.readyState == "loading") {
 				window.addEventListener("DOMContentLoaded", () => {
@@ -537,7 +538,7 @@ class Genie {
 		const cacheKey = `cache:accent:${songUrl}`;
 		const cached = await GM_getValue(cacheKey, null);
 		if (cached) {
-			return cache;
+			return cached;
 		}
 
 		return new Promise((resolve, reject) => {

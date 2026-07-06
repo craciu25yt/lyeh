@@ -1,7 +1,12 @@
-div[class^="PageGrid-desktop"][class*="AddSongPage__PageGrid"] {
+div[class^="PageGrid-desktop"][class*="ArtistVerificationRequestPage"] {
     background-color: var(--lyeh-background-main) !important;
     background-image: none;
 }
+div[class^="PageGrid-desktop"][class*="GradientPageGrid"] {
+    background-color: var(--lyeh-background-main) !important;
+    background-image: none;
+}
+
 /*this seemsv very unsatble*/
 .css-wkgora-control,
 .css-qabeig-control {
@@ -41,7 +46,7 @@ div[class^="Field-shared__FieldHelpText"] {
     color: var(--lyeh-text-main) !important;
 }
 
-div[class^="LyricsTextarea__Container"] {
+div[class^="Lyrics__Container"] :is(div, input) {
     border-color: var(--lyeh-text-main) !important;
     fill: var(--lyeh-text-main) !important;
 }
