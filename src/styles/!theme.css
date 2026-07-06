@@ -438,6 +438,23 @@ li[class^="StickyToolbarDropdownItem__Container"]:hover {
 div[class^="TagInput__Container"] div[class^="css"][class*="-control"] {
     border-color: var(--lyeh-text-main) !important;
 }
+div[class^="Toast__Container"] {
+    background-color: transparent !important;
+}
+div[class^="Toast__Container"] div[class^="Alert__Container"][color="success.main"] {
+    background-color: rgba(250, 100, 160, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+}
+div[class^="Toast__Container"] div[class^="Alert__Container"][color="success.main"] path {
+    fill: var(--lyeh-text-main);
+}
+div[class^="Alert__Container"][color="background.on"] {
+    background-color: #ff43434a;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+}
 /*
 Popup:
 border-radius: 10px;

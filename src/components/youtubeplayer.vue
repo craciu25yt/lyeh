@@ -54,7 +54,7 @@
 	left: 50%;
 	transform: translateX(-50%);
 	bottom: 20px;
-	z-index: 50;
+	z-index: 5;
 
 	display: flex;
 	align-items: center;
@@ -189,9 +189,12 @@ const songName = ref("");
 const songArtists = ref("");
 const songCover = ref("");
 
-let lyrics: Array<Object | string> | null = null;
-let lrclibArtist: String | null = null;
-let appleMusicID: String | null = null;
+let artists: Array<string> | null = null;
+let youtubeUrl: string | null = null;
+
+let lyrics: Array<object | string> | null = null;
+let lrclibArtist: string | null = null;
+let appleMusicID: string | null = null;
 
 const position = ref(0);
 const duration = ref(0);
@@ -199,7 +202,7 @@ let player: any = null;
 let positionInterval: number | null = null;
 
 const syncedLines = ref<{ time: number; text: string }[]>([]);
-const lineMap = ref(new Map<number, HTMLElement>());
+const lineMap = ref(new Map<number, HTMLElement[]>());
 const currentLineIndex = computed(() => {
 	const pos = position.value;
 	const lines = syncedLines.value;
@@ -219,7 +222,7 @@ const youtubeContainer = ref<HTMLElement | null>(null);
 // intelligent search > genius link, as might contain videoclip sounds and mess with me
 //let youtubeUrl: string | null = null;
 
-function searchYouTube(query: string): Promise<string | null> {
+function searchYouTube(query: string, relax: boolean = false): Promise<string | null> {
 	return new Promise((resolve) => {
 		GM_xmlhttpRequest({
 			method: "GET",
@@ -229,7 +232,7 @@ function searchYouTube(query: string): Promise<string | null> {
 				"User-Agent": navigator.userAgent,
 				"Accept-Language": "en-US,en;q=0.9",
 			},
-			onload: (res) => {
+			onload: (res: GM_xmlhttpRequest) => {
 				try {
 					const html = res.responseText;
 					const entryMatches = html.match(/initialData\.push\(([\s\S]*?)\);/g);
@@ -244,6 +247,7 @@ function searchYouTube(query: string): Promise<string | null> {
 								const data = JSON.parse(object.data);
 								let videoID = null;
 
+								console.log(data);
 								let i = 0;
 								// I think youtube likes nesting
 								for (const entry of data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents) {
@@ -252,6 +256,7 @@ function searchYouTube(query: string): Promise<string | null> {
 										console.yLog("no song was found");
 										break;
 									}
+									console.yLog(entry);
 									// info badge
 									if (entry.itemSectionRenderer?.contents[0]?.messageRenderer) continue;
 									// ts has me crying btw 😭
@@ -259,19 +264,21 @@ function searchYouTube(query: string): Promise<string | null> {
 										const watchEndpoint = entry.musicCardShelfRenderer.title.runs[0].navigationEndpoint.watchEndpoint;
 										const type = watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType;
 										console.log(type);
-										if (type != "MUSIC_VIDEO_TYPE_ATV") continue;
+										if (!relax && type != "MUSIC_VIDEO_TYPE_ATV") continue;
 										videoID = watchEndpoint.videoId;
 										break;
 									}
 
 									if (entry.itemSectionRenderer) {
+										if (entry.itemSectionRenderer.contents[0].didYouMeanRenderer) continue;
+										console.yLog(entry.itemSectionRenderer.contents[0]);
 										const watchEndpoint =
 											entry.itemSectionRenderer.contents[0].musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer
 												.playNavigationEndpoint.watchEndpoint;
 										const type = watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType;
 										console.log(type);
 
-										if (type != "MUSIC_VIDEO_TYPE_ATV") continue;
+										if (!relax && type != "MUSIC_VIDEO_TYPE_ATV") continue;
 										videoID = watchEndpoint.videoId;
 										break;
 									}
@@ -331,20 +338,48 @@ function stopPositionTracking() {
 async function initPlayer() {
 	if (!youtubeContainer.value) return;
 
-	const query = `"${songName.value} ${songArtists.value}"`;
+	let query = `"${songName.value.replace(/[^A-Za-z\s]/g, "")} ${songArtists.value.replace(/[^A-Za-z\s]/g, "")}"`;
 
-	console.log("Searching YouTube Music for:", query);
-	const videoId = await searchYouTube(query);
-
-	console.log(videoId);
+	console.yLog("Searching YouTube Music for:", query);
+	let videoId = await searchYouTube(query);
+	console.log(youtubeUrl);
 	if (!videoId) {
-		console.error("No video found for:", query);
-		return;
+		console.yLog("No video found for:", query);
+
+		query = `"${songName.value.replace(/[^A-Za-z\s]/g, "")}" ${songArtists.value.replace(/[^A-Za-z\s]/g, "")}`;
+		console.yLog("Executing a relaxed search:", query);
+		videoId = await searchYouTube(query, true);
+		if (!videoId) {
+			console.yLog("Relaxed search missed 😭");
+
+			if (artists!.length == 1) {
+				if (youtubeUrl) {
+					console.yLog("Fallback video from genius");
+					videoId = extractVideoID(youtubeUrl!);
+				} else {
+					return;
+				}
+			} else {
+				console.yLog("Executing last try as:", query);
+				query = `"${songName.value.replace(/[^A-Za-z\s]/g, "")}" ${artists![0].replace(/[^A-Za-z\s]/g, "")}`;
+				videoId = await searchYouTube(query, true);
+				if (!videoId) {
+					console.yLog("No luck buddy. Sorry 🙏");
+					if (youtubeUrl) {
+						console.yLog("Fallback video from genius");
+						videoId = extractVideoID(youtubeUrl!);
+					} else {
+						return;
+					}
+				}
+			}
+		}
 	}
+	console.yLog("Found a match:", videoId);
 
 	const YT = (window as any).YT;
 	if (!YT || !YT.Player) {
-		console.error("YouTube IFrame API not loaded yet. Please try again.");
+		console.yLog("YouTube IFrame API not loaded yet. Please try again.");
 		return;
 	}
 
@@ -373,7 +408,12 @@ async function initPlayer() {
 		},
 	});
 }
-
+// sad ahh helper
+function extractVideoID(url: string) {
+	console.log(url);
+	const parsed = new URL(url.replace(/\/+$/, ""));
+	return parsed.searchParams.get("v");
+}
 async function afterPlayStart() {
 	const cache = GM_getValue(`cache:lyrics:${appleMusicID}`);
 	let lrclibReq: Promise<Response> | null = null;
@@ -385,26 +425,6 @@ async function afterPlayStart() {
 		lrclib = cache;
 	}
 
-	let cleanLyrics = [];
-	let currentLineBuffer = "";
-	for (const line of lyrics!) {
-		if (line && (line as any).tag === "br") {
-			const finishedLine = currentLineBuffer.trim();
-			if (finishedLine && !finishedLine.startsWith("[")) {
-				cleanLyrics.push(finishedLine);
-			}
-			currentLineBuffer = "";
-			continue;
-		}
-
-		if (typeof line === "string" && line.startsWith("[")) {
-			continue;
-		}
-
-		const text = clearText(line);
-		if (text) currentLineBuffer += text;
-	}
-	console.log(cleanLyrics);
 	if (lrclibReq) {
 		const response = await lrclibReq;
 		const data = await response.json();
@@ -418,19 +438,9 @@ async function afterPlayStart() {
 	if (!syncedLyrics) {
 		console.yLog("No song lyrics found!");
 	}
-	const validLyrics = [];
-	let i = 0;
-	for (const line of syncedLyrics) {
-		if (!cleanLyrics[i]) break;
-		const similar = similarity(line.split("]")[1], cleanLyrics[i]);
-		console.log(similar, line.split("]")[1], cleanLyrics[i]);
-		if (similar > 0.4) {
-			i++;
-			validLyrics.push(line);
-		}
-	}
-	console.log(validLyrics);
+	console.log(syncedLines.value);
 	syncedLines.value = parseSyncedLyrics(syncedLyrics);
+	console.log(syncedLines.value);
 	wrapAndInject();
 	isReady.value = true;
 }
@@ -497,6 +507,7 @@ function parseSyncedLyrics(lines: string[] | null): { time: number; text: string
 	if (!lines) return [];
 	const result: { time: number; text: string }[] = [];
 	for (const line of lines) {
+		console.log(line);
 		const match = line.match(/^\[(\d+):(\d+)\.(\d+)\](.*)/);
 		if (!match) continue;
 		const minutes = parseInt(match[1]);
@@ -509,6 +520,7 @@ function parseSyncedLyrics(lines: string[] | null): { time: number; text: string
 	return result;
 }
 
+// rn I'm so tried and my brain isn't capable to do this by itself so this whole thing is vibecoded
 let lineMapBuilt = false;
 function wrapAndInject() {
 	if (lineMapBuilt) return;
@@ -516,10 +528,13 @@ function wrapAndInject() {
 	if (!container) return;
 	const p = container.querySelector("p");
 	if (!p) return;
-	const map = new Map<number, HTMLElement>();
+
+	// Update Map to hold arrays of elements
+	const map = new Map<number, HTMLElement[]>();
 	const nodes = Array.from(p.childNodes);
 	let currentRun: Node[] = [];
 	const runs: Node[][] = [];
+
 	for (const node of nodes) {
 		if (node instanceof HTMLElement && node.tagName === "BR") {
 			runs.push(currentRun);
@@ -529,6 +544,7 @@ function wrapAndInject() {
 		}
 	}
 	runs.push(currentRun);
+
 	const spans: HTMLElement[] = [];
 	for (const run of runs) {
 		if (run.length === 0) continue;
@@ -541,64 +557,114 @@ function wrapAndInject() {
 		}
 		spans.push(span);
 	}
-	const synced = syncedLines.value;
-	const used = new Set<number>();
-	let scanStart = 0;
 
-	for (let syncedIdx = 0; syncedIdx < synced.length; syncedIdx++) {
-		if (scanStart >= spans.length) break;
-		const syncedText = synced[syncedIdx].text.toLowerCase().trim();
+	const synced = syncedLines.value;
+	let currentSpanIdx = 0; // Track our position in the Genius DOM
+
+	// INVERTED LOOP: Iterate over LRCLib synced lines instead of DOM spans
+	for (let k = 0; k < synced.length; k++) {
+		const syncedText = synced[k].text.toLowerCase().trim();
 		if (!syncedText) continue;
 
-		let bestScore = 0;
-		let bestIdx = -1;
+		// compact: removes all spaces/punctuation for strict substring matching (bypasses missing <br> spaces)
+		const compactSynced = syncedText.replace(/[^a-z0-9\u00c0-\u024f]/gi, "");
+		// norm: keeps spaces for word boundary / overlap checks
+		const normSynced = syncedText.replace(/[^\w\s\u00c0-\u024f]/gi, "");
 
-		for (let j = scanStart; j < spans.length; j++) {
-			if (used.has(j)) continue;
+		const matchedSpans: HTMLElement[] = [];
+		let highestScore = 0;
+		let bestSingleSpanIdx = -1;
+
+		// Sliding window: Look ahead in the DOM from our current position
+		const searchStart = Math.max(0, currentSpanIdx);
+		const searchEnd = Math.min(searchStart + 6, spans.length);
+
+		for (let j = searchStart; j < searchEnd; j++) {
 			const domText = spans[j].textContent?.trim()?.toLowerCase() || "";
-			if (!domText) continue;
+			if (!domText || domText.startsWith("[")) continue;
 
-			if (domText.includes(syncedText) || syncedText.includes(domText)) {
-				bestScore = 1;
-				bestIdx = j;
+			const compactDom = domText.replace(/[^a-z0-9\u00c0-\u024f]/gi, "");
+			const normDom = domText.replace(/[^\w\s\u00c0-\u024f]/gi, "");
+
+			// CASE 1: Synced line spans MULTIPLE DOM spans (Genius split it up)
+			if (compactSynced.includes(compactDom) && compactDom.length > 4) {
+				matchedSpans.push(spans[j]);
+				currentSpanIdx = j; // Advance pointer safely
+				continue; // Don't break, see if the next DOM span is ALSO included
+			}
+
+			// CASE 2: DOM span contains MULTIPLE Synced lines (Genius combined them)
+			if (compactDom.includes(compactSynced) && compactSynced.length > 4) {
+				if (matchedSpans.length === 0) {
+					matchedSpans.push(spans[j]);
+					currentSpanIdx = j;
+				}
+				break; // Found the container block, move to the next synced line
+			}
+
+			// CASE 3: Fuzzy Overlap for slang (e.g. "estás" vs "tá", "toy" vs "estoy")
+			const syncedWords = normSynced.split(/\s+/).filter((w) => w.length >= 2);
+			let matchCount = 0;
+			for (const w of syncedWords) {
+				if (normDom.includes(w)) matchCount++;
+			}
+			const overlap = syncedWords.length > 0 ? matchCount / syncedWords.length : 0;
+
+			if (overlap > 0.6) {
+				if (matchedSpans.length === 0) {
+					matchedSpans.push(spans[j]);
+					currentSpanIdx = j;
+				}
 				break;
 			}
-			const score = similarity(syncedText, domText);
-			if (score > bestScore) {
-				bestScore = score;
-				bestIdx = j;
+
+			// CASE 4: Standard edit distance fallback
+			const score = similarity(normSynced, normDom);
+			if (score > highestScore) {
+				highestScore = score;
+				bestSingleSpanIdx = j;
 			}
 		}
 
-		if (bestScore > 0.3 && bestIdx >= 0) {
-			map.set(syncedIdx, spans[bestIdx]);
-			used.add(bestIdx);
-			if (bestIdx === scanStart) {
-				while (used.has(scanStart)) scanStart++;
-			}
+		// Commit the maps found for this specific timestamp
+		if (matchedSpans.length > 0) {
+			map.set(k, matchedSpans);
+		} else if (highestScore > 0.4 && bestSingleSpanIdx >= 0) {
+			map.set(k, [spans[bestSingleSpanIdx]]);
+			currentSpanIdx = bestSingleSpanIdx;
 		}
 	}
+
 	lineMap.value = map;
 	lineMapBuilt = true;
 }
-
+watch(currentLineIndex, (newIdx) => {
+	if (newIdx !== -1) {
+		highlightLine(newIdx);
+	} else {
+		// Clean up highlights if tracking goes out of bounds or drops
+		document.querySelectorAll(".synced-line.current-line").forEach((el) => el.classList.remove("current-line"));
+	}
+});
 function highlightLine(idx: number) {
 	document.querySelectorAll(".synced-line.current-line").forEach((el) => el.classList.remove("current-line"));
-	const el = lineMap.value.get(idx);
-	if (el) el.classList.add("current-line");
+
+	const elements = lineMap.value.get(idx);
+	if (elements) {
+		elements.forEach((el) => el.classList.add("current-line"));
+	}
 }
-watch(currentLineIndex, (idx) => {
-	if (idx < 0) return;
-	highlightLine(idx);
-});
 
 function init(data: CustomEvent<{ name: string; artists: Array<string>; image: string; appleMusicID: string; youtubeUrl: string; lyrics: Array<any> }>) {
 	console.vLog("display", data);
 	display.value = true;
 	songName.value = data.detail.name;
 	songArtists.value = data.detail.artists.join(", ");
+	artists = data.detail.artists;
 	songCover.value = data.detail.image;
 
+	console.log(youtubeUrl);
+	youtubeUrl = data.detail.youtubeUrl;
 	lyrics = data.detail.lyrics[0].children;
 
 	appleMusicID = data.detail.appleMusicID;

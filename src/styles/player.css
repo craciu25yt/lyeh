@@ -103,7 +103,7 @@ div[class^="AppleMusicPlayer-desktop__IframeContainer"] {
 .current-line {
     position: relative;
     display: inline-block;
-    z-index: 10 !important;
+    z-index: 2 !important;
     scale: 1.02 !important;
     font-size: 20px;
 

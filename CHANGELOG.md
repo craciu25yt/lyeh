@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.1
+- Improved synced-lyrics attachment
+- Fixed few UI issues with z-index with player and lyrics
+
 ## 1.6.0
 - Removed Spotify Player (screw spotify dev programme)
 - Added YouTube Player

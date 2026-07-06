@@ -45,7 +45,7 @@ interface ChangelogEntry {
 }
 
 function parseChangelog(md: string, fromVersion: string, toVersion: string): ChangelogEntry[] {
-		const sectionRegex = /##\s+(.+)\n([\s\S]*?)(?=##\s+|\s*$)/g;
+	const sectionRegex = /##\s+(.+)\n([\s\S]*?)(?=##\s+|\s*$)/g;
 	const sections: { version: string; items: string[] }[] = [];
 	let m;
 	while ((m = sectionRegex.exec(md)) !== null) {
@@ -73,10 +73,19 @@ function parseChangelog(md: string, fromVersion: string, toVersion: string): Cha
 			const pb = fromVersion.split(".").map(Number);
 			let le = true;
 			for (let j = 0; j < 3; j++) {
-				if ((pa[j] || 0) > (pb[j] || 0)) { le = false; break; }
-				if ((pa[j] || 0) < (pb[j] || 0)) { le = true; break; }
+				if ((pa[j] || 0) > (pb[j] || 0)) {
+					le = false;
+					break;
+				}
+				if ((pa[j] || 0) < (pb[j] || 0)) {
+					le = true;
+					break;
+				}
 			}
-			if (le) { end = i - 1; break; }
+			if (le) {
+				end = i - 1;
+				break;
+			}
 		}
 	}
 
@@ -122,7 +131,7 @@ class Genie {
 		Object.defineProperty(console, "yLog", {
 			get: () => {
 				const yt =
-					"background-color: #FF0000; color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
+					"background-color: #FF5E5E; color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
 				const lyeh =
 					"background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
 				return console.realLog.bind(console, "%cLyeh%c %cYouTube", lyeh, "", yt);
@@ -420,7 +429,7 @@ class Genie {
 		observer.observe(document.body, { childList: true, subtree: true });
 	}
 	private mountYouTube() {
-		console.log("mounting YouTube");
+		console.log("mounting YouTube", trackingData.entities.songs[trackingData.songPage.song].youtubeUrl);
 		window.dispatchEvent(
 			new CustomEvent("lyeh:youtube:display", {
 				detail: {
