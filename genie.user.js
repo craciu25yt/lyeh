@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Genie
 // @namespace    npm/lyeh
-// @version      1.6.1
+// @version      1.6.2
 // @downloadURL  https://raw.githubusercontent.com/craciu25yt/lyeh/gh-pages/genie.user.js
 // @updateURL    https://raw.githubusercontent.com/craciu25yt/lyeh/gh-pages/genie.user.js
 // @match        https://genius.com/*
