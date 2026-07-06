@@ -179,7 +179,7 @@
 import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue";
 
 //@ts-ignore
-import { GM_getValue, GM_setValue, GM_xmlhttpRequest } from "$";
+import { GM_getValue, GM_setValue, GM_xmlhttpRequest, unsafeWindow } from "$";
 
 const display = ref(false);
 const isReady = ref(false);
@@ -377,7 +377,7 @@ async function initPlayer() {
 	}
 	console.yLog("Found a match:", videoId);
 
-	const YT = (window as any).YT;
+	const YT = (unsafeWindow as any).YT;
 	if (!YT || !YT.Player) {
 		console.yLog("YouTube IFrame API not loaded yet. Please try again.");
 		return;
