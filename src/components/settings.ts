@@ -50,7 +50,7 @@ export const settingsSchema: SettingCategory[] = [
 				label: "Player width",
 				type: "slider",
 				default: 70,
-				description: "Modifies Apple's player width",
+				description: "Modifies the player width",
 				min: 30,
 				length: 50,
 				format: "$!%",

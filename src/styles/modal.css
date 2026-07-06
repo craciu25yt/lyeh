@@ -118,3 +118,23 @@ li[class^="ContributorList__ListItem"]:not(:last-child) {
 div[class^="Attribution__Author"] {
     color: var(--lyeh-text-main);
 }
+
+div[class^="TagInput__DragPreview"][class*="-multiValue"] {
+    background-color: rgba(250, 100, 160, 0.4);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+button[class^="RepeatableInputPair__Remove"] {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    border: none;
+}
+
+div[class^="AnnotationEditProposals__Container"] {
+    border-radius: 10px;
+    background-color: rgba(31, 26, 26, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+div[class^="AnnotationEditProposals__Proposal"] {
+    border-color: rgba(255, 255, 255, 0.4) !important;
+}

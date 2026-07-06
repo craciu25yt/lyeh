@@ -35,6 +35,11 @@ main {
 path {
     fill: var(--lyeh-text-main);
 }
+object[class^="profile_achievements-badge-icon"] {
+    fill: red !important;
+    background-color: red !important;
+}
+
 div[class^="StickyNavLoggedIn__Container"] path {
     fill: color-contrast(var(--current-accent));
 }
@@ -485,3 +490,18 @@ accent
 rgba(250, 100, 160, 0.4)
 
 */
+
+.iq_notification {
+    border-radius: 10px;
+    background-color: rgb(219 89 141 / 49%) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+div[class^="TooltipContent-sc"] {
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    outline: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+}

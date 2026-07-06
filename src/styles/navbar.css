@@ -70,10 +70,12 @@ div[class="lyeh__ItemParent"]:has([class^="LineItemDetail__Container"]) [class^=
     color: var(--lyeh-text-main) !important;
 }
 
-div[class^="ExpandableDiff__Lines"] ins {
+div[class^="ExpandableDiff__Lines"] ins,
+ins {
     background-color: #13ff004a !important;
 }
-div[class^="ExpandableDiff__Lines"] del {
+div[class^="ExpandableDiff__Lines"] del,
+del {
     background-color: #ff00004a !important;
 }
 

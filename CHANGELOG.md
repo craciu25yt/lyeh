@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.4
+- Added few missing UI components
+
 ## 1.6.3
 - Several UI improvements & fixes
 
