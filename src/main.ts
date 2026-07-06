@@ -170,7 +170,7 @@ class Genie {
 		for (const category of settingsSchema) {
 			for (const setting of category.items) {
 				const value: string = GM_getValue(`lyeh:settings:${setting.id}`);
-				let settingValue = value ? JSON.parse(value) : setting.default;
+				let settingValue = value ? value : setting.default;
 				if (!value && setting.format) {
 					settingValue = setting.format.replace("$!", settingValue);
 				}
@@ -463,7 +463,8 @@ class Genie {
 		this.observeDOM();
 		this.extractSongData();
 		this.mountVue();
-		if (currentPage == "songPage" && JSON.parse(GM_getValue("lyeh:settings:youtube"))) {
+		const youtubeToggled = GM_getValue("lyeh:settings:youtube");
+		if (currentPage == "songPage" && youtubeToggled) {
 			this.mountYouTube();
 		}
 		const url = new URL(window.location.href);
@@ -536,7 +537,7 @@ class Genie {
 		const cacheKey = `cache:accent:${songUrl}`;
 		const cached = await GM_getValue(cacheKey, null);
 		if (cached) {
-			return JSON.parse(cached);
+			return cache;
 		}
 
 		return new Promise((resolve, reject) => {
@@ -559,7 +560,7 @@ class Genie {
 								swatches.LightMuted;
 
 							//@ts-ignore
-							GM_setValue(cacheKey, JSON.stringify(activeSwatch.color._oklch));
+							GM_setValue(cacheKey, activeSwatch.color._oklch);
 							URL.revokeObjectURL(blobUrl);
 
 							//@ts-ignore

@@ -247,7 +247,6 @@ function searchYouTube(query: string, relax: boolean = false): Promise<string | 
 								const data = JSON.parse(object.data);
 								let videoID = null;
 
-								console.log(data);
 								let i = 0;
 								// I think youtube likes nesting
 								for (const entry of data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents) {
@@ -256,14 +255,12 @@ function searchYouTube(query: string, relax: boolean = false): Promise<string | 
 										console.yLog("no song was found");
 										break;
 									}
-									console.yLog(entry);
 									// info badge
 									if (entry.itemSectionRenderer?.contents[0]?.messageRenderer) continue;
 									// ts has me crying btw 😭
 									if (entry.musicCardShelfRenderer) {
 										const watchEndpoint = entry.musicCardShelfRenderer.title.runs[0].navigationEndpoint.watchEndpoint;
 										const type = watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType;
-										console.log(type);
 										if (!relax && type != "MUSIC_VIDEO_TYPE_ATV") continue;
 										videoID = watchEndpoint.videoId;
 										break;
@@ -271,12 +268,10 @@ function searchYouTube(query: string, relax: boolean = false): Promise<string | 
 
 									if (entry.itemSectionRenderer) {
 										if (entry.itemSectionRenderer.contents[0].didYouMeanRenderer) continue;
-										console.yLog(entry.itemSectionRenderer.contents[0]);
 										const watchEndpoint =
 											entry.itemSectionRenderer.contents[0].musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer
 												.playNavigationEndpoint.watchEndpoint;
 										const type = watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType;
-										console.log(type);
 
 										if (!relax && type != "MUSIC_VIDEO_TYPE_ATV") continue;
 										videoID = watchEndpoint.videoId;
@@ -346,33 +341,31 @@ async function initPlayer() {
 	if (!videoId) {
 		console.yLog("No video found for:", query);
 
-		query = `"${songName.value.replace(/[^A-Za-z\s]/g, "")}" ${songArtists.value.replace(/[^A-Za-z\s]/g, "")}`;
+		const cleanName = songName.value.replace(/[^A-Za-z\s]/g, "");
+		const cleanArtists = songArtists.value.replace(/[^A-Za-z\s]/g, "");
+
+		query = `"${cleanName}" ${cleanArtists}`;
 		console.yLog("Executing a relaxed search:", query);
 		videoId = await searchYouTube(query, true);
-		if (!videoId) {
-			console.yLog("Relaxed search missed 😭");
 
-			if (artists!.length == 1) {
-				if (youtubeUrl) {
-					console.yLog("Fallback video from genius");
-					videoId = extractVideoID(youtubeUrl!);
-				} else {
-					return;
-				}
-			} else {
-				console.yLog("Executing last try as:", query);
-				query = `"${songName.value.replace(/[^A-Za-z\s]/g, "")}" ${artists![0].replace(/[^A-Za-z\s]/g, "")}`;
-				videoId = await searchYouTube(query, true);
-				if (!videoId) {
-					console.yLog("No luck buddy. Sorry 🙏");
-					if (youtubeUrl) {
-						console.yLog("Fallback video from genius");
-						videoId = extractVideoID(youtubeUrl!);
-					} else {
-						return;
-					}
-				}
-			}
+		if (!videoId && artists!.length > 1) {
+			console.yLog("Relaxed search missed 😭");
+			console.yLog("Executing last try as:", query);
+
+			// Don't do like gims seya pls
+			const cleanFirstArtist = artists![0].replace(/[^A-Za-z\s]/g, "");
+			query = `"${cleanName}" ${cleanFirstArtist}`;
+
+			videoId = await searchYouTube(query, true);
+		}
+		if (!videoId && youtubeUrl) {
+			console.yLog("Fallback video from genius");
+			videoId = extractVideoID(youtubeUrl!);
+		}
+
+		if (!videoId) {
+			console.yLog("No luck buddy. Sorry 🙏");
+			return;
 		}
 	}
 	console.yLog("Found a match:", videoId);
@@ -414,26 +407,55 @@ function extractVideoID(url: string) {
 	const parsed = new URL(url.replace(/\/+$/, ""));
 	return parsed.searchParams.get("v");
 }
+
+// remasters, remix etc might not have lyrics, so fallback
+// (all this cuz Olvídame btw)
+function cleanSong(name: string) {
+	return name.replace(" ", "+").replace(/\(.*\)/, "");
+}
 async function afterPlayStart() {
 	const cache = GM_getValue(`cache:lyrics:${appleMusicID}`);
 	let lrclibReq: Promise<Response> | null = null;
-	let lrclib;
+	let syncedLyrics;
 
 	if (!cache) {
-		lrclibReq = fetch(`https://lrclib.net/api/get?artist_name=${lrclibArtist}&track_name=${songName.value.replace(" ", "+")}`);
+		lrclibReq = fetch(`https://lrclib.net/api/search?q=${songName.value.replace(" ", "+")}+${artists!.join("+")}`);
 	} else {
-		lrclib = cache;
+		syncedLyrics = cache;
 	}
 
 	if (lrclibReq) {
 		const response = await lrclibReq;
-		const data = await response.json();
-		GM_setValue(`cache:lyrics:${appleMusicID}`, data);
-		lrclib = data;
+		let data = await response.json();
+
+		if (data.length == 0) {
+			console.yLog("First search missed.");
+
+			const retryRes = await fetch(`https://lrclib.net/api/search?q=${cleanSong(songName.value)}+${artists!.join("+")}`);
+			data = await retryRes.json();
+
+			if (data.length == 0) {
+				console.yLog("No lyrics was found for this song :(");
+				return;
+			}
+		}
+		let lyrics: string = "";
+		console.log(data);
+		for (const song of data) {
+			if (!song.syncedLyrics) continue;
+			syncedLyrics = song.syncedLyrics;
+			console.log(syncedLyrics);
+			break;
+		}
+
+		GM_setValue(`cache:lyrics:${appleMusicID}`, syncedLyrics);
 	}
-	let syncedLyrics = null;
-	if (lrclib.syncedLyrics) {
-		syncedLyrics = lrclib.syncedLyrics.split("\n") || null;
+	if (syncedLyrics == "") {
+		console.yLog("No lyrics was found for this song :(");
+		return;
+	}
+	if (syncedLyrics) {
+		syncedLyrics = syncedLyrics.split("\n") || null;
 	}
 	if (!syncedLyrics) {
 		console.yLog("No song lyrics found!");

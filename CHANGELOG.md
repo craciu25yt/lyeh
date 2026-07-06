@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.6.2
+- IMPORTANT!! Is recommended to clear the cache after this update. Goto your profile -> lyeh settings -> clear cache
+- Improved LRCLIB query 
+- Fixed error with uninitialized setting
+
+
 ## 1.6.1
 - Improved synced-lyrics attachment
 - Fixed few UI issues with z-index with player and lyrics
