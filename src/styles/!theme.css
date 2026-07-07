@@ -35,19 +35,18 @@ main {
 path {
     fill: var(--lyeh-text-main);
 }
-object[class^="profile_achievements-badge-icon"] {
-    fill: red !important;
-    background-color: red !important;
-}
 
 div[class^="StickyNavLoggedIn__Container"] path {
     fill: color-contrast(var(--current-accent));
 }
+
 div[class^="Lyrics__Container"] {
     font-size: 1.15rem !important;
     letter-spacing: -0.01em !important;
     line-height: 1.7 !important;
     color: var(--lyeh-text-main) !important;
+    font-family: var(--settings-font);
+    font-weight: var(--settings-font-weight);
 }
 
 div[class^="Lyrics__Container"] a {
@@ -490,6 +489,19 @@ accent
 rgba(250, 100, 160, 0.4)
 
 */
+[class^="QuestionTemplate__Title"] {
+    background-color: #000000a1;
+}
+
+div[class^="PageGrid-desktop"][class*="About__Grid"]
+    :not([class^="QuestionTemplate__Title"] span, [class^="IqPoints__Container"]):is(a, div, button, span, h2, path) {
+    color: var(--accent-text) !important;
+    border-color: var(--accent-text) !important;
+    fill: var(--accent-text);
+}
+button[class^="TextButton"] path {
+    fill: contrast-color(var(--accent-text)) !important;
+}
 
 .iq_notification {
     border-radius: 10px;

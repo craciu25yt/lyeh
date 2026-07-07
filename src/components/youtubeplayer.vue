@@ -333,16 +333,15 @@ function stopPositionTracking() {
 async function initPlayer() {
 	if (!youtubeContainer.value) return;
 
-	let query = `"${songName.value.replace(/[^A-Za-z\s]/g, "")} ${songArtists.value.replace(/[^A-Za-z\s]/g, "")}"`;
+	let query = `"${songName.value} ${songArtists.value}"`;
 
 	console.yLog("Searching YouTube Music for:", query);
 	let videoId = await searchYouTube(query);
-	console.log(youtubeUrl);
 	if (!videoId) {
-		console.yLog("No video found for:", query);
+		console.yLog("No video found");
 
-		const cleanName = songName.value.replace(/[^A-Za-z\s]/g, "");
-		const cleanArtists = songArtists.value.replace(/[^A-Za-z\s]/g, "");
+		const cleanName = songName.value.replace(/[^A-Za-z0-9\s]/g, "");
+		const cleanArtists = songArtists.value.replace(/[^A-Za-z0-9\s]/g, "");
 
 		query = `"${cleanName}" ${cleanArtists}`;
 		console.yLog("Executing a relaxed search:", query);
@@ -359,7 +358,8 @@ async function initPlayer() {
 			videoId = await searchYouTube(query, true);
 		}
 		if (!videoId && youtubeUrl) {
-			console.yLog("Fallback video from genius");
+			console.yLog("Relaxed search missed 😭");
+			console.yLog("Adding fallback video from genius");
 			videoId = extractVideoID(youtubeUrl!);
 		}
 
@@ -368,7 +368,7 @@ async function initPlayer() {
 			return;
 		}
 	}
-	console.yLog("Found a match:", videoId);
+	console.yLog("Found a candidate:", videoId);
 
 	const YT = (unsafeWindow as any).YT;
 	if (!YT || !YT.Player) {
@@ -403,7 +403,6 @@ async function initPlayer() {
 }
 // sad ahh helper
 function extractVideoID(url: string) {
-	console.log(url);
 	const parsed = new URL(url.replace(/\/+$/, ""));
 	return parsed.searchParams.get("v");
 }
@@ -419,6 +418,8 @@ async function afterPlayStart() {
 	let syncedLyrics;
 
 	if (!cache) {
+		console.yLog(`Querying for lyrics: ${songName.value.replace(" ", "+")}+${artists!.join("+")}`);
+
 		lrclibReq = fetch(`https://lrclib.net/api/search?q=${songName.value.replace(" ", "+")}+${artists!.join("+")}`);
 	} else {
 		syncedLyrics = cache;
@@ -429,7 +430,7 @@ async function afterPlayStart() {
 		let data = await response.json();
 
 		if (data.length == 0) {
-			console.yLog("First search missed.");
+			console.yLog(`First lyrics search missed. Last attempt as: ${cleanSong(songName.value)}+${artists!.join("+")}`);
 
 			const retryRes = await fetch(`https://lrclib.net/api/search?q=${cleanSong(songName.value)}+${artists!.join("+")}`);
 			data = await retryRes.json();

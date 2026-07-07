@@ -10,7 +10,7 @@ import "./styles/albums.css";
 import "./styles/user.css";
 import "./styles/home.css";
 import "./styles/add_song.css";
-
+import "./styles/font.css";
 import Heatmap from "./components/Heatmap.vue";
 
 import "./styles/art_extractor.css";
@@ -171,13 +171,15 @@ class Genie {
 		for (const category of settingsSchema) {
 			for (const setting of category.items) {
 				const value: string = GM_getValue(`lyeh:settings:${setting.id}`);
-				let settingValue = value ? value : setting.default;
-				if (!value && setting.format) {
-					settingValue = setting.format.replace("$!", settingValue);
+				let settingValue = value;
+				if (!settingValue) {
+					settingValue = setting.default;
+					if (setting.format) {
+						settingValue = setting.format.replace("$!", settingValue);
+					}
+					GM_setValue(`lyeh:settings:${setting.id}`, settingValue);
 				}
-				// if (setting.format) {
-				// 	settingValue = setting.format.replace("$!", settingValue);
-				// }
+
 				if (setting.id == "youtube") {
 					if (settingValue) {
 						document.documentElement.style.setProperty(`--settings-youtube`, "none");
@@ -363,6 +365,10 @@ class Genie {
 							"--current-accent",
 							window.getComputedStyle(navvar).backgroundColor,
 						);
+						document.documentElement.style.setProperty(
+							"--accent-text",
+							window.getComputedStyle(navvar).color,
+						);
 					}
 					const referents = node.querySelectorAll(`[class^="Referent__FragmentContainer"]`);
 					if (referents.length != 0) {
@@ -464,7 +470,9 @@ class Genie {
 		this.observeDOM();
 		this.extractSongData();
 		this.mountVue();
+
 		const youtubeToggled = GM_getValue("lyeh:settings:youtube");
+		console.log(youtubeToggled, typeof youtubeToggled);
 		if (currentPage == "songPage" && youtubeToggled) {
 			this.mountYouTube();
 		}

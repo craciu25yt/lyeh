@@ -59,7 +59,27 @@
 							<div class="setting-input-wrapper" :data-disabled="item.disabled || null">
 								<button v-if="item.type == 'button'" class="button" @click="buttonCallback(item.id)">{{ item.label }}</button>
 
-								<input v-if="item.type == 'text'" :id="item.id" type="text" v-model="settingsState[item.id]" @input="saveSetting(item.id, settingsState[item.id])" class="text-input" :disabled="item.disabled" />
+								<input
+									v-if="item.type == 'text'"
+									:id="item.id"
+									type="text"
+									v-model="settingsState[item.id]"
+									@input="saveSetting(item.id, settingsState[item.id])"
+									class="text-input"
+									:disabled="item.disabled"
+								/>
+
+								<div v-if="item.type == 'selector'" class="selector-container">
+									<div class="selector-current" @click="isOpen[item.id] = !isOpen[item.id]">
+										<!-- @vue-ignore -->
+										{{ fonts[settingsState[item.id]] }}
+									</div>
+									<ul v-if="isOpen[item.id]" class="selector-option-menu">
+										<li v-for="option in item.options" :key="option.value" @click="selectorCallback(item, option.value)" :disabled="option.disbled" class="selector-option">
+											{{ option.label }}
+										</li>
+									</ul>
+								</div>
 
 								<label v-if="item.type == 'boolean'" class="switch">
 									<input
@@ -117,28 +137,43 @@
 import { ref, onMounted, onUnmounted, reactive } from "vue";
 import { settingsSchema } from "./settings";
 
-import { GM_deleteValue, GM_deleteValues, GM_getValue, GM_getValues, GM_listValues, GM_setValue } from "$";
+import { GM_deleteValues, GM_getValue, GM_getValues, GM_listValues, GM_setValue } from "$";
 
 const visible = ref(false);
-
+const isOpen = ref<Record<string, boolean>>({});
+const fonts = {
+	programme: "Programme",
+	"programme-alt": "Programme alt",
+	"apple-font": "BlinkMacSystemFont",
+};
 function saveSetting(key: string, value: any, format: string | undefined = undefined) {
 	if (format) {
 		value = format.replace("$!", value);
 	}
 
-	GM_setValue(`lyeh:settings:${key}`, JSON.stringify(value));
+	GM_setValue(`lyeh:settings:${key}`, value);
 	document.documentElement.style.setProperty(`--settings-${key}`, value);
 }
 
+function getFont(value: string) {
+	const entry = Object.entries(fonts).find(([_, val]) => val === value);
+	return entry ? entry[0] : value;
+}
 const settingsState = reactive<Record<string, any>>(
 	settingsSchema.reduce(
 		(acc, cat) => {
 			cat.items.forEach((item) => {
-				acc[item.id] = GM_getValue(`lyeh:settings:${item.id}`) ? JSON.parse(GM_getValue(`lyeh:settings:${item.id}`)!) : item.default;
+				let storedValue = GM_getValue(`lyeh:settings:${item.id}`);
+				let value = storedValue != undefined ? storedValue : item.default;
+
+				if (item.id === "font" && storedValue) {
+					value = getFont(storedValue);
+				}
 				if (item.disabled) {
-					acc[item.id] = item.default;
+					value = item.default;
 					saveSetting(item.id, item.default);
 				}
+				acc[item.id] = value;
 			});
 
 			return acc;
@@ -146,9 +181,19 @@ const settingsState = reactive<Record<string, any>>(
 		{} as Record<string, any>,
 	),
 );
+function selectorCallback(item: any, option: string) {
+	if (item.id == "font") {
+		// what the fuck in the js
+		saveSetting(item.id, fonts[option as keyof typeof fonts]);
+		settingsState[item.id] = option;
+	}
+}
 function buttonCallback(id: string) {
 	if (id == "clear-cache") {
 		clearCache();
+	}
+	if (id == "clear-data") {
+		clearData();
 	}
 }
 function sliderCallback(item: any) {
@@ -166,7 +211,46 @@ function clearCache() {
 	for (const [key, value] of Object.entries(allStorage)) {
 		if (!key.startsWith("cache:")) continue;
 		toDelete.push(key);
-		totalBytes += value.length * 2; // js uses utf-16
+
+		totalBytes += key.length * 2; // js uses utf-16
+
+		if (value == null || value == undefined) continue;
+
+		const type = typeof value;
+		if (type === "string") {
+			totalBytes += value.length * 2;
+		} else if (type === "number" || type === "boolean") {
+			totalBytes += String(value).length * 2;
+		} else if (type === "object") {
+			totalBytes += JSON.stringify(value).length * 2;
+		}
+	}
+	if (toDelete.length != 0) {
+		GM_deleteValues(toDelete);
+	}
+	console.vLog(`Successfully deleted ${(totalBytes / 1024).toFixed(2)} KB from StorageDB`);
+}
+function clearData() {
+	console.vLog("Clearing data...");
+	const allStorage = GM_getValues(GM_listValues());
+	const toDelete = [];
+	let totalBytes = 0;
+
+	for (const [key, value] of Object.entries(allStorage)) {
+		toDelete.push(key);
+
+		totalBytes += key.length * 2; // js uses utf-16
+
+		if (value == null || value == undefined) continue;
+
+		const type = typeof value;
+		if (type === "string") {
+			totalBytes += value.length * 2;
+		} else if (type === "number" || type === "boolean") {
+			totalBytes += String(value).length * 2;
+		} else if (type === "object") {
+			totalBytes += JSON.stringify(value).length * 2;
+		}
 	}
 	if (toDelete.length != 0) {
 		GM_deleteValues(toDelete);
@@ -200,6 +284,7 @@ body {
 	height: 100%;
 	margin: 0;
 }
+
 .overlay {
 	position: fixed;
 	inset: 0;
@@ -457,7 +542,7 @@ body {
 }
 
 .text-input {
-	background: rgba(0, 0, 0, 0.4);
+	background: rgba(0, 0, 0, 0.3);
 	border: 1px solid rgba(255, 255, 255, 0.15);
 	border-radius: 10px;
 	padding: 8px 12px;
@@ -468,5 +553,45 @@ body {
 .text-input:focus {
 	outline: none;
 	border-color: rgba(250, 100, 160, 0.7);
+}
+
+.selector-container {
+	position: relative;
+	color: white;
+	display: inline-block;
+	width: max-content;
+	font-size: 16px;
+}
+
+.selector-current {
+	height: 100%;
+	width: 100%;
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	border-radius: 10px;
+	padding: 6px 12px;
+	color: white;
+	align-items: center;
+}
+
+.selector-option-menu {
+	justify-self: right;
+	position: absolute;
+	background-color: #1f1f1f !important;
+	border-radius: 10px;
+	margin-top: 5px;
+	z-index: 9999;
+	overflow: hidden;
+	min-width: max-content;
+}
+.selector-option {
+	padding: 10px;
+	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.selector-option:hover {
+	background-color: rgba(250, 100, 160, 0.56);
+}
+.selector-option:not(:last-child) {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 </style>

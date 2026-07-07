@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.6.5
+- IMPORTANT!! Please clear your cache. Go to your profile (top right) -> lyeh settings -> clear cache
+- Added fonts for lyrics!
+- Setted YouTube player as default
+- Partially fixed page metadata UI (WiP for better implementation)
+- Improved YouTube search
+
 ## 1.6.4
 - Added few missing UI components
 

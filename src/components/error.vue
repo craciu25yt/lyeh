@@ -7,7 +7,7 @@
                 <span>{{ error }}</span>
             </div>
             <text class="lyeh-footer"
-                >If the issue persists, please <a href="https://github.com/craciu25yt/lyeh/issues" target="_blank"">report it</a></text
+                >Try clearing the cache, and if the issue persists, please <a href="https://github.com/craciu25yt/lyeh/issues" target="_blank"">report it</a></text
             >
         </div>
     </div>

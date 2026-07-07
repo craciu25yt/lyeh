@@ -2,7 +2,16 @@
 interface BaseSliderItem {
 	id: string;
 	label: string;
-	type: "boolean" | "text" | "number" | "color" | "button" | "boolean_callback" | "slider" | "slider_bottom";
+	type:
+		| "boolean"
+		| "text"
+		| "number"
+		| "color"
+		| "button"
+		| "boolean_callback"
+		| "slider"
+		| "slider_bottom"
+		| "selector";
 	default?: any;
 	description: string;
 	disabled?: boolean;
@@ -17,11 +26,21 @@ interface SliderSettingItem extends BaseSliderItem {
 	length: number;
 }
 
+interface SelectorOptions {
+	value: string;
+	label?: string;
+	disbled?: boolean;
+	selected?: boolean;
+}
+interface SelectorSettingItem extends BaseSliderItem {
+	type: "selector";
+	options: SelectorOptions[];
+}
 interface StandardSettingsItem extends BaseSliderItem {
 	type: "boolean" | "text" | "number" | "color" | "button" | "boolean_callback";
 }
 
-export type SettingsItem = StandardSettingsItem | SliderSettingItem;
+export type SettingsItem = StandardSettingsItem | SliderSettingItem | SelectorSettingItem;
 
 export interface SettingCategory {
 	id: string;
@@ -59,14 +78,42 @@ export const settingsSchema: SettingCategory[] = [
 	},
 	{
 		id: "youtube",
-		title: "YouTube",
+		title: "Lyrics Page",
 		items: [
 			{
 				id: "youtube",
 				label: "Use YouTube",
 				description: "Replaces Apple Music with YouTube audio",
 				type: "boolean_callback",
-				default: false,
+				default: true,
+			},
+			{
+				id: "font",
+				label: "Lyrics Font",
+				description: "The font to use for the lyrics",
+				type: "selector",
+				default: "Programme alt",
+				options: [
+					{
+						value: "programme",
+						label: "Programme (Original)",
+					},
+					{
+						value: "programme-alt",
+						label: "Programme Alt",
+					},
+					{
+						value: "apple-font",
+						label: "Blink Mac System",
+					},
+				],
+			},
+			{
+				id: "font-weight",
+				label: "Font Weight",
+				description: "The weight (boldness) of the selected font",
+				type: "text",
+				default: "200",
 			},
 		],
 	},
@@ -78,6 +125,12 @@ export const settingsSchema: SettingCategory[] = [
 				id: "clear-cache",
 				label: "Clear cache",
 				description: "Clears all Lyeh's cache (image accents...)",
+				type: "button",
+			},
+			{
+				id: "clear-data",
+				label: "Wipe data",
+				description: "Clears all Lyeh's data. This includes settings, etc. This does NOT delete genius data",
 				type: "button",
 			},
 		],
