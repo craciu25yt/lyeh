@@ -1,6 +1,9 @@
 # Changelog
 
 ## 1.6.5
+- Fixed lyrics sync with annotations
+
+## 1.6.5
 - IMPORTANT!! Please clear your cache. Go to your profile (top right) -> lyeh settings -> clear cache
 - Added fonts for lyrics!
 - Setted YouTube player as default

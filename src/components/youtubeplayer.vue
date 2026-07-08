@@ -554,19 +554,25 @@ function wrapAndInject() {
 
 	// Update Map to hold arrays of elements
 	const map = new Map<number, HTMLElement[]>();
-	const nodes = Array.from(p.childNodes);
 	let currentRun: Node[] = [];
 	const runs: Node[][] = [];
 
-	for (const node of nodes) {
-		if (node instanceof HTMLElement && node.tagName === "BR") {
-			runs.push(currentRun);
-			currentRun = [];
-		} else {
-			currentRun.push(node);
+	function collectRuns(parent: Node) {
+		for (const node of Array.from(parent.childNodes)) {
+			if (node instanceof HTMLElement && node.tagName === "BR") {
+				if (currentRun.length > 0) {
+					runs.push(currentRun);
+					currentRun = [];
+				}
+			} else if (node instanceof HTMLElement && node.querySelector('br')) {
+				collectRuns(node);
+			} else {
+				currentRun.push(node);
+			}
 		}
 	}
-	runs.push(currentRun);
+	collectRuns(p);
+	if (currentRun.length > 0) runs.push(currentRun);
 
 	const spans: HTMLElement[] = [];
 	for (const run of runs) {
@@ -617,7 +623,7 @@ function wrapAndInject() {
 			}
 
 			// CASE 2: DOM span contains MULTIPLE Synced lines (Genius combined them)
-			if (compactDom.includes(compactSynced) && compactSynced.length > 4) {
+			if (compactDom.startsWith(compactSynced) && compactSynced.length > 4) {
 				if (matchedSpans.length === 0) {
 					matchedSpans.push(spans[j]);
 					currentSpanIdx = j;
