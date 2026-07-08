@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.6
+- Few ui fixes in albums & song page
+
 ## 1.6.5
 - Fixed lyrics sync with annotations
 

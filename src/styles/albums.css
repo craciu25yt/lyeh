@@ -19,5 +19,29 @@ a[class^="SongTags__Tag"] {
 }
 
 div[class^="TracklistOffsetContainer"] {
-    color: white !important;
+    color: var(--lyeh-text-main);
+}
+
+div[class^="UnnumberedTracksEditor__Track"],
+div[class^="FilledTrack__Container"] {
+    background-color: #16141496;
+    color: var(--lyeh-text-main);
+}
+div[class^="UnnumberedTracksEditor__Track"] h3,
+div[class^="FilledTrack__Container"] h3 {
+    color: var(--lyeh-text-main);
+}
+
+div[class^="Track__RightAlignedIndicator-sc"] {
+    color: var(--lyeh-text-main);
+}
+
+div[class^="css-"][class*="-control"] {
+    background-color: #16141496 !important;
+    color: var(--lyeh-text-main) !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+div[class^="css-"][class*="-singleValue"] {
+    color: var(--lyeh-text-main);
 }
