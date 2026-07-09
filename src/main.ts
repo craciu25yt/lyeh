@@ -151,6 +151,7 @@ class Genie {
 			// scribe guy fix your thing and stop sending my data to ai pls
 			if (source.includes("chrome-extension://") && !source.includes("lyeh")) return;
 			if (source.includes("api.js?onload=cloudflare")) return;
+			if (err.message == "Script error.") return
 			console.log("error unu", document.readyState);
 			if (document.readyState == "loading") {
 				window.addEventListener("DOMContentLoaded", () => {
