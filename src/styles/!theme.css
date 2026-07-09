@@ -49,20 +49,28 @@ div[class^="Lyrics__Container"] {
     font-weight: var(--settings-font-weight);
 }
 
-div[class^="Lyrics__Container"] a {
-    text-decoration-color: var(--lyeh-accent) !important;
-    /*border-bottom: 1px dashed rgba(255, 71, 87, 0.3);*/
-    transition: all 0.2s ease;
-}
+span[class^="ReferentFragment"] span {
+    text-decoration: underline var(--lyeh-accent) !important;
 
+    /*border-bottom: 1px dashed rgba(255, 71, 87, 0.3);*/
+}
+div[class^="AnnotationPlaceholder__Block"] {
+    background-color: rgba(250, 100, 160, 0.5);
+
+}
 .rich_text_formatting a:hover {
     border-radius: 4px;
     background-color: rgba(250, 100, 160, 0.5);
 }
 
 span[class^="ReferentFragment"] {
+    text-decoration: underline var(--lyeh-accent) !important;
+
     background: var(--lyeh-bg-secondary);
     color: var(--lyeh-text-main) !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+
     z-index: 1;
 }
 

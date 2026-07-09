@@ -214,7 +214,7 @@ class Genie {
 		const lyricPageRegex = /^\/[^\/]+-lyrics\/?$/m;
 		console.log(url.pathname);
 		if (lyricPageRegex.test(url.pathname)) {
-			this.mouseEvents();
+			//this.mouseEvents();
 		}
 		if (url.pathname.startsWith("/new")) {
 			console.log("al vacio", document.cookie);

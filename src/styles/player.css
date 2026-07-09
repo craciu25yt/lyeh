@@ -103,6 +103,7 @@ div[class^="AppleMusicPlayer-desktop__IframeContainer"] {
 .synced-line {
     position: relative;
     display: inline-block;
+    text-decoration-color: var(--lyeh-accent) !important;
 
     transition: scale 0.4s ease-in-out;
 }

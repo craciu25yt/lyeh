@@ -334,9 +334,16 @@ async function initPlayer() {
 	if (!youtubeContainer.value) return;
 
 	let query = `"${songName.value} ${songArtists.value}"`;
+	let videoId
+	const cache = GM_getValue(`cache:youtube:${btoa(query)}`)
+	if (cache) {
+		console.yLog("Cached YouTube ID for:", query);
 
-	console.yLog("Searching YouTube Music for:", query);
-	let videoId = await searchYouTube(query);
+		videoId = cache
+	} else {
+		console.yLog("Searching YouTube Music for:", query);
+		videoId = await searchYouTube(query);
+	}
 	if (!videoId) {
 		console.yLog("No video found");
 
@@ -367,6 +374,9 @@ async function initPlayer() {
 			console.yLog("No luck buddy. Sorry 🙏");
 			return;
 		}
+	}
+	if (!cache) {
+		GM_setValue(`cache:youtube:${btoa(`"${songName.value} ${songArtists.value}"`)}`, videoId)
 	}
 	console.yLog("Found a candidate:", videoId);
 
@@ -542,6 +552,38 @@ function parseSyncedLyrics(lines: string[] | null): { time: number; text: string
 	}
 	return result;
 }
+
+const nativeRemoveChild = Node.prototype.removeChild;
+//@ts-ignore
+Node.prototype.removeChild = function (child) {
+  if (child && child.parentNode !== this) {
+	  const actualParent = child.parentNode;
+    //@ts-ignore
+    if (actualParent && actualParent.classList?.contains('synced-line')) {
+      return nativeRemoveChild.call(actualParent, child);
+    }
+    if (this.contains(child)) {
+      return nativeRemoveChild.call(this, child);
+    }
+    return child;
+  }
+  return nativeRemoveChild.call(this, child);
+};
+
+
+const nativeReplaceChild = Node.prototype.replaceChild;
+//@ts-ignore
+Node.prototype.replaceChild = function (newChild, oldChild) {
+  if (oldChild && oldChild.parentNode !== this) {
+	  const actualParent = oldChild.parentNode;
+    //@ts-ignore
+    if (actualParent && actualParent.classList?.contains('synced-line')) {
+      return nativeReplaceChild.call(actualParent, newChild, oldChild);
+    }
+    return oldChild;
+  }
+  return nativeReplaceChild.call(this, newChild, oldChild);
+};
 
 // rn I'm so tried and my brain isn't capable to do this by itself so this whole thing is vibecoded
 let lineMapBuilt = false;
