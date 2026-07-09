@@ -32,6 +32,7 @@ const progressBarRegex = /linear-gradient\(to right,\s*[^)]+\)\s*([\d.]+%)/;
 
 let currentPage = "";
 import { settingsSchema } from "./components/settings";
+import { isEmptyBindingElement } from "typescript";
 // lil skid. I love u genius devs don't sue me <3
 const COOKIE_NAME = "_genius_release_opt_in_add_song";
 const MAX_AGE = 60 * 60 * 24 * 60;
@@ -45,55 +46,58 @@ interface ChangelogEntry {
 }
 
 function parseChangelog(md: string, fromVersion: string, toVersion: string): ChangelogEntry[] {
-	const sectionRegex = /##\s+(.+)\n([\s\S]*?)(?=##\s+|\s*$)/g;
-	const sections: { version: string; items: string[] }[] = [];
-	let m;
-	while ((m = sectionRegex.exec(md)) !== null) {
-		const items = m[2]
-			.trim()
-			.split("\n")
-			.map((l) => l.replace(/^[-*]\s*/, "").trim())
-			.filter(Boolean);
-		sections.push({ version: m[1], items });
-	}
 
-	const fromIdx = sections.findIndex((s) => s.version === fromVersion);
-	const toIdx = sections.findIndex((s) => s.version === toVersion);
-	if (toIdx === -1) return [];
+  const sectionRegex = /##\s+(.+?)\r?\n([\s\S]*?)(?=##\s+|\s*$)/g;
+  const sections: { version: string; items: string[] }[] = [];
+  let m;
 
-	const start = toIdx;
-	let end: number;
-	if (fromIdx !== -1) {
-		end = Math.min(fromIdx - 1, sections.length - 1);
-	} else {
-		end = sections.length - 1;
-		for (let i = toIdx; i < sections.length; i++) {
-			const sv = sections[i].version;
-			const pa = sv.split(".").map(Number);
-			const pb = fromVersion.split(".").map(Number);
-			let le = true;
-			for (let j = 0; j < 3; j++) {
-				if ((pa[j] || 0) > (pb[j] || 0)) {
-					le = false;
-					break;
-				}
-				if ((pa[j] || 0) < (pb[j] || 0)) {
-					le = true;
-					break;
-				}
-			}
-			if (le) {
-				end = i - 1;
-				break;
-			}
-		}
-	}
+  while ((m = sectionRegex.exec(md)) !== null) {
+    const version = m[1].trim();
+    const items = m[2]
+      .trim()
+      .split(/\r?\n/)
+      .map((l) => l.replace(/^[-*]\s*/, "").trim())
+      .filter(Boolean);
+    sections.push({ version, items });
+  }
 
-	const result: ChangelogEntry[] = [];
-	for (let i = start; i <= end; i++) {
-		result.push({ title: sections[i].version, items: sections[i].items });
-	}
-	return result;
+  const fromIdx = sections.findIndex((s) => s.version === fromVersion);
+  const toIdx = sections.findIndex((s) => s.version === toVersion);
+  if (toIdx === -1) return [];
+
+  const start = toIdx;
+  let end: number;
+  if (fromIdx !== -1) {
+    end = Math.min(fromIdx - 1, sections.length - 1);
+  } else {
+    end = sections.length - 1;
+    for (let i = toIdx; i < sections.length; i++) {
+      const sv = sections[i].version;
+      const pa = sv.split(".").map(Number);
+      const pb = fromVersion.split(".").map(Number);
+      let le = true;
+      for (let j = 0; j < 3; j++) {
+        if ((pa[j] || 0) > (pb[j] || 0)) {
+          le = false;
+          break;
+        }
+        if ((pa[j] || 0) < (pb[j] || 0)) {
+          le = true;
+          break;
+        }
+      }
+      if (le) {
+        end = i - 1;
+        break;
+      }
+    }
+  }
+
+  const result: ChangelogEntry[] = [];
+  for (let i = start; i <= end; i++) {
+    result.push({ title: sections[i].version, items: sections[i].items });
+  }
+  return result;
 }
 
 class Genie {
@@ -489,6 +493,7 @@ class Genie {
 			GM_setValue("lyeh:version", version);
 		} else if (cacheVersion !== version) {
 			const entries = parseChangelog(CHANGELOG, cacheVersion, version);
+			console.log(entries)
 			window.dispatchEvent(
 				new CustomEvent("lyeh:version-mismatch", {
 					detail: { oldVersion: cacheVersion, newVersion: version, entries },

@@ -1,9 +1,12 @@
 # Changelog
 
+## 1.6.7
+- Fixed genius core panic when opening a annotation while having synced lyrics injected
+- Added css to synced lynes and few other ui fixes
+- Fixed git messing with crfl
+
 ## 1.6.6
 - Few ui fixes in albums & song page
-
-## 1.6.5
 - Fixed lyrics sync with annotations
 
 ## 1.6.5
