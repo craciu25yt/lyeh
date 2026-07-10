@@ -2,7 +2,7 @@
 	<div v-if="visible" class="overlay" @click.self="dismiss">
 		<div class="box">
 			<div class="bar">
-				<span class="title">Settings</span>
+				<span class="title">{{ title }}</span>
 				<button class="close" @click="dismiss">
 					<svg width="18" height="18" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
 						<title>Close</title>
@@ -15,7 +15,7 @@
 				</button>
 			</div>
 			<div class="content">
-				<div v-for="category in settingsSchema" :key="category.id" class="category-row">
+				<div v-for="category in schema" :key="category.id" class="category-row">
 					<h3 class="category-title">{{ category.title }}</h3>
 					<div class="setting-list">
 						<div v-for="item in category.items" :key="item.id" class="setting-row" :data-disabled="item.disabled || null" :data-tooltip="item.disabled ? item.tooltip : null">
@@ -66,6 +66,16 @@
 									v-model="settingsState[item.id]"
 									@input="saveSetting(item.id, settingsState[item.id])"
 									class="text-input"
+									:disabled="item.disabled"
+								/>
+
+								<input
+									v-if="item.type == 'color'"
+									:id="item.id"
+									type="color"
+									v-model="settingsState[item.id]"
+									@input="saveSetting(item.id, settingsState[item.id])"
+									class="color-input"
 									:disabled="item.disabled"
 								/>
 
@@ -134,11 +144,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, reactive } from "vue";
-import { settingsSchema } from "./settings";
+import { ref, onMounted, onUnmounted, reactive, toRef } from "vue";
+import { settingsSchema as defaultSchema, type SettingCategory } from "./settings";
 
 import { GM_deleteValues, GM_getValue, GM_getValues, GM_listValues, GM_setValue } from "$";
 
+const props = withDefaults(
+	defineProps<{
+		schema?: SettingCategory[];
+		title?: string;
+		eventName?: string;
+	}>(),
+	{ schema: () => defaultSchema, title: "Settings", eventName: "lyeh:settings" },
+);
+
+const schema = toRef(props, "schema");
 const visible = ref(false);
 const isOpen = ref<Record<string, boolean>>({});
 const fonts = {
@@ -160,7 +180,7 @@ function getFont(value: string) {
 	return entry ? entry[0] : value;
 }
 const settingsState = reactive<Record<string, any>>(
-	settingsSchema.reduce(
+	schema.value.reduce(
 		(acc, cat) => {
 			cat.items.forEach((item) => {
 				let storedValue = GM_getValue(`lyeh:settings:${item.id}`);
@@ -194,6 +214,62 @@ function buttonCallback(id: string) {
 	}
 	if (id == "clear-data") {
 		clearData();
+	}
+	if (id == "auth") {
+		oauth2();
+	}
+	if (id == "save-gradient") {
+		saveGradient();
+	}
+}
+function oauth2() {
+	const authUrl = `https://api.genius.com/oauth/authorize?client_id=yqEOBD9VeImIqvcYBGjLFH86oGyQdpGOV9JBxzEAMoOeOh9Z1hVqwrrxRY_AJCdo&redirect_uri=${encodeURIComponent("https://lyeh.auchen.net/api/oauth2/callback")}&scope=me&response_type=code`;
+	const width = 500;
+	const height = 750;
+	const left = window.screenX + (window.outerWidth - width) / 2;
+	const top = window.screenY + (window.outerHeight - height) / 2.5;
+	window.open(authUrl, "Lyeh Auth", `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`);
+	const handleMessage = (event: MessageEvent) => {
+		if (event.origin != "http://localhost:8080" && event.origin != "https://lyeh.auchen.net") return;
+
+		if (event.data && event.data.type === "lyeh_token") {
+			const { access_token, refresh_token, expires_in } = event.data.tokens;
+
+			GM_setValue("lyeh:auth:access_token", access_token);
+			GM_setValue("lyeh:auth:refresh_token", refresh_token);
+			GM_setValue("lyeh:auth:expires_at", Date.now() + expires_in * 1000);
+
+			console.vLog("Lyeh auth successful!");
+			window.removeEventListener("message", handleMessage);
+		}
+	};
+
+	window.addEventListener("message", handleMessage);
+}
+async function saveGradient() {
+	const token = GM_getValue("lyeh:auth:access_token");
+	if (!token) {
+		console.vLog("Not authenticated, cannot save gradient");
+		return;
+	}
+
+	const meta = document.querySelector('meta[property="twitter:app:url:iphone"]') as HTMLMetaElement;
+	if (!meta) {
+		console.vLog("Not on a user profile page");
+		return;
+	}
+	const userId = meta.content.replace("genius://users/", "");
+	const color1 = settingsState["gradient-1"];
+	const color2 = settingsState["gradient-2"];
+	if (!color1 || !color2) return;
+
+	const resp = await fetch("https://lyeh.auchen.net/api/user/gradient", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ token, user: userId, color1, color2 }),
+	});
+	if (resp.ok) {
+		console.vLog("Gradient saved!");
 	}
 }
 function sliderCallback(item: any) {
@@ -266,11 +342,11 @@ function dismiss() {
 }
 
 onMounted(() => {
-	window.addEventListener("lyeh:settings", handler as EventListener);
+	window.addEventListener(props.eventName, handler as EventListener);
 });
 
 onUnmounted(() => {
-	window.removeEventListener("lyeh:settings", handler as EventListener);
+	window.removeEventListener(props.eventName, handler as EventListener);
 });
 </script>
 
@@ -553,6 +629,23 @@ body {
 .text-input:focus {
 	outline: none;
 	border-color: rgba(250, 100, 160, 0.7);
+}
+
+.color-input {
+	width: 40px;
+	height: 34px;
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	border-radius: 10px;
+	background: transparent;
+	cursor: pointer;
+	padding: 2px;
+}
+.color-input::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+.color-input::-webkit-color-swatch {
+	border: none;
+	border-radius: 8px;
 }
 
 .selector-container {

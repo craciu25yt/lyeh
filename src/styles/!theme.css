@@ -21,6 +21,10 @@
     --current-accent: rgb(255, 255, 100);
     --settings-player-width: 40vh;
     --settings-spotify: flex;
+
+    --profile-bg-primary: var(--lyeh-bg-primary);
+    --profile-bg-secondary: var(--lyeh-bg-primary);
+
 }
 
 /* Overwrite the structural layout safely */
@@ -483,6 +487,11 @@ div[class^="Alert__Container"][color="background.on"] {
     border-radius: 10px;
 }
 div[class^="Alert__Container"][color="error.main"] {
+    background-color: #ff43434a;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+}
+div[class^="LyricsEditArchiveInfoSection__Container"] {
     background-color: #ff43434a;
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 10px;

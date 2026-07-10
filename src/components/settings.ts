@@ -55,6 +55,12 @@ export const settingsSchema: SettingCategory[] = [
 		title: "General",
 		items: [
 			{
+				id: "auth",
+				label: "Genius OAuth2",
+				description: "Some Lyeh services require of you confirming your account",
+				type: "button",
+			},
+			{
 				id: "light-theme",
 				label: "Light theme",
 				type: "boolean",
@@ -132,6 +138,35 @@ export const settingsSchema: SettingCategory[] = [
 				label: "Wipe data",
 				description: "Clears all Lyeh's data. This includes settings, etc. This does NOT delete genius data",
 				type: "button",
+			},
+		],
+	},
+];
+
+export const userProfile: SettingCategory[] = [
+	{
+		id: "colors",
+		title: "Colors",
+		items: [
+			{
+				id: "gradient-1",
+				label: "Gradient 1",
+				type: "color",
+				default: "#ed4597",
+				description: "The first color of the gradient",
+			},
+			{
+				id: "gradient-2",
+				label: "Gradient 2",
+				type: "color",
+				default: "#ed4597",
+				description: "The second color of the gradient",
+			},
+			{
+				id: "save-gradient",
+				label: "Save colors",
+				type: "button",
+				description: "Saves your gradient to your Lyeh profile",
 			},
 		],
 	},

@@ -32,7 +32,7 @@ const progressBarRegex = /linear-gradient\(to right,\s*[^)]+\)\s*([\d.]+%)/;
 
 let currentPage = "";
 import { settingsSchema } from "./components/settings";
-import { isEmptyBindingElement } from "typescript";
+
 // lil skid. I love u genius devs don't sue me <3
 const COOKIE_NAME = "_genius_release_opt_in_add_song";
 const MAX_AGE = 60 * 60 * 24 * 60;
@@ -264,6 +264,7 @@ class Genie {
 		state = "pre-starting";
 	}
 	private isMounted = false;
+	private backendBase = "https://lyeh.auchen.net";
 	private mountVue() {
 		if (this.isMounted) return;
 
@@ -348,6 +349,22 @@ class Genie {
 						bioContainer.insertAdjacentElement("afterend", titleContainer);
 
 						createApp(Heatmap).mount(githubSkid);
+					}
+					//console.log(document.querySelector(`[class="square_button"][ng-if="$ctrl.can_edit_profile"]`))
+					const buttonContainer = node.matches(`[class^="column_layout-column_span"]`)
+						? document.querySelector(`[class="square_button"][ng-if="$ctrl.can_edit_profile"]`)
+						: null;
+					if (buttonContainer && !document.getElementById("lyeh-customization")) {
+						console.log("wiii")
+						const customizeButton = document.createElement("div");
+						customizeButton.className = "square_button lyeh-customize-button";
+						customizeButton.textContent = "Lyeh settings";
+						customizeButton.onclick = () => {
+							window.dispatchEvent(new CustomEvent("lyeh:settings:user"));
+						};
+
+						buttonContainer.insertAdjacentElement("afterend", customizeButton);
+
 					}
 
 					const menu = node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`);
@@ -481,6 +498,7 @@ class Genie {
 		if (currentPage == "songPage" && youtubeToggled) {
 			this.mountYouTube();
 		}
+		this.loadProfileGradient();
 		const url = new URL(window.location.href);
 		// const userRegex = /^\/[^\/-]+\/?$/;
 
@@ -502,7 +520,31 @@ class Genie {
 			);
 			GM_setValue("lyeh:version", version);
 		}
+
+		if (GM_getValue("lyeh:auth:access_token")) {
+			console.log(this.getValidToken())
+		}
 		state = "running";
+	}
+	private async loadProfileGradient() {
+		const meta = document.querySelector('meta[property="twitter:app:url:iphone"]') as HTMLMetaElement;
+		if (!meta) return;
+
+		const userId = meta.content.replace("genius://users/", "");
+		if (!userId) return;
+
+		try {
+			const resp = await fetch(`https://lyeh.auchen.net/api/user/gradient?user=${userId}`);
+			if (!resp.ok) return;
+			const data = await resp.json();
+			if (!data.gradient) return;
+
+			const [color1, color2] = data.gradient.split(",");
+			if (color1) document.documentElement.style.setProperty("--profile-gb-primary", color1);
+			if (color2) document.documentElement.style.setProperty("--profile-gb-secondary", color2);
+		} catch (e) {
+			console.log("Failed to load profile gradient", e);
+		}
 	}
 	private transformHeader(headerElement: HTMLElement) {
 		// Add custom Bleh classes instead of breaking React structure
@@ -596,6 +638,36 @@ class Genie {
 					reject(err);
 					resolve(null);
 				},
+			});
+		});
+	}
+
+	private async getValidToken(): Promise<string | null> {
+		const accessToken = GM_getValue("lyeh:auth:access_token");
+		if (!accessToken) return null;
+
+		const expiresAt = GM_getValue("lyeh:auth:expires_at");
+		if (!expiresAt || Date.now() < expiresAt) return accessToken;
+
+		const refreshToken = GM_getValue("lyeh:auth:refresh_token");
+		if (!refreshToken) return null;
+
+		return new Promise((resolve) => {
+			privilegedFetch({
+				method: "POST",
+				url: `${this.backendBase}/api/oauth2/refresh?refresh_token=${encodeURIComponent(refreshToken)}`,
+				onload: (resp: any) => {
+					if (resp.status != 200) {
+					console.log(resp.responseText, resp.status)
+						return
+					}
+					const data = JSON.parse(resp.responseText);
+					GM_setValue("lyeh:auth:access_token", data.access_token);
+					GM_setValue("lyeh:auth:refresh_token", data.refresh_token);
+					GM_setValue("lyeh:auth:expires_at", Date.now() + data.expires_in * 1000);
+					resolve(data.access_token);
+				},
+				onerror: () => resolve(null),
 			});
 		});
 	}

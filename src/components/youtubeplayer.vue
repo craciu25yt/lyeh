@@ -330,12 +330,16 @@ function stopPositionTracking() {
 	}
 }
 
+function b64(str: string) {
+	const bytes = new TextEncoder().encode(str);
+  return btoa(String.fromCodePoint(...bytes));
+}
 async function initPlayer() {
 	if (!youtubeContainer.value) return;
 
 	let query = `"${songName.value} ${songArtists.value}"`;
 	let videoId
-	const cache = GM_getValue(`cache:youtube:${btoa(query)}`)
+	const cache = GM_getValue(`cache:youtube:${b64(query)}`)
 	if (cache) {
 		console.yLog("Cached YouTube ID for:", query);
 
@@ -376,7 +380,7 @@ async function initPlayer() {
 		}
 	}
 	if (!cache) {
-		GM_setValue(`cache:youtube:${btoa(`"${songName.value} ${songArtists.value}"`)}`, videoId)
+		GM_setValue(`cache:youtube:${b64(`"${songName.value} ${songArtists.value}"`)}`, videoId)
 	}
 	console.yLog("Found a candidate:", videoId);
 

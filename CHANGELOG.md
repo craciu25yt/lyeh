@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.7.0
+- Added profile gradients! Top right your profile (in a lyric page), lyeh settings, Genius OAuth2. Login. Go to your profile -> lyeh customization
+
 ## 1.6.7
 - Fixed genius core panic when opening a annotation while having synced lyrics injected
 - Added css to synced lynes and few other ui fixes
