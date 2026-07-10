@@ -9,13 +9,13 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@types/spotify-web-playback-sdk": "^0.1.19",
     "@vitejs/plugin-basic-ssl": "^2.3.0",
     "typescript": "~6.0.2",
     "vite": "^8.0.12",
     "vite-plugin-monkey": "^8.0.6"
   },
   "dependencies": {
+    "@jaames/iro": "^5.5.2",
     "@vitejs/plugin-vue": "^6.0.7",
     "colorthief": "^3.3.1",
     "vue": "^3.5.38"

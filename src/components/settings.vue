@@ -1,5 +1,7 @@
 <template>
-	<div v-if="visible" class="overlay" @click.self="dismiss">
+	<div v-if="visible" class="overlay"
+	@mousedown="onOverlayMousedown"
+  @mouseup="onOverlayMouseup">
 		<div class="box">
 			<div class="bar">
 				<span class="title">{{ title }}</span>
@@ -69,22 +71,30 @@
 									:disabled="item.disabled"
 								/>
 
-								<input
+								<button
 									v-if="item.type == 'color'"
 									:id="item.id"
-									type="color"
-									v-model="settingsState[item.id]"
-									@input="saveSetting(item.id, settingsState[item.id])"
 									class="color-input"
+									@click.stop="colorCallback(item.id)"
 									:disabled="item.disabled"
-								/>
+									:style="{ backgroundColor: settingsState[item.id] || '#292424' }"
+								></button>
+								<div v-if="item.type == 'color'" v-show="isOpen[item.id]" :id="'picker-' + item.id" class="color-picker-dropdown" @click.stop>
+									<input
+										type="text"
+										class="color-hex-input"
+										:value="settingsState[item.id]"
+										@input="hexInputCallback(item.id, ($event.target as HTMLInputElement).value)"
+										placeholder="#292424"
+									/>
+								</div>
 
 								<div v-if="item.type == 'selector'" class="selector-container">
-									<div class="selector-current" @click="isOpen[item.id] = !isOpen[item.id]">
+									<div class="selector-current" @click.stop="toggleSelector(item.id)">
 										<!-- @vue-ignore -->
 										{{ fonts[settingsState[item.id]] }}
 									</div>
-									<ul v-if="isOpen[item.id]" class="selector-option-menu">
+									<ul v-if="isOpen[item.id]" class="selector-option-menu" @click.stop>
 										<li v-for="option in item.options" :key="option.value" @click="selectorCallback(item, option.value)" :disabled="option.disbled" class="selector-option">
 											{{ option.label }}
 										</li>
@@ -144,11 +154,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, reactive, toRef } from "vue";
+import { ref, onMounted, onUnmounted, reactive, toRef, nextTick } from "vue";
 import { settingsSchema as defaultSchema, type SettingCategory } from "./settings";
 
 import { GM_deleteValues, GM_getValue, GM_getValues, GM_listValues, GM_setValue } from "$";
 
+import iro from "@jaames/iro";
 const props = withDefaults(
 	defineProps<{
 		schema?: SettingCategory[];
@@ -166,6 +177,70 @@ const fonts = {
 	"programme-alt": "Programme alt",
 	"apple-font": "BlinkMacSystemFont",
 };
+const colorPickers: Record<string, any> = {};
+function colorCallback(id: string) {
+	if (!isOpen.value[id]) {
+		Object.keys(isOpen.value).forEach(k => isOpen.value[k] = false);
+	}
+	isOpen.value[id] = !isOpen.value[id];
+	//@ts-ignore
+	if (isOpen.value[id] && !colorPickers[id]) {
+		nextTick(() => {
+			//@ts-ignore
+			const picker = new iro.ColorPicker(`#picker-${id}`, {
+				width: 220,
+				margin: 12,
+				padding: 4,
+				color: settingsState[id] || "#ffffff", // Set initial color from state
+				layout: [
+					{
+						component: iro.ui.Wheel,
+						options: { wheelLightness: false },
+					},
+					{
+						component: iro.ui.Slider,
+						options: { sliderType: "value" },
+					},
+					{
+						component: iro.ui.Slider,
+						options: { sliderType: "alpha" },
+					},
+				],
+			});
+
+			// Preview live — no GM persist until "Save colors"
+			picker.on("color:change", (color: any) => {
+				const hexString = color.hex8String;
+				settingsState[id] = hexString;
+				applySetting(id, hexString);
+			});
+
+			// Cache the picker instance
+			colorPickers[id] = picker;
+		});
+	}
+}
+function toggleSelector(id: string) {
+	Object.keys(isOpen.value).forEach(k => isOpen.value[k] = false);
+	isOpen.value[id] = true;
+}
+function hexInputCallback(id: string, value: string) {
+	const hex = value.startsWith("#") ? value : "#" + value;
+	if (/^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$/.test(hex)) {
+		if (colorPickers[id]) {
+			colorPickers[id].color.hexString = hex;
+		}
+		settingsState[id] = hex;
+		applySetting(id, hex);
+	}
+}
+function applySetting(key: string, value: any) {
+	//console.log(key, value)
+	document.documentElement.style.setProperty(`--profile-${key}`, value);
+}
+function closeAllDropdowns() {
+	Object.keys(isOpen.value).forEach(key => { isOpen.value[key] = false; });
+}
 function saveSetting(key: string, value: any, format: string | undefined = undefined) {
 	if (format) {
 		value = format.replace("$!", value);
@@ -228,8 +303,12 @@ function oauth2() {
 	const height = 750;
 	const left = window.screenX + (window.outerWidth - width) / 2;
 	const top = window.screenY + (window.outerHeight - height) / 2.5;
+
 	window.open(authUrl, "Lyeh Auth", `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`);
+
 	const handleMessage = (event: MessageEvent) => {
+		console.aLog("OAuth2 callback received")
+
 		if (event.origin != "http://localhost:8080" && event.origin != "https://lyeh.auchen.net") return;
 
 		if (event.data && event.data.type === "lyeh_token") {
@@ -239,13 +318,15 @@ function oauth2() {
 			GM_setValue("lyeh:auth:refresh_token", refresh_token);
 			GM_setValue("lyeh:auth:expires_at", Date.now() + expires_in * 1000);
 
-			console.vLog("Lyeh auth successful!");
+			console.aLog("OAuth2'ed successfully!");
 			window.removeEventListener("message", handleMessage);
 		}
 	};
 
 	window.addEventListener("message", handleMessage);
 }
+
+
 async function saveGradient() {
 	const token = GM_getValue("lyeh:auth:access_token");
 	if (!token) {
@@ -259,8 +340,8 @@ async function saveGradient() {
 		return;
 	}
 	const userId = meta.content.replace("genius://users/", "");
-	const color1 = settingsState["gradient-1"];
-	const color2 = settingsState["gradient-2"];
+	const color1 = settingsState["bg-primary"];
+	const color2 = settingsState["bg-secondary"];
 	if (!color1 || !color2) return;
 
 	const resp = await fetch("https://lyeh.auchen.net/api/user/gradient", {
@@ -269,6 +350,8 @@ async function saveGradient() {
 		body: JSON.stringify({ token, user: userId, color1, color2 }),
 	});
 	if (resp.ok) {
+		saveSetting("bg-primary", color1);
+		saveSetting("bg-secondary", color2);
 		console.vLog("Gradient saved!");
 	}
 }
@@ -338,9 +421,31 @@ function handler() {
 }
 
 function dismiss() {
+	closeAllDropdowns();
+	Object.keys(colorPickers).forEach(key => delete colorPickers[key]);
+	schema.value.forEach(cat => {
+		cat.items.forEach(item => {
+			if (item.type === 'color') {
+				const stored = GM_getValue(`lyeh:settings:${item.id}`);
+				const restored = stored !== undefined ? stored : item.default;
+				settingsState[item.id] = restored;
+				document.documentElement.style.setProperty(`--profile-${item.id}`, restored);
+			}
+		});
+	});
 	visible.value = false;
 }
-
+let isOverlayClick = false;
+function onOverlayMousedown(e: MouseEvent) {
+	isOverlayClick = e.target == e.currentTarget
+}
+function onOverlayMouseup(e: MouseEvent) {
+  // Only dismiss if the click both started AND ended on the background overlay
+  if (isOverlayClick && e.target === e.currentTarget) {
+    dismiss();
+  }
+  isOverlayClick = false;
+}
 onMounted(() => {
 	window.addEventListener(props.eventName, handler as EventListener);
 });
@@ -355,11 +460,11 @@ onUnmounted(() => {
 	color: white;
 	background-color: rgba(250, 100, 160, 0.7);
 }
-body {
-	overflow: hidden;
-	height: 100%;
-	margin: 0;
-}
+/*body {
+  margin: 0 !important;
+	overflow: hidden !important;
+	height: 100% !important;
+}*/
 
 .overlay {
 	position: fixed;
@@ -371,6 +476,10 @@ body {
 	background: rgba(0, 0, 0, 0.2);
 	color: #f1f2f6;
 	transition: display 1s;
+
+	margin: 0 !important;
+	overflow: hidden !important;
+	height: 100% !important;
 }
 .overlay::before {
 	content: "";
@@ -389,7 +498,8 @@ body {
 	box-shadow:
 		0 8px 64px rgba(0, 0, 0, 0.5),
 		inset 0 1px 0 rgba(255, 255, 255, 0.1);
-	min-width: 40vw;
+	min-width: 45vw;
+
 }
 .bar {
 	display: flex;
@@ -421,8 +531,18 @@ body {
 }
 
 .content {
-	padding: 20px;
+	padding: 25px;
+	overflow-y: scroll !important;
+	scrollbar-color: #888 transparent;
+	max-height: 70vh;
 }
+
+.category-row:not(:first-child) {
+    margin-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    padding-top: 25px;
+}
+
 .category-title {
 	font-size: 18px;
 	font-weight: 700;
@@ -458,6 +578,8 @@ body {
 	bottom: 105%;
 	right: 0;
 
+	pointer-events: none;
+
 	/*I hate blur stacking*/
 	background-color: #1a1a1e;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -492,6 +614,11 @@ body {
 
 .setting-input-wrapper[data-disabled] {
 	opacity: 0.5;
+}
+
+.color-picker-container {
+	position: relative;
+	display: inline-block;
 }
 
 /*skidded button ngl*/
@@ -632,22 +759,55 @@ body {
 }
 
 .color-input {
-	width: 40px;
+	width: 80px;
 	height: 34px;
-	border: 1px solid rgba(255, 255, 255, 0.15);
+	border: 1px solid rgba(255, 255, 255, 0.25);
 	border-radius: 10px;
-	background: transparent;
 	cursor: pointer;
-	padding: 2px;
+	display: flex;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+	transition: transform 0.1s ease;
 }
-.color-input::-webkit-color-swatch-wrapper {
-	padding: 0;
+.color-input-btn:active {
+	transform: scale(0.95);
 }
-.color-input::-webkit-color-swatch {
-	border: none;
+.color-picker-dropdown {
+	position: fixed;
+	margin-top: 10px;
+	right: 0;
+	z-index: 10000;
+	background: #1f1f1f;
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	border-radius: 12px;
+	padding: 10px;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+	overflow: visible !important;
+}
+.color-text-fallback {
+	font-size: 11px;
+	color: #000;
+	font-weight: bold;
+	/* Mix blend mode guarantees visibility against dark or light background colors */
+	mix-blend-mode: difference;
+	filter: invert(1) grayscale(1) contrast(9);
+}
+.color-hex-input {
+	background: rgba(0, 0, 0, 0.3);
+	border: 1px solid rgba(255, 255, 255, 0.15);
 	border-radius: 8px;
+	padding: 6px 10px;
+	color: white;
+	font-size: 13px;
+	width: 100%;
+	box-sizing: border-box;
+	margin-top: 8px;
+	font-family: monospace;
+	margin-bottom: 10px;
 }
-
+.color-hex-input:focus {
+	outline: none;
+	border-color: rgba(250, 100, 160, 0.7);
+}
 .selector-container {
 	position: relative;
 	color: white;

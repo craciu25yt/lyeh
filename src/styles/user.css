@@ -153,7 +153,6 @@ scrollable-data[repeat-with="leaderboard_row"] div {
 }
 
 body[class^="act-show"][class*="cont-users"] {
-    background-color: var(--profile-bg-primary) !important;
-    background: linear-gradient(190deg,var(--profile-gb-primary, var(--profile-bg-primary)) 0%, var(--profile-gb-secondary, var(--profile-bg-secondary)) 65%);
+    background: linear-gradient(190deg, var(--profile-bg-primary) 0%, var(--profile-bg-secondary) 65%);
     /*background: linear-gradient(190deg,rgba(2, 0, 36, 1) 0%, rgba(4, 126, 198, 1) 65%);*/
 }

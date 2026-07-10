@@ -149,17 +149,17 @@ export const userProfile: SettingCategory[] = [
 		title: "Colors",
 		items: [
 			{
-				id: "gradient-1",
+				id: "bg-primary",
 				label: "Gradient 1",
 				type: "color",
-				default: "#ed4597",
+				default: "#292424",
 				description: "The first color of the gradient",
 			},
 			{
-				id: "gradient-2",
+				id: "bg-secondary",
 				label: "Gradient 2",
 				type: "color",
-				default: "#ed4597",
+				default: "#292424",
 				description: "The second color of the gradient",
 			},
 			{

@@ -14,7 +14,7 @@ import "./styles/font.css";
 import Heatmap from "./components/Heatmap.vue";
 
 import "./styles/art_extractor.css";
-import { getColorSync, getSwatches, getSwatchesSync } from "colorthief";
+import { getSwatches, getSwatchesSync } from "colorthief";
 
 import { createApp } from "vue";
 import App from "./app.vue";
@@ -28,7 +28,6 @@ const debug = true;
 const banners = new Map<string, string>();
 const covers = new Map<string, string>();
 const coverAccent = new Map<string, Promise<any>>();
-const progressBarRegex = /linear-gradient\(to right,\s*[^)]+\)\s*([\d.]+%)/;
 
 let currentPage = "";
 import { settingsSchema } from "./components/settings";
@@ -139,6 +138,15 @@ class Genie {
 				const lyeh =
 					"background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
 				return console.realLog.bind(console, "%cLyeh%c %cYouTube", lyeh, "", yt);
+			},
+		});
+		Object.defineProperty(console, "aLog", {
+			get: () => {
+				const auth =
+					"background-color: #FFAA00; color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
+				const lyeh =
+					"background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
+				return console.realLog.bind(console, "%cLyeh%c %cAuth", lyeh, "", auth);
 			},
 		});
 
@@ -498,12 +506,12 @@ class Genie {
 		if (currentPage == "songPage" && youtubeToggled) {
 			this.mountYouTube();
 		}
-		this.loadProfileGradient();
 		const url = new URL(window.location.href);
-		// const userRegex = /^\/[^\/-]+\/?$/;
+		const userRegex = /^\/[^\/-]+\/?$/;
 
-		// if (userRegex.test(url.pathname)) {
-		// }
+		if (userRegex.test(url.pathname)) {
+			this.loadProfileGradient();
+		}
 
 		const cacheVersion = GM_getValue("lyeh:version");
 		const version = GM_info.script.version;
@@ -540,8 +548,8 @@ class Genie {
 			if (!data.gradient) return;
 
 			const [color1, color2] = data.gradient.split(",");
-			if (color1) document.documentElement.style.setProperty("--profile-gb-primary", color1);
-			if (color2) document.documentElement.style.setProperty("--profile-gb-secondary", color2);
+			if (color1) document.documentElement.style.setProperty("--profile-bg-primary", color1);
+			if (color2) document.documentElement.style.setProperty("--profile-bg-secondary", color2);
 		} catch (e) {
 			console.log("Failed to load profile gradient", e);
 		}
@@ -658,9 +666,10 @@ class Genie {
 				url: `${this.backendBase}/api/oauth2/refresh?refresh_token=${encodeURIComponent(refreshToken)}`,
 				onload: (resp: any) => {
 					if (resp.status != 200) {
-					console.log(resp.responseText, resp.status)
+						console.aLog(resp.responseText, resp.status)
 						return
 					}
+					console.aLog("Token renewed")
 					const data = JSON.parse(resp.responseText);
 					GM_setValue("lyeh:auth:access_token", data.access_token);
 					GM_setValue("lyeh:auth:refresh_token", data.refresh_token);
@@ -724,6 +733,7 @@ declare global {
 		realLog(...content: any[]): void;
 		vLog(...content: any[]): void;
 		yLog(...content: any[]): void;
+		aLog(...content: any[]): void;
 	}
 }
 

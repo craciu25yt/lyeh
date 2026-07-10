@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.7.1
+- Improved profile gradients selector
+
 ## 1.7.0
 - Added profile gradients! Top right your profile (in a lyric page), lyeh settings, Genius OAuth2. Login. Go to your profile -> lyeh customization
 
