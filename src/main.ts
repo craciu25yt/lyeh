@@ -45,58 +45,57 @@ interface ChangelogEntry {
 }
 
 function parseChangelog(md: string, fromVersion: string, toVersion: string): ChangelogEntry[] {
+	const sectionRegex = /##\s+(.+?)\r?\n([\s\S]*?)(?=##\s+|\s*$)/g;
+	const sections: { version: string; items: string[] }[] = [];
+	let m;
 
-  const sectionRegex = /##\s+(.+?)\r?\n([\s\S]*?)(?=##\s+|\s*$)/g;
-  const sections: { version: string; items: string[] }[] = [];
-  let m;
+	while ((m = sectionRegex.exec(md)) !== null) {
+		const version = m[1].trim();
+		const items = m[2]
+			.trim()
+			.split(/\r?\n/)
+			.map((l) => l.replace(/^[-*]\s*/, "").trim())
+			.filter(Boolean);
+		sections.push({ version, items });
+	}
 
-  while ((m = sectionRegex.exec(md)) !== null) {
-    const version = m[1].trim();
-    const items = m[2]
-      .trim()
-      .split(/\r?\n/)
-      .map((l) => l.replace(/^[-*]\s*/, "").trim())
-      .filter(Boolean);
-    sections.push({ version, items });
-  }
+	const fromIdx = sections.findIndex((s) => s.version === fromVersion);
+	const toIdx = sections.findIndex((s) => s.version === toVersion);
+	if (toIdx === -1) return [];
 
-  const fromIdx = sections.findIndex((s) => s.version === fromVersion);
-  const toIdx = sections.findIndex((s) => s.version === toVersion);
-  if (toIdx === -1) return [];
+	const start = toIdx;
+	let end: number;
+	if (fromIdx !== -1) {
+		end = Math.min(fromIdx - 1, sections.length - 1);
+	} else {
+		end = sections.length - 1;
+		for (let i = toIdx; i < sections.length; i++) {
+			const sv = sections[i].version;
+			const pa = sv.split(".").map(Number);
+			const pb = fromVersion.split(".").map(Number);
+			let le = true;
+			for (let j = 0; j < 3; j++) {
+				if ((pa[j] || 0) > (pb[j] || 0)) {
+					le = false;
+					break;
+				}
+				if ((pa[j] || 0) < (pb[j] || 0)) {
+					le = true;
+					break;
+				}
+			}
+			if (le) {
+				end = i - 1;
+				break;
+			}
+		}
+	}
 
-  const start = toIdx;
-  let end: number;
-  if (fromIdx !== -1) {
-    end = Math.min(fromIdx - 1, sections.length - 1);
-  } else {
-    end = sections.length - 1;
-    for (let i = toIdx; i < sections.length; i++) {
-      const sv = sections[i].version;
-      const pa = sv.split(".").map(Number);
-      const pb = fromVersion.split(".").map(Number);
-      let le = true;
-      for (let j = 0; j < 3; j++) {
-        if ((pa[j] || 0) > (pb[j] || 0)) {
-          le = false;
-          break;
-        }
-        if ((pa[j] || 0) < (pb[j] || 0)) {
-          le = true;
-          break;
-        }
-      }
-      if (le) {
-        end = i - 1;
-        break;
-      }
-    }
-  }
-
-  const result: ChangelogEntry[] = [];
-  for (let i = start; i <= end; i++) {
-    result.push({ title: sections[i].version, items: sections[i].items });
-  }
-  return result;
+	const result: ChangelogEntry[] = [];
+	for (let i = start; i <= end; i++) {
+		result.push({ title: sections[i].version, items: sections[i].items });
+	}
+	return result;
 }
 
 class Genie {
@@ -159,7 +158,8 @@ class Genie {
 			// scribe guy fix your thing and stop sending my data to ai pls
 			if (source.includes("chrome-extension://") && !source.includes("lyeh")) return;
 			if (source.includes("api.js?onload=cloudflare")) return;
-			if (err.message == "Script error.") return
+			if (source.includes("assets.genius.com")) return;
+			if (err.message == "Script error.") return;
 			console.log("error unu", document.readyState);
 			if (document.readyState == "loading") {
 				window.addEventListener("DOMContentLoaded", () => {
@@ -363,7 +363,7 @@ class Genie {
 						? document.querySelector(`[class="square_button"][ng-if="$ctrl.can_edit_profile"]`)
 						: null;
 					if (buttonContainer && !document.getElementById("lyeh-customization")) {
-						console.log("wiii")
+						console.log("wiii");
 						const customizeButton = document.createElement("div");
 						customizeButton.className = "square_button lyeh-customize-button";
 						customizeButton.textContent = "Lyeh settings";
@@ -372,7 +372,6 @@ class Genie {
 						};
 
 						buttonContainer.insertAdjacentElement("afterend", customizeButton);
-
 					}
 
 					const menu = node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`);
@@ -520,7 +519,7 @@ class Genie {
 			GM_setValue("lyeh:version", version);
 		} else if (cacheVersion !== version) {
 			const entries = parseChangelog(CHANGELOG, cacheVersion, version);
-			console.log(entries)
+			console.log(entries);
 			window.dispatchEvent(
 				new CustomEvent("lyeh:version-mismatch", {
 					detail: { oldVersion: cacheVersion, newVersion: version, entries },
@@ -530,9 +529,37 @@ class Genie {
 		}
 
 		if (GM_getValue("lyeh:auth:access_token")) {
-			console.log(this.getValidToken())
+			console.log(this.getValidToken());
 		}
 		state = "running";
+		if (unsafeWindow.angular) {
+			unsafeWindow.angular.module("genius").config([
+				"$provide",
+				function ($provide) {
+					$provide.decorator("ngIfDirective", [
+						"$delegate",
+						function ($delegate) {
+							const directive = $delegate[0];
+							const originalCompile = directive.compile;
+
+							directive.compile = function (element, attr) {
+								let node = element[0];
+								while (node) {
+									if (node.classList && node.classList.contains('profile_identity_and_description')) {
+										attr.ngIf = "true";
+										break;
+									}
+									node = node.parentElement;
+								}
+								return originalCompile.apply(this, arguments);
+							};
+
+							return $delegate;
+						},
+					]);
+				},
+			]);
+		}
 	}
 	private async loadProfileGradient() {
 		const meta = document.querySelector('meta[property="twitter:app:url:iphone"]') as HTMLMetaElement;
@@ -666,10 +693,10 @@ class Genie {
 				url: `${this.backendBase}/api/oauth2/refresh?refresh_token=${encodeURIComponent(refreshToken)}`,
 				onload: (resp: any) => {
 					if (resp.status != 200) {
-						console.aLog(resp.responseText, resp.status)
-						return
+						console.aLog(resp.responseText, resp.status);
+						return;
 					}
-					console.aLog("Token renewed")
+					console.aLog("Token renewed");
 					const data = JSON.parse(resp.responseText);
 					GM_setValue("lyeh:auth:access_token", data.access_token);
 					GM_setValue("lyeh:auth:refresh_token", data.refresh_token);

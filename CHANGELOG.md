@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.7.2
+- Fixed leyh error handler getting genius' errors
+
 ## 1.7.1
 - Improved profile gradients selector
 

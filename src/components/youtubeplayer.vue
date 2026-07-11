@@ -740,7 +740,10 @@ function init(data: CustomEvent<{ name: string; artists: Array<string>; image: s
 
 	console.log(youtubeUrl);
 	youtubeUrl = data.detail.youtubeUrl;
-	lyrics = data.detail.lyrics[0].children;
+	if (data.detail.lyrics) {
+
+	lyrics = data.detail?.lyrics[0]?.children;
+	}
 
 	appleMusicID = data.detail.appleMusicID;
 
