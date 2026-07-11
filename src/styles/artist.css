@@ -32,7 +32,7 @@ button[class^="DropdownList__LabeledButton"] {
     border-color: var(--lyeh-text-main);
 }
 button[class^="DropdownList__LabeledButton"]:hover {
-    background-color: rgba(250, 100, 160, 0.5) !important;
+    background-color: var(--accent-50) !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
@@ -48,7 +48,7 @@ a[class^="DiscographyItem__Container"] {
 }
 a[class^="DiscographyItem__Container"]:hover {
     scale: 1.1;
-    background-color: #16141496;
+    background-color: var(--background-glassy-layer);
     border: 1px solid rgba(255, 255, 255, 0.6);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
@@ -57,7 +57,7 @@ div[class^="SizedImage__Container"] {
 }
 div[class^="PopularSongs__Container"],
 div[class^="PopularAlbums__Container"] {
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
     border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 10px;
 }
@@ -114,11 +114,11 @@ button[class^="PagingActions__PageButton"]:has([style*="background-color"]) {
 }*/
 /* genius just don't update your page 🙏 (will add js in future just too lazy rn) | rn don't even know where that is lmao*/
 .iHfhfx {
-    background-color: rgba(250, 100, 160, 0.5) !important;
+    background-color: var(--accent-50) !important;
 }
 
 ul[class^="DropdownList__ItemsContainer"] {
-    background-color: #16141496;
+    background-color: var(--background-glassy-layer);
     backdrop-filter: blur(10px);
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.6);
@@ -126,13 +126,13 @@ ul[class^="DropdownList__ItemsContainer"] {
 }
 
 ul[class^="DropdownList__ItemsContainer"] {
-    background-color: #16141496;
+    background-color: var(--background-glassy-layer);
     border: 1px solid rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(10px);
     border-radius: 10px;
 }
 a[class^="ProfilesDropdown__SocialLink"]:hover {
-    background-color: rgba(250, 100, 160, 0.5);
+    background-color: var(--accent-50);
 }
 span[class^="DropdownList__Caret"] {
     background-color: var(--lyeh-text-main) !important;
@@ -149,6 +149,6 @@ a[class^="QuestionAnswerList__ItemContainer"] {
 div[class^="AllAlbumsModal__Contents"],
 div[class^="AllSongsModal__Contents"] {
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--background-glassy-50);
     backdrop-filter: blur(10px);
 }

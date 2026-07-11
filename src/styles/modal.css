@@ -23,7 +23,7 @@ div[class^="RecentActivity__Container"] {
 }
 
 div[class^="LineItem__ItemRow"] {
-    background-color: #16141496;
+    background-color: var(--background-glassy-layer);
     /*box-shadow: 8px 8px 12px black;*/
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
 
@@ -32,7 +32,7 @@ div[class^="LineItem__ItemRow"] {
     margin-top: 8px;
 }
 div[class^="LineItem__ItemRow"]:hover {
-    background-color: #161414;
+    background-color: var(--background-glassy-hover);
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); /*I love u spikerko*/
 }
 
@@ -59,30 +59,30 @@ mini-article-card a {
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
 
     border-radius: 10px;
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
     backdrop-filter: blur(10px);
     color: var(--lyeh-text-main);
     padding: 10px;
 }
 mini-song-card .mini_card {
     padding: 10px;
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
 }
 .mini_card path {
     fill: var(--lyeh-text-main) !important;
 }
 .mini_card:hover {
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
 }
 .mini_card-lyric_excerpt span {
-    background-color: rgba(250, 100, 160, 0.5) !important;
+    background-color: var(--accent-50) !important;
     color: #d6d6d6 !important;
 }
 div[class^="mini_card-thumbnail"] {
     border-radius: 10px;
 }
 div[class^="mini_card-thumbnail"] path:first-child {
-    fill: #16141496 !important;
+    fill: var(--background-glassy-layer) !important;
 }
 a[class^="full_width_button"] {
     background-color: transparent !important;
@@ -94,7 +94,7 @@ mini-video-card a {
 div[class^="thumbnail_grid"] {
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 10px;
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
     backdrop-filter: blur(10px);
     color: var(--lyeh-text-main);
 }
@@ -102,7 +102,7 @@ div[class^="thumbnail_grid-grid_element"] {
     padding: 5px;
 }
 div[class^="thumbnail_grid-grid_element"]:hover {
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
 }
 .vertical_album_card:hover {
     background-color: unset !important;
@@ -120,7 +120,7 @@ div[class^="Attribution__Author"] {
 }
 
 div[class^="TagInput__DragPreview"][class*="-multiValue"] {
-    background-color: rgba(250, 100, 160, 0.4);
+    background-color: var(--accent-40);
     border-radius: 10px;
     backdrop-filter: blur(5px);
 }

@@ -93,7 +93,7 @@ div[class^="AppleMusicPlayer-desktop__IframeContainer"] {
     z-index: -1 !important;
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    background-color: rgba(250, 100, 160, 0.4);
+    background-color: var(--accent-40);
 
     /* Hide by default and set up the transition */
     opacity: 0;
@@ -103,7 +103,7 @@ div[class^="AppleMusicPlayer-desktop__IframeContainer"] {
 .synced-line {
     position: relative;
     display: inline-block;
-    text-decoration-color: var(--lyeh-accent) !important;
+    text-decoration-color: var(--settings-accent) !important;
 
     transition: scale 0.4s ease-in-out;
 }

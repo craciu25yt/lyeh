@@ -1,12 +1,12 @@
 .standalone_annotation {
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
     border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 10px;
     padding: 20px;
 }
 
 a[class^="referent--accent_font referent--line_break"] {
-    background-color: rgba(250, 100, 160, 0.7) !important;
+    background-color: var(--accent-70) !important;
 }
 div[class^="profile_achievements-badge-name"] {
     color: var(--lyeh-text-main);
@@ -20,13 +20,13 @@ div[class^="statistics_panel"] path {
 }
 
 a[class^="profile_contribution"] {
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
     border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 10px;
     padding: 20px;
 }
 .profile_contribution {
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
     border: 1px solid rgba(255, 255, 255, 0.6);
     color: var(--lyeh-text-main) !important;
     border-radius: 10px;
@@ -44,11 +44,11 @@ div[class^="note_bubble"]::before {
 }
 
 profile-user-pane .white_container {
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
     border-radius: 10px;
 }
 .statistics_panel {
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
     border-radius: 10px;
 }
 
@@ -106,7 +106,7 @@ span[class^="user_badge-iq"] {
 
 .tooltip {
     border-radius: 10px;
-    background-color: rgba(41, 36, 36, 0.4) !important;
+    background-color: var(--background-glassy-container) !important;
     color: white !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
     backdrop-filter: blur(10px);
@@ -115,7 +115,7 @@ span[class^="user_badge-iq"] {
 /* Lyeh */
 
 .lyeh-tag {
-    background-color: rgba(250, 100, 160, 0.5);
+    background-color: var(--accent-50);
     color: #dddddd !important;
     font-weight: bold;
     padding: 1px 6px;
@@ -123,11 +123,18 @@ span[class^="user_badge-iq"] {
 }
 
 .lyeh-injected-title {
-    color: #9a9a9a !important;
+    color: var(--lyeh-text-main) !important;
+    mix-blend-mode: difference !important;
+    isolation: isolate;
+}
+path {
+    scale: 1;
+    stroke: black !important;
+      stroke-width: 0.1px !important; /* Adjust thickness as needed */
 }
 
 form[class^="global_search"] input {
-    background-color: var(--lyeh-bg-primary);
+    background-color: var(--background-main-full);
     border-radius: 15px;
     color: white;
     text-align: center; /* Centers horizontally */
@@ -146,13 +153,78 @@ scrollable-data[repeat-with="leaderboard_row"] div {
 }
 
 
+div[class^="text_label"][class*="text_label--gray"] {
+    color: var(--lyeh-text-main) !important;
+    mix-blend-mode: difference;
+    isolation: isolate;
+    /*color: contrast-color(var(--profile-bg-primary));*/
+}
+.statistic_and_label-subtext {
+    color: white !important;
+}
 /* Lyehh */
 
 .lyeh-customize-button {
-    margin-left: 10px !important;
+    margin-left: 4px !important;
 }
 
 body[class^="act-show"][class*="cont-users"] {
-    background: linear-gradient(190deg, var(--profile-bg-primary) 0%, var(--profile-bg-secondary) 65%);
+    background: linear-gradient(180deg,
+    var(--profile-bg-primary) 35%,
+    var(--profile-bg-secondary) 100%);
+    background-attachment: fixed;
     /*background: linear-gradient(190deg,rgba(2, 0, 36, 1) 0%, rgba(4, 126, 198, 1) 65%);*/
+}
+
+/*body[class^="act-show"].u-dark_overlay::before {
+}*/
+body[class^="act-show"] .modal_window {
+  background-color: rgba(22, 20, 20, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  backdrop-filter: blur(10px);
+
+  width: 50vw !important;
+  height: 90vh !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.modal_window-content--full_height {
+    height: 90vh !important;
+
+}
+
+.statistics_panel {
+  display: flex !important;
+}
+
+.statistics_panel > [icon="blockquote.svg"] {
+  order: 2 !important;
+}
+
+/* Push Transcriptions to 2nd position */
+.statistics_panel > [icon="one_document.svg"] {
+  order: 1 !important;
+}
+
+.statistics_panel > [icon="comment.svg"] {
+  order: 4 !important;
+}
+
+.statistics_panel > [icon="magnifying_glass.svg"] {
+  order: 5 !important;
+}
+
+.statistics_panel > [icon="star.svg"] {
+  order: 6 !important;
+}
+
+.statistics_panel > [icon="lightning.svg"] {
+  order: 3 !important;
 }

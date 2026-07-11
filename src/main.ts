@@ -105,7 +105,9 @@ class Genie {
 
 	private init() {
 		if (window.top !== window.self) {
-			console.log("iframe detected, exitting out");
+			console.log("iframe detected, injecting config");
+			this.loadConfig(document.documentElement);
+			console.log("exitting");
 			return;
 		}
 		console.realLog = console.log;
@@ -113,7 +115,7 @@ class Genie {
 		Object.defineProperty(console, "log", {
 			get: () => {
 				const css =
-					"background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
+					"background-color: rgba(255, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
 				return console.realLog.bind(console, "%cLyeh", css);
 			},
 			set: (newValue) => {
@@ -126,7 +128,7 @@ class Genie {
 				const vue =
 					"background-color: #42b883; color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
 				const lyeh =
-					"background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
+					"background-color: rgba(255, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
 				return console.realLog.bind(console, "%cLyeh%c %cVue", lyeh, "", vue);
 			},
 		});
@@ -135,7 +137,7 @@ class Genie {
 				const yt =
 					"background-color: #FF5E5E; color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
 				const lyeh =
-					"background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
+					"background-color: rgba(255, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
 				return console.realLog.bind(console, "%cLyeh%c %cYouTube", lyeh, "", yt);
 			},
 		});
@@ -144,7 +146,7 @@ class Genie {
 				const auth =
 					"background-color: #FFAA00; color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
 				const lyeh =
-					"background-color: rgba(250, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
+					"background-color: rgba(255, 100, 160, 0.7); color: black; font-weight: bold; padding: 1px 6px; border-radius: 4px";
 				return console.realLog.bind(console, "%cLyeh%c %cAuth", lyeh, "", auth);
 			},
 		});
@@ -159,6 +161,7 @@ class Genie {
 			if (source.includes("chrome-extension://") && !source.includes("lyeh")) return;
 			if (source.includes("api.js?onload=cloudflare")) return;
 			if (source.includes("assets.genius.com")) return;
+
 			if (err.message == "Script error.") return;
 			console.log("error unu", document.readyState);
 			if (document.readyState == "loading") {
@@ -181,29 +184,7 @@ class Genie {
 		});
 
 		console.log("Loading settings...");
-		for (const category of settingsSchema) {
-			for (const setting of category.items) {
-				const value: string = GM_getValue(`lyeh:settings:${setting.id}`);
-				let settingValue = value;
-				if (!settingValue) {
-					settingValue = setting.default;
-					if (setting.format) {
-						settingValue = setting.format.replace("$!", settingValue);
-					}
-					GM_setValue(`lyeh:settings:${setting.id}`, settingValue);
-				}
-
-				if (setting.id == "youtube") {
-					if (settingValue) {
-						document.documentElement.style.setProperty(`--settings-youtube`, "none");
-					} else {
-						document.documentElement.style.setProperty(`--settings-youtube`, "flex");
-					}
-					continue;
-				}
-				document.documentElement.style.setProperty(`--settings-${setting.id}`, settingValue);
-			}
-		}
+		this.loadConfig(document.documentElement);
 		console.log("Settings loaded!");
 
 		//document.documentElement.dataset.lyehTheme = "dark";
@@ -227,7 +208,7 @@ class Genie {
 		const lyricPageRegex = /^\/[^\/]+-lyrics\/?$/m;
 		console.log(url.pathname);
 		if (lyricPageRegex.test(url.pathname)) {
-			//this.mouseEvents();
+			this.mouseEvents();
 		}
 		if (url.pathname.startsWith("/new")) {
 			console.log("al vacio", document.cookie);
@@ -284,49 +265,41 @@ class Genie {
 			createApp(App).mount(container);
 		}
 	}
+	private loadConfig(root: HTMLElement | null) {
+		if (!root) return;
+
+		for (const category of settingsSchema) {
+			for (const setting of category.items) {
+				const value: string = GM_getValue(`lyeh:settings:${setting.id}`);
+				let settingValue = value;
+				if (!settingValue) {
+					settingValue = setting.default;
+
+					GM_setValue(`lyeh:settings:${setting.id}`, settingValue);
+				}
+				if (setting.format) {
+					settingValue = setting.format.replace("$!", settingValue);
+				}
+				if (setting.id == "youtube") {
+					if (settingValue) {
+						root.style.setProperty(`--settings-youtube`, "none");
+					} else {
+						root.style.setProperty(`--settings-youtube`, "flex");
+					}
+					continue;
+				}
+				if (setting.id == "lyrics-spacing") {
+					if (!settingValue) {
+						root.classList.add("lyeh-custom-spacing");
+					}
+					continue;
+				}
+				root.style.setProperty(`--settings-${setting.id}`, settingValue);
+			}
+		}
+	}
 	private observeDOM() {
 		const observer = new MutationObserver(async (mutations) => {
-			// const img = document.querySelector('[class*="SizedImage__Image"]') as HTMLImageElement;
-			// console.log(img);
-			// if (img && img.src) {
-			// 	observer.disconnect();
-			// 	console.log("IMAGEEEEEEEEEEEEE", img);
-
-			// 	// Use Violentmonkey's privileged context to bypass CORS
-			// 	privilegedFetch({
-			// 		method: "GET",
-			// 		url: img.src,
-			// 		responseType: "blob",
-			// 		onload: (response: GM_xmlhttpRequest) => {
-			// 			// Create a local object URL from the raw blob data
-			// 			const blobUrl = URL.createObjectURL(response.response);
-
-			// 			// Create an off-screen image element to parse the color
-			// 			const tempImg = new Image();
-			// 			tempImg.onload = () => {
-			// 				const color = this.getAccent(tempImg);
-			// 				const baseColor = color.Vibrant?.color ?? color.LightVibrant?.color;
-			// 				document.documentElement.style.setProperty("--lyeh-current-song-accent", baseColor!.css());
-			// 				const hsl = baseColor!.hsl();
-			// 				const h = hsl.h;
-			// 				const s = hsl.s;
-			// 				const l = hsl.l;
-
-			// 				document.documentElement.style.setProperty(
-			// 					"--lyeh-current-song-accent-secondary",
-			// 					`hsl(${h}, ${s}%, ${Math.max(0, l - 20)}%)`,
-			// 				);
-
-			// 				// Clean up memory
-			// 				URL.revokeObjectURL(blobUrl);
-			// 			};
-			// 			tempImg.src = blobUrl;
-			// 		},
-			// 		onerror: (err: Error) => {
-			// 			console.error("Failed to fetch image via GM_xmlhttpRequest", err);
-			// 		},
-			// 	});
-			// }
 			for (const mutation of mutations) {
 				for (const node of mutation.addedNodes) {
 					if (!(node instanceof HTMLElement)) continue;
@@ -440,7 +413,7 @@ class Genie {
 							}
 							const barElem = node.getElementsByClassName(Class)[0];
 							const percentageElm = barElem.querySelector(`[class^="ContributorList__AttributionValue"]`);
-							barElem.style.background = `linear-gradient(to right, rgba(250, 100, 160, 0.4) ${percentageElm?.innerHTML},  rgba(0, 0, 0, 0.4) 0px)`;
+							barElem.style.background = `linear-gradient(to right, var(--accent-40) ${percentageElm?.innerHTML},  rgba(0, 0, 0, 0.4) 0px)`;
 						}
 					}
 					if (node.matches(`[class^="ContributorList__List-sc"`)) {
@@ -451,7 +424,7 @@ class Genie {
 							}
 							const barElem = node.getElementsByClassName(Class)[0];
 							const percentageElm = barElem.querySelector(`[class^="ContributorList__AttributionValue"]`);
-							barElem.style.background = `linear-gradient(to right, rgba(250, 100, 160, 0.4) ${percentageElm?.innerHTML},  rgba(0, 0, 0, 0.4) 0px)`;
+							barElem.style.background = `linear-gradient(to right, var(--accent-40) ${percentageElm?.innerHTML},  rgba(0, 0, 0, 0.4) 0px)`;
 						}
 					}
 
@@ -502,8 +475,25 @@ class Genie {
 
 		const youtubeToggled = GM_getValue("lyeh:settings:youtube");
 		console.log(youtubeToggled, typeof youtubeToggled);
-		if (currentPage == "songPage" && youtubeToggled) {
-			this.mountYouTube();
+		if (currentPage == "songPage") {
+			const el = document.querySelector('div[class^="PageGrid-desktop"][class*="StickyToolbar__Container"]');
+			if (el) {
+				const observer = new IntersectionObserver(
+					([e]) => {
+						e.target.classList.toggle("is-sticky", e.intersectionRatio < 1);
+					},
+					{
+						threshold: [1],
+						rootMargin: "-55px 0px 0px 0px",
+					},
+				);
+
+				observer.observe(el);
+			}
+
+			if (youtubeToggled) {
+				this.mountYouTube();
+			}
 		}
 		const url = new URL(window.location.href);
 		const userRegex = /^\/[^\/-]+\/?$/;
@@ -532,34 +522,35 @@ class Genie {
 			console.log(this.getValidToken());
 		}
 		state = "running";
-		if (unsafeWindow.angular) {
-			unsafeWindow.angular.module("genius").config([
-				"$provide",
-				function ($provide) {
-					$provide.decorator("ngIfDirective", [
-						"$delegate",
-						function ($delegate) {
-							const directive = $delegate[0];
-							const originalCompile = directive.compile;
+	// 	if (unsafeWindow.angular) {
+	// 		unsafeWindow.angular.module("genius").config([
+	// 			"$provide",
+	// 			function ($provide) {
+	// 				$provide.decorator("ngIfDirective", [
+	// 					"$delegate",
+	// 					function ($delegate) {
+	// 						const directive = $delegate[0];
+	// 						const originalCompile = directive.compile;
 
-							directive.compile = function (element, attr) {
-								let node = element[0];
-								while (node) {
-									if (node.classList && node.classList.contains('profile_identity_and_description')) {
-										attr.ngIf = "true";
-										break;
-									}
-									node = node.parentElement;
-								}
-								return originalCompile.apply(this, arguments);
-							};
+	// 						directive.compile = function (element, attr) {
+	// 							let node = element[0];
+	// 							while (node) {
+	// 								if (node.classList && node.classList.contains("profile_identity_and_description")) {
+	// 									attr.ngIf = "true";
+	// 									break;
+	// 								}
+	// 								node = node.parentElement;
+	// 							}
+	// 							return originalCompile.apply(this, arguments);
+	// 						};
 
-							return $delegate;
-						},
-					]);
-				},
-			]);
-		}
+	// 						return $delegate;
+	// 					},
+	// 				]);
+	// 			},
+	// 		]);
+	// 	}
+	// }\
 	}
 	private async loadProfileGradient() {
 		const meta = document.querySelector('meta[property="twitter:app:url:iphone"]') as HTMLMetaElement;
@@ -734,7 +725,7 @@ class Genie {
 					document.documentElement.style.setProperty("--current-accent", accentColor);
 
 					document.documentElement.style.setProperty(
-						"--lyeh-bg-primary",
+						"--background-main-full",
 						`color-mix(in oklch, ${accentColor} 15%, #292424)`,
 					);
 				}
@@ -747,7 +738,7 @@ class Genie {
 
 			if (songAnchor) {
 				document.documentElement.style.setProperty("--current-accent", "rgb(255, 255, 100)");
-				document.documentElement.style.setProperty("--lyeh-bg-primary", "#292424");
+				document.documentElement.style.setProperty("--background-main-full", "#292424");
 			}
 		});
 	}

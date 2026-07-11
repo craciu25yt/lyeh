@@ -61,15 +61,19 @@ export const settingsSchema: SettingCategory[] = [
 				type: "button",
 			},
 			{
-				id: "light-theme",
-				label: "Light theme",
-				type: "boolean",
-				default: false,
-				description: "Enables the light theme",
-				disabled: true,
-				tooltip: "Light theme is not available at the moment",
+				id: "accent",
+				label: "Accent color",
+				type: "color",
+				default: "#fa64a0",
+				description: "The accent color to use arround Genius",
 			},
-			{ id: "explode", label: "Explode", type: "boolean", default: false, description: "instant combustion" },
+			{
+				id: "background",
+				label: "Background color",
+				type: "color",
+				default: "#4d4545ff",
+				description: "The background color to use arroun Genius",
+			},
 			{
 				id: "player-width",
 				label: "Player width",
@@ -80,6 +84,7 @@ export const settingsSchema: SettingCategory[] = [
 				length: 50,
 				format: "$!%",
 			},
+
 		],
 	},
 	{
@@ -121,12 +126,21 @@ export const settingsSchema: SettingCategory[] = [
 				type: "text",
 				default: "200",
 			},
+			{
+				id: "lyrics-spacing",
+				label: "Disable lyrics spacing",
+				description: "Reverts Lyeh's custom spacing",
+				type: "boolean",
+				default: false,
+			},
 		],
 	},
 	{
 		id: "advanced",
 		title: "Advanced",
 		items: [
+			{ id: "explode", label: "Explode", type: "boolean", default: false, description: "instant combustion" },
+
 			{
 				id: "clear-cache",
 				label: "Clear cache",

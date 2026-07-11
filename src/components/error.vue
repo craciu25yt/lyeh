@@ -44,7 +44,7 @@ onUnmounted(() => {
 <style scoped>
 ::selection {
     color: white;
-    background-color: rgba(250, 100, 160, 0.7);
+    background-color: var(--accent-70);
 }
 .overlay {
     position: fixed;
@@ -103,7 +103,7 @@ onUnmounted(() => {
 }
 
 .error-box {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--background-glassy-50);
     border-radius: 10px;
     padding: 15px;
     border: 10px;

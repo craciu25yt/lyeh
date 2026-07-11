@@ -1,7 +1,7 @@
 /* Globals */
 div[class^="styleAnchors__PageHeaderDropdownMenu"] {
     border-radius: 10px;
-    background-color: rgba(41, 36, 36, 0.4);
+    background-color: var(--background-glassy-container);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.15);
 
@@ -27,7 +27,7 @@ div[aria-label^="User Menu"] ~ div[class*="styleAnchors__PageHeaderDropdownMenu"
     border: none;
 }
 [class^="PageHeaderMenu__Title"][class*="PageHeaderMenu__Item"]:hover {
-    background-color: rgba(250, 100, 160, 0.4) !important;
+    background-color: var(--accent-40) !important;
     color: var(--lyeh-text-main);
     transition: background-color 0.3s;
 }
@@ -37,7 +37,7 @@ div[class^="PageHeaderInbox-desktop__Label"] {
 }
 
 form[class^="StickyNavSearch-desktop__Form"] {
-    background-color: var(--lyeh-bg-primary);
+    background-color: var(--background-main-full) !important;
     border-radius: 15px;
 }
 
@@ -47,7 +47,7 @@ input[class^="StickyNavSearch-desktop__Input"] {
     -webkit-text-fill-color: #ffffff !important; /* Forces Chrome/Safari to cooperate */
 
     margin-left: 15px;
-    background-color: var(--lyeh-bg-primary);
+    background-color: var(--background-main-full);
 }
 
 div[class^="styleAnchors__PageHeaderDropdownMenu"] div[class^="LineItemList__Container"] {
@@ -55,7 +55,7 @@ div[class^="styleAnchors__PageHeaderDropdownMenu"] div[class^="LineItemList__Con
 }
 
 div[class^="LineItemDetail__Container"] {
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
 }
 div[class^="LyricsDiffsSection__Container"] {
     background-color: transparent !important;
@@ -92,13 +92,13 @@ div[class^="DetailSection-shared"] {
     background-color: transparent !important;
 }
 a[class^="MiniCard__Link"] {
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
     border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 10px;
     padding: 0.5rem;
 }
 a[class^="MiniCard__Link"]:hover {
-    background-color: rgba(250, 100, 160, 0.7) !important;
+    background-color: var(--accent-70) !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -135,11 +135,11 @@ div[class^="feed_dropdown-item"] {
     margin: 10px;
     border: 1px solid rgba(255, 255, 255, 0.2) !important;
 
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
     border-radius: 10px;
 }
 div[class^="feed_dropdown-item"]:hover {
-    background-color: #161414 !important;
+    background-color: var(--background-glassy-hover) !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); /*I love u spikerko*/
 }
 /*
@@ -151,7 +151,7 @@ div[class*="styleAnchors__PageHeaderDropdownMenu"][class*="PageHeaderDropdown-de
     background-color: transparent !important;
 }
 .modal_window-content p {
-    background-color: rgba(250, 100, 160, 0.5);
+    background-color: var(--accent-50);
     padding: 5px;
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
     border-radius: 5px;
@@ -175,7 +175,11 @@ div[class*="styleAnchors__PageHeaderDropdownMenu"][class*="PageHeaderDropdown-de
 }*/
 
 .u-dark_overlay::before {
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
+}
+body[class^="act-messages_inbox"][class*="u-dark_overlay"] standalone-inbox {
+  filter: blur(10px);
+  transition: filter 0.4s ease; /* Smooth transition */
 }
 .conversation-compose_area {
     background-color: transparent !important;
@@ -189,19 +193,19 @@ textarea[class^="square_input"] {
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 textarea[class^="square_input"]:focus {
-    box-shadow: rgba(250, 100, 160, 0.5) 0 0 0.3em inset !important;
+    box-shadow: var(--accent-50) 0 0 0.3em inset !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .square_button {
-    background-color: #161414 !important;
+    background-color: var(--background-glassy-hover) !important;
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
     color: var(--lyeh-text-main) !important;
     border-radius: 10px !important;
     padding: 5px 10px !important;
 }
 .square_button:hover {
-    background-color: rgba(250, 100, 160, 0.5) !important;
+    background-color: var(--accent-50) !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
@@ -212,7 +216,7 @@ span[class*="text_label--purple"] {
 }
 div[class="conversation"] span[class*="text_label"]:not([class*="text_label--purple"]) {
     border-bottom: 1px !important;
-    background-color: rgba(250, 100, 160, 0.5);
+    background-color: var(--accent-50);
     padding: 3px;
     border-radius: 4px;
 }
@@ -264,8 +268,8 @@ span[class^="square_item_and_iq"] button[class^="square_button"] {
     z-index: 10;
 }
 span[class^="square_item_and_iq"] span[class^="square_button"]:hover {
-    background: var(--lyeh-accent) !important;
+    background: var(--settings-accent) !important;
 }
 span[class^="square_item_and_iq"] button[class^="square_button"]:hover {
-    background: var(--lyeh-accent) !important;
+    background: var(--settings-accent) !important;
 }

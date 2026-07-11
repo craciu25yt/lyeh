@@ -187,32 +187,36 @@ function colorCallback(id: string) {
 	if (isOpen.value[id] && !colorPickers[id]) {
 		nextTick(() => {
 			//@ts-ignore
+			const layout = [
+				{
+					component: iro.ui.Wheel,
+					options: { wheelLightness: false },
+				},
+				{
+					component: iro.ui.Slider,
+					options: { sliderType: "value" },
+				},
+			];
+			if (id !== "accent") {
+				layout.push({
+					component: iro.ui.Slider,
+					options: { sliderType: "alpha" },
+				});
+			}
 			const picker = new iro.ColorPicker(`#picker-${id}`, {
 				width: 220,
 				margin: 12,
 				padding: 4,
-				color: settingsState[id] || "#ffffff", // Set initial color from state
-				layout: [
-					{
-						component: iro.ui.Wheel,
-						options: { wheelLightness: false },
-					},
-					{
-						component: iro.ui.Slider,
-						options: { sliderType: "value" },
-					},
-					{
-						component: iro.ui.Slider,
-						options: { sliderType: "alpha" },
-					},
-				],
+				color: settingsState[id] || "#ffffff",
+				layout,
 			});
 
 			// Preview live — no GM persist until "Save colors"
 			picker.on("color:change", (color: any) => {
-				const hexString = color.hex8String;
+				const hexString = id === "accent" ? color.hexString : color.hex8String;
 				settingsState[id] = hexString;
 				applySetting(id, hexString);
+				GM_setValue(`lyeh:settings:${id}`, hexString);
 			});
 
 			// Cache the picker instance
@@ -236,18 +240,23 @@ function hexInputCallback(id: string, value: string) {
 }
 function applySetting(key: string, value: any) {
 	//console.log(key, value)
+	if (key == "accent" || key == "background") {
+		document.documentElement.style.setProperty(`--settings-${key}`, value);
+		return
+	}
 	document.documentElement.style.setProperty(`--profile-${key}`, value);
 }
 function closeAllDropdowns() {
 	Object.keys(isOpen.value).forEach(key => { isOpen.value[key] = false; });
 }
 function saveSetting(key: string, value: any, format: string | undefined = undefined) {
-	if (format) {
-		value = format.replace("$!", value);
-	}
-
 	GM_setValue(`lyeh:settings:${key}`, value);
-	document.documentElement.style.setProperty(`--settings-${key}`, value);
+	if (key === "lyrics-spacing") {
+		document.documentElement.classList.toggle("lyeh-custom-spacing", !value);
+		return;
+	}
+	const cssValue = format ? format.replace("$!", value) : value;
+	document.documentElement.style.setProperty(`--settings-${key}`, cssValue);
 }
 
 function getFont(value: string) {
@@ -286,9 +295,13 @@ function selectorCallback(item: any, option: string) {
 function buttonCallback(id: string) {
 	if (id == "clear-cache") {
 		clearCache();
+		window.location.reload();
+
 	}
 	if (id == "clear-data") {
 		clearData();
+		window.location.reload();
+
 	}
 	if (id == "auth") {
 		oauth2();
@@ -458,7 +471,7 @@ onUnmounted(() => {
 <style scoped>
 ::selection {
 	color: white;
-	background-color: rgba(250, 100, 160, 0.7);
+	background-color: var(--accent-70);
 }
 /*body {
   margin: 0 !important;
@@ -651,7 +664,7 @@ onUnmounted(() => {
 	border-radius: 50%;
 }
 .switch input:checked + .button-slider {
-	background-color: rgba(250, 100, 160, 0.7); /* Adjust to match your theme */
+	background-color: var(--accent-70); /* Adjust to match your theme */
 }
 
 .switch input:checked + .button-slider::after {
@@ -661,7 +674,7 @@ onUnmounted(() => {
 .switch input:focus-visible + .button-slider {
 	box-shadow:
 		0 0 0 2px #000,
-		0 0 0 4px rgba(250, 100, 160, 0.7);
+		0 0 0 4px var(--accent-70);
 }
 
 .slider-bottom {
@@ -701,8 +714,8 @@ onUnmounted(() => {
 	width: 15px;
 	background-color: #fff;
 	border-radius: 50%;
-	border: 2px solid rgba(250, 100, 160, 0.7);
-	box-shadow: -407px 0 0 400px rgba(250, 100, 160, 0.7);
+	border: 2px solid var(--accent-70);
+	box-shadow: -407px 0 0 400px var(--accent-70);
 }
 
 .slider-bottom::-moz-range-thumb,
@@ -711,8 +724,8 @@ onUnmounted(() => {
 	width: 15px;
 	background-color: #fff;
 	border-radius: 50%;
-	border: 1px solid rgba(250, 100, 160, 0.7);
-	box-shadow: -407px 0 0 400px rgba(250, 100, 160, 0.7);
+	border: 1px solid var(--accent-70);
+	box-shadow: -407px 0 0 400px var(--accent-70);
 }
 
 .slider-footer {
@@ -741,7 +754,7 @@ onUnmounted(() => {
 	border-radius: 10px;
 }
 .button:hover {
-	background: rgba(250, 100, 160, 0.4);
+	background: var(--accent-40);
 }
 
 .text-input {
@@ -755,7 +768,7 @@ onUnmounted(() => {
 }
 .text-input:focus {
 	outline: none;
-	border-color: rgba(250, 100, 160, 0.7);
+	border-color: var(--accent-70);
 }
 
 .color-input {
@@ -767,6 +780,13 @@ onUnmounted(() => {
 	display: flex;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 	transition: transform 0.1s ease;
+	/*background-image:
+		linear-gradient(45deg, #808080 25%, transparent 25%),
+		linear-gradient(-45deg, #808080 25%, transparent 25%),
+		linear-gradient(45deg, transparent 75%, #808080 75%),
+		linear-gradient(-45deg, transparent 75%, #808080 75%);*/
+	background-size: 10px 10px;
+	background-position: 0 0, 0 5px, 5px -5px, -5px 0;
 }
 .color-input-btn:active {
 	transform: scale(0.95);
@@ -806,7 +826,7 @@ onUnmounted(() => {
 }
 .color-hex-input:focus {
 	outline: none;
-	border-color: rgba(250, 100, 160, 0.7);
+	border-color: var(--accent-70);
 }
 .selector-container {
 	position: relative;
@@ -842,7 +862,7 @@ onUnmounted(() => {
 	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .selector-option:hover {
-	background-color: rgba(250, 100, 160, 0.56);
+	background-color: var(--accent-50);
 }
 .selector-option:not(:last-child) {
 	border-bottom: 1px solid rgba(255, 255, 255, 0.15);

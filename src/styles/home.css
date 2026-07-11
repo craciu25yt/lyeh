@@ -7,10 +7,10 @@ div[class^="HomeContent-desktop__Section"] :is(h2, h3) {
     color: inherit;
 }
 div[class^="EditorialPlacement__Container"]:hover :is(h2, h3) {
-    color: var(--lyeh-accent) !important;
+    color: var(--settings-accent) !important;
 }
 div[class^="SquareManySelects__Container"] {
-    background-color: #16141496;
+    background-color: var(--background-glassy-layer);
     border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 10px;
     backdrop-filter: blur(10px);
@@ -19,7 +19,7 @@ div[class^="SquareManySelects__Option"]:hover {
     background-color: var(--accent-muted) !important;
 }
 a[class^="PageGrid-desktop"][class*="ChartItem-desktop__Row"]:hover {
-    background-color: #16141496;
+    background-color: var(--background-glassy-layer);
 }
 
 /*not squared anymore lmao*/

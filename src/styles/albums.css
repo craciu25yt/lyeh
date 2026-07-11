@@ -24,7 +24,7 @@ div[class^="TracklistOffsetContainer"] {
 
 div[class^="UnnumberedTracksEditor__Track"],
 div[class^="FilledTrack__Container"] {
-    background-color: #16141496;
+    background-color: var(--background-glassy-layer);
     color: var(--lyeh-text-main);
 }
 div[class^="UnnumberedTracksEditor__Track"] h3,
@@ -37,7 +37,7 @@ div[class^="Track__RightAlignedIndicator-sc"] {
 }
 
 div[class^="css-"][class*="-control"] {
-    background-color: #16141496 !important;
+    background-color: var(--background-glassy-layer) !important;
     color: var(--lyeh-text-main) !important;
 
     border: 1px solid rgba(255, 255, 255, 0.15);
