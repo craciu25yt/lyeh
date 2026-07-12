@@ -205,12 +205,12 @@ body[class^="act-show"] .modal_window {
 }
 
 .statistics_panel > [icon="blockquote.svg"] {
-  order: 2 !important;
+  order: 1 !important;
 }
 
 /* Push Transcriptions to 2nd position */
 .statistics_panel > [icon="one_document.svg"] {
-  order: 1 !important;
+  order: 2 !important;
 }
 
 .statistics_panel > [icon="comment.svg"] {

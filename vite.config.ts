@@ -10,7 +10,7 @@ export default defineConfig(({ command }) => ({
 			userscript: {
 				name: "Genie",
 				namespace: "npm/lyeh",
-				version: "1.8.0",
+				version: "1.8.1",
 				match: ["https://genius.com/*"],
 				grant: [
 					"GM_addStyle",

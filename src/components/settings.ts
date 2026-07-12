@@ -65,14 +65,14 @@ export const settingsSchema: SettingCategory[] = [
 				label: "Accent color",
 				type: "color",
 				default: "#fa64a0",
-				description: "The accent color to use arround Genius",
+				description: "The accent color to use around Genius",
 			},
 			{
 				id: "background",
 				label: "Background color",
 				type: "color",
 				default: "#4d4545ff",
-				description: "The background color to use arroun Genius",
+				description: "The background color to use around Genius",
 			},
 			{
 				id: "player-width",

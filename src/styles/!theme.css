@@ -27,6 +27,7 @@
     --accent-60: color-mix(in srgb, var(--settings-accent) 60%, transparent);
     --accent-50: color-mix(in srgb, var(--settings-accent) 50%, transparent);
     --accent-40: color-mix(in srgb, var(--settings-accent) 40%, transparent);
+    --accent-30: color-mix(in srgb, var(--settings-accent) 30%, transparent);
 
     --accent-muted: color-mix(in srgb, var(--settings-accent) 50%, transparent);
     --lyeh-current-song-accent: #000000; /* fallback */

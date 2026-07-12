@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.1
+- Implemented Out of the Box experience (setup) for lyeh
+
 ## 1.8.0
 - Added customization settings!
 
