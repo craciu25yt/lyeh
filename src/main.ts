@@ -340,10 +340,10 @@ class Genie {
 					const buttonContainer = node.matches(`[class^="column_layout-column_span"]`)
 						? document.querySelector(`[class="square_button"][ng-if="$ctrl.can_edit_profile"]`)
 						: null;
-					if (buttonContainer && !document.getElementById("lyeh-customization")) {
-						console.log("wiii");
+					if (buttonContainer && !document.getElementById(`lyeh-customize-button`)) {
 						const customizeButton = document.createElement("div");
 						customizeButton.className = "square_button lyeh-customize-button";
+						customizeButton.id = "lyeh-customize-button"
 						customizeButton.textContent = "Lyeh settings";
 						customizeButton.onclick = () => {
 							window.dispatchEvent(new CustomEvent("lyeh:settings:user"));

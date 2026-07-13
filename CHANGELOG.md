@@ -5,6 +5,9 @@
 - Added css to filepicker 
 - Fixed button hover style
 
+## 1.8.2
+- Fixed lyeh customize profile button popping up at each mutation
+
 ## 1.8.1
 - Implemented Out of the Box experience (setup) for lyeh
 
