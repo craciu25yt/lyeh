@@ -10,8 +10,8 @@ export default defineConfig(({ command }) => ({
 			userscript: {
 				name: "Genie",
 				namespace: "npm/lyeh",
-				version: "1.8.1",
-				match: ["https://genius.com/*"],
+				version: "1.8.2",
+				match: ["https://genius.com/*", "https://dialog.filepicker.io/dialog/open/*"],
 				grant: [
 					"GM_addStyle",
 					"GM_xmlhttpRequest",

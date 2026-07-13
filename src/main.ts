@@ -104,12 +104,16 @@ class Genie {
 	}
 
 	private init() {
-		if (window.top !== window.self) {
+		if (window.top != window.self) {
+			if (window.location.hostname.includes("filepicker.io")) {
+				console.log("filepicker.io detected, injecting css");
+				import("./styles/filepickerio.css");
+			}
 			console.log("iframe detected, injecting config");
 			this.loadConfig(document.documentElement);
 			console.log("exitting");
-			return;
 		}
+
 		console.realLog = console.log;
 		let geniusLogger = console.realLog;
 		Object.defineProperty(console, "log", {
@@ -224,9 +228,10 @@ class Genie {
 			this.startup();
 		}
 		if (debug) {
-			window.addEventListener("keypress", (event) => {
+			window.addEventListener("keydown", (event) => {
 				console.log(event.ctrlKey, event.key);
-				if (event.ctrlKey && event.key == "\x02") {
+				//thanks for everything waterfox
+				if (event.ctrlKey && event.key == "m") {
 					debugger;
 				}
 			});
@@ -522,35 +527,35 @@ class Genie {
 			console.log(this.getValidToken());
 		}
 		state = "running";
-	// 	if (unsafeWindow.angular) {
-	// 		unsafeWindow.angular.module("genius").config([
-	// 			"$provide",
-	// 			function ($provide) {
-	// 				$provide.decorator("ngIfDirective", [
-	// 					"$delegate",
-	// 					function ($delegate) {
-	// 						const directive = $delegate[0];
-	// 						const originalCompile = directive.compile;
+		// 	if (unsafeWindow.angular) {
+		// 		unsafeWindow.angular.module("genius").config([
+		// 			"$provide",
+		// 			function ($provide) {
+		// 				$provide.decorator("ngIfDirective", [
+		// 					"$delegate",
+		// 					function ($delegate) {
+		// 						const directive = $delegate[0];
+		// 						const originalCompile = directive.compile;
 
-	// 						directive.compile = function (element, attr) {
-	// 							let node = element[0];
-	// 							while (node) {
-	// 								if (node.classList && node.classList.contains("profile_identity_and_description")) {
-	// 									attr.ngIf = "true";
-	// 									break;
-	// 								}
-	// 								node = node.parentElement;
-	// 							}
-	// 							return originalCompile.apply(this, arguments);
-	// 						};
+		// 						directive.compile = function (element, attr) {
+		// 							let node = element[0];
+		// 							while (node) {
+		// 								if (node.classList && node.classList.contains("profile_identity_and_description")) {
+		// 									attr.ngIf = "true";
+		// 									break;
+		// 								}
+		// 								node = node.parentElement;
+		// 							}
+		// 							return originalCompile.apply(this, arguments);
+		// 						};
 
-	// 						return $delegate;
-	// 					},
-	// 				]);
-	// 			},
-	// 		]);
-	// 	}
-	// }\
+		// 						return $delegate;
+		// 					},
+		// 				]);
+		// 			},
+		// 		]);
+		// 	}
+		// }\
 	}
 	private async loadProfileGradient() {
 		const meta = document.querySelector('meta[property="twitter:app:url:iphone"]') as HTMLMetaElement;

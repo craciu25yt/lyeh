@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.8.2
+- Added font fallback to allow latin characters
+- Added css to filepicker 
+- Fixed button hover style
+
 ## 1.8.1
 - Implemented Out of the Box experience (setup) for lyeh
 

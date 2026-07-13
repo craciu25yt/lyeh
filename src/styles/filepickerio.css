@@ -1,0 +1,80 @@
+html, body {
+    background-color: rgba(0,0,0, 0.7) !important;
+}
+
+
+
+
+div[class^="LyricsEditProposals-desktop__Proposal-sc"] {
+    background-color: var(--background-glassy-50);
+}
+div[class^="fp__wrapper"],
+div[class^="fp__content"],
+div[class^="fp__sidebar"],
+section[class^="fp__action-bar"],
+div[class^="fp__action-bar"],
+header[class^="content__header"],
+section[class^="fp__drag-and-drop"],
+[class^="fp__alert"],
+[class^="content__box"],
+[class^="fp__flex"],
+.fp__header {
+    background-color: transparent !important;
+}
+
+
+.fp__container {
+    background-color: transparent !important;
+    border-radius: 15px;
+}
+
+
+
+.fp__header__title,
+label[class^="ng-binding"], h1 {
+    color: white !important;
+}
+
+p {
+    color: var(--lyeh-text-muted) !important;
+}
+
+
+
+ul[class="sidebar__group"] .active {
+    background-color: var(--accent-40) !important;
+}
+ul[class="sidebar__group"] :hover {
+    background-color: var(--accent-40) !important;
+}
+input[class^="form__control"] {
+    background-color: var(--background-glassy-container);
+}
+
+input[class^="btn"],
+button[class^="btn"] {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background-color: var(--accent-40) !important;
+    color: white !important;
+}
+
+button[class^="btn"]:disabled {
+    color: white !important;
+}
+button[class^="btn"]:hover:disabled {
+    background-color: var(--accent-40) !important;
+    color:white!important
+}
+
+
+button[class^="btn"]:hover ,
+input[class^="btn"]:hover {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background-color: var(--accent-70) !important;
+}
+
+div[class^="fp__container"] {
+    background-color: transparent !important;
+    border-radius: 15px;
+
+}

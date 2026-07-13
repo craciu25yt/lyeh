@@ -11,7 +11,7 @@
 
     --background-secondary: var(--settings-background);
 
-    --background-glassy-50: color-mix(in srgb, var(--settings-background), #000000 20%);
+    --background-glassy-50: color-mix(in srgb, var(--settings-background), rgba(0,0,0,0.5) 50%);
 
     --background-glassy-container: color-mix(in srgb, rgba(41, 36, 36, 0.4),  var(--settings-background) 20%);
     --background-glassy-layer: color-mix(in srgb, #16141496 , var(--settings-background) 25%);
@@ -54,7 +54,9 @@ main {
     background-color: var(--background-main) !important;
     color: var(--lyeh-text-main) !important;
     fill: var(--lyeh-text-main) !important;
-    transition: background-color 1s;
+}
+iframe {
+    background: transparent !important;
 }
 path {
     fill: var(--lyeh-text-main);
@@ -66,7 +68,7 @@ div[class^="StickyNavLoggedIn__Container"] path {
 
 div[class^="Lyrics__Container"] {
     color: var(--lyeh-text-main) !important;
-    font-family: var(--settings-font);
+    font-family: var(--settings-font), "Programme Pan", Arial, sans-serif;
     font-weight: var(--settings-font-weight);
 }
 
@@ -374,6 +376,7 @@ div[class^="ScrollableTabs__TabNavContainer"] {
 div[class^="ScrollableTabs__ContentArea"] {
     position: relative;
     background-color: transparent;
+
 }
 div[class^="ScrollableTabs__ContentArea"]::before {
     content: "";
@@ -382,7 +385,19 @@ div[class^="ScrollableTabs__ContentArea"]::before {
     inset: 0;
     backdrop-filter: blur(10px);
     position: absolute;
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0 0 15px 15px;
 }
+
+input[class^="TextInput-sc"]:disabled {
+    background-color: rgba(0,0,0,0.6) !important;
+}
+div[class^="TagInput__Container"]:has([class^="TagInput__DisabledIcon"]) {
+    background-color: rgba(0,0,0,1) !important;
+}
+
+
 h3[class^="ScrollableTabsSection__Title"],
 legend[class^="Field-shared__FieldLabel"] {
     color: var(--lyeh-text-main);
@@ -427,10 +442,17 @@ button[class^="IconButton-sc"][class*="Modal-desktop__SaveIconButton-sc"] {
 button[class^="IconButton-sc"][class*="Modal-desktop__SaveIconButton-sc"] path {
     fill: white !important;
 }
+
 label[class^="Modal-desktop__ButtonField"] button[aria-label="Save"]:hover {
     background-color: rgb(106 189 70) !important;
 }
 label[class^="Modal-desktop__ButtonField"] button[aria-label="Cancel"]:hover {
+    background-color: var(--accent-60) !important;
+}
+label[class^="Modal-desktop__ButtonField"] button[aria-label="Close"]:hover {
+    background-color: var(--accent-60) !important;
+}
+button[class^="IconButton-sc"]:hover {
     background-color: var(--accent-60) !important;
 }
 /* todo: order this 😭*/
@@ -580,4 +602,26 @@ label[class^="RadioButtons__Label-sc"] div {
 }
 input[type="radio"]:checked ~ [class^="RadioButtons__Button-sc"]::before {
     background-color: var(--lyeh-text-main) !important;
+}
+
+
+div[class^="LyricsEditProposals-desktop__Proposal-sc"] {
+    background-color: var(--background-glassy-50);
+}
+
+
+/* outside of iframe  */
+div[class^=fp__overlay] {
+    background-color: transparent !important;
+
+}
+
+
+[class^="fp__container"] {
+    background-color: transparent !important;
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+
+    border: 1px solid rgba(255, 255, 255, 0.4);
+
 }
