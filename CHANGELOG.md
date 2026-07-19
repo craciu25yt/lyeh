@@ -1,6 +1,12 @@
 # Changelog
 
-## 1.8.2
+## 1.8.4
+- Expanded social medias in artist profiles
+- Fixed settings popups not closing after clicking outside of it
+- Few UI tweaks in settings
+- Fixed few missing CSS in some albums menus
+
+## 1.8.3
 - Added font fallback to allow latin characters
 - Added css to filepicker 
 - Fixed button hover style
