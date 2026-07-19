@@ -16,7 +16,7 @@
 					</svg>
 				</button>
 			</div>
-			<div class="content">
+			<div class="content" @click="closeAllDropdowns">
 				<div v-for="category in schema" :key="category.id" class="category-row">
 					<h3 class="category-title">{{ category.title }}</h3>
 					<div class="setting-list">
@@ -225,6 +225,10 @@ function colorCallback(id: string) {
 	}
 }
 function toggleSelector(id: string) {
+	if (isOpen.value[id]) {
+		isOpen.value[id] = false;
+		return;
+	}
 	Object.keys(isOpen.value).forEach(k => isOpen.value[k] = false);
 	isOpen.value[id] = true;
 }
@@ -842,9 +846,26 @@ onUnmounted(() => {
 	background: rgba(255, 255, 255, 0.1);
 	border: 1px solid rgba(255, 255, 255, 0.15);
 	border-radius: 10px;
-	padding: 6px 12px;
+	padding: 6px 28px 6px 12px;
 	color: white;
 	align-items: center;
+	user-select: none;
+	position: relative;
+}
+.selector-current::after {
+	content: "";
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	width: 7px;
+	height: 7px;
+	border-right: 2px solid rgba(255, 255, 255, 0.6);
+	border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+	transform: translateY(-70%) rotate(45deg);
+	transition: transform 0.2s ease;
+}
+.selector-container:has(.selector-option-menu) .selector-current::after {
+	transform: translateY(-30%) rotate(-135deg);
 }
 
 .selector-option-menu {

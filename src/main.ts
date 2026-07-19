@@ -162,7 +162,7 @@ class Genie {
 			console.log(source);
 
 			// scribe guy fix your thing and stop sending my data to ai pls
-			if (source.includes("chrome-extension://") && !source.includes("lyeh")) return;
+			if (source.includes("chrome-extension://") && !source.includes("Genie")) return;
 			if (source.includes("api.js?onload=cloudflare")) return;
 			if (source.includes("assets.genius.com")) return;
 
@@ -308,6 +308,8 @@ class Genie {
 			for (const mutation of mutations) {
 				for (const node of mutation.addedNodes) {
 					if (!(node instanceof HTMLElement)) continue;
+					console.log(node)
+
 					const bioContainer = node.matches("profile-user-pane")
 						? document.querySelector(`profile-user-pane > div[class^="white_container"]`)
 						: null;
@@ -335,6 +337,9 @@ class Genie {
 						bioContainer.insertAdjacentElement("afterend", titleContainer);
 
 						createApp(Heatmap).mount(githubSkid);
+					}
+					if (node.matches(`[class^="SocialProfiles__Container"]`)) {
+						console.log("otia tio ke no lo he enxufao")
 					}
 					//console.log(document.querySelector(`[class="square_button"][ng-if="$ctrl.can_edit_profile"]`))
 					const buttonContainer = node.matches(`[class^="column_layout-column_span"]`)
@@ -499,6 +504,45 @@ class Genie {
 			if (youtubeToggled) {
 				this.mountYouTube();
 			}
+		}
+		if (currentPage == "profilePage") {
+			const SocialProfiles = document.querySelector(`[class^="SocialProfiles__Container"]`)
+			if (!SocialProfiles) {
+				console.log("social profiles not found")
+			}
+			SocialProfiles.classList = ""
+			while (SocialProfiles?.firstChild) {
+				SocialProfiles.removeChild(SocialProfiles.firstChild)
+			}
+
+			const containter = document.createElement("div")
+			containter.classList = "social-container"
+			SocialProfiles?.appendChild(containter)
+			for (let [social, username] of Object.entries(trackingData.entities.artists[trackingData.profilePage.artist].socialLinks) as [string, string][]) {
+				const elem = document.createElement("a")
+				elem.classList = "social-elem"
+				let displaySocial = social
+				if (social == "youtube") displaySocial = "YouTube"
+				else if (social == "tiktok") displaySocial = "TikTok"
+				else displaySocial = social
+								.replace(/([A-Z])/g, ' $1')
+								.replace(/^./, letter => letter.toUpperCase())
+								.trim()
+				// sometimes I wonder what the fuck do I code
+				elem.textContent = displaySocial
+
+				if (social == "instagram") username = "https://instagram.com/"+username
+				if (social == "snapchat") username = "https://snapchat.com/@"+username
+				if (social == "facebook") username = "https://facebook.com/"+username
+				if (social == "twitter") username = "https://twitter.com/"+username
+				if (social == "tiktok") username = "https://tiktok.com/@"+username
+				elem.href = username
+
+				containter?.appendChild(elem)
+				console.log(social, username)
+			}
+
+			console.log(SocialProfiles)
 		}
 		const url = new URL(window.location.href);
 		const userRegex = /^\/[^\/-]+\/?$/;
