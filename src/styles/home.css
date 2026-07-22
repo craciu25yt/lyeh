@@ -48,3 +48,12 @@ div[class^="EditorialPlacement__Label"]::after {
 a[class^="PageGrid-desktop"][class*="CommunityRanking-desktop__Row"]:hover {
     background-color: var(--accent-muted);
 }
+
+div[class^="HomeContent-desktop__CenteredFlexColumn-sc"] section{
+    background-color: transparent;
+}
+
+div[class^="HomeContent-desktop__Container-sc"] section {
+    background-color: transparent;
+
+}

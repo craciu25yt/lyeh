@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.9.0
+- Introduced hotkeys in text inputs (Control-B, Control-I, Control-D, Control-Shift-K. Check out the readme)
+- Added cover search (BETA)
+- Fixed css in home page
+- Added new Editors purple to its badge (genius devs failed to do 😭)
+
 ## 1.8.4
 - Expanded social medias in artist profiles
 - Fixed settings popups not closing after clicking outside of it

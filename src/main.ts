@@ -12,6 +12,7 @@ import "./styles/home.css";
 import "./styles/add_song.css";
 import "./styles/font.css";
 import Heatmap from "./components/Heatmap.vue";
+import coverSelector from "./components/coverSelector.vue";
 
 import "./styles/art_extractor.css";
 import { getSwatches, getSwatchesSync } from "colorthief";
@@ -164,7 +165,7 @@ class Genie {
 			// scribe guy fix your thing and stop sending my data to ai pls
 			if (source.includes("chrome-extension://") && !source.includes("Genie")) return;
 			if (source.includes("api.js?onload=cloudflare")) return;
-			if (source.includes("assets.genius.com")) return;
+			if (source.includes("genius.com")) return;
 
 			if (err.message == "Script error.") return;
 			console.log("error unu", document.readyState);
@@ -234,6 +235,7 @@ class Genie {
 				if (event.ctrlKey && event.key == "m") {
 					debugger;
 				}
+				this.keybindManager(event)
 			});
 		}
 		// const originalFetch = window.fetch;
@@ -256,6 +258,77 @@ class Genie {
 		// 	return response;
 		// };
 		state = "pre-starting";
+	}
+	private tags = ["i", "b"]
+	private keybindManager(event: KeyboardEvent) {
+		const key = event.key.toLowerCase()
+
+		if (!event.ctrlKey) return
+		if (key != "b" && key != "i" && key != "d" && (key != "k" || !event.shiftKey)) return
+		const elem = document.querySelector(`textarea[class^="TextInput-"]`) as HTMLTextAreaElement | HTMLInputElement;
+		if (!elem || document.activeElement != elem) return
+
+		console.log("wawa prevented", key)
+		event.preventDefault();
+
+		const start = elem.selectionStart ?? 0;
+		const end = elem.selectionEnd ?? 0;
+		const text = elem.value;
+
+		let lineStart = text.lastIndexOf("\n", start - 1) + 1;
+		const lineEndIndex = text.indexOf("\n", end);
+		const lineEnd = lineEndIndex === -1 ? text.length : lineEndIndex;
+
+		const selectedText = text.substring(start, end);
+		let placeholder = ""
+		if (key == "b") {
+			placeholder = `<b>${selectedText}</b>`
+		}
+		if (key == "i") {
+			placeholder = `<i>${selectedText}</i>`
+		}
+		if (key == "d") {
+			const currentLine = text.substring(lineStart, lineEnd);
+			console.log(currentLine)
+			placeholder = `\n${currentLine}`
+
+			elem.setSelectionRange(lineEnd,lineEnd);
+
+		}
+		if (key == "k") {
+			if (lineEndIndex === -1 && lineStart > 0) {
+				lineStart -= 1;
+			}
+			console.log(lineEnd, lineStart)
+			elem.setSelectionRange(lineStart - 1, lineEnd);
+
+		}
+
+		const cursorPos1 = selectedText.length > 0 ? start + placeholder.length : start + 3;
+		const cursorPos2 = selectedText.length > 0 ? start + placeholder.length : start + 3;
+
+		elem.focus();
+
+		//@ts-nocheck
+		const success = document.execCommand("insertText", false, placeholder);
+
+		if (!success) {
+			if (key == "k") {
+				elem.value = text.substring(0, lineStart) + text.substring(lineEnd);
+
+			}
+			elem.value = text.substring(0, start) + placeholder + text.substring(end);
+		}
+		if (key == "d") {
+			elem.setSelectionRange(start + placeholder.length, end + placeholder.length);
+
+		} else if (key == "k") {
+			elem.setSelectionRange(lineStart, lineStart);
+
+		} else {
+			elem.setSelectionRange(cursorPos1, cursorPos2);
+		}
+
 	}
 	private isMounted = false;
 	private backendBase = "https://lyeh.auchen.net";
@@ -340,6 +413,28 @@ class Genie {
 					}
 					if (node.matches(`[class^="SocialProfiles__Container"]`)) {
 						console.log("otia tio ke no lo he enxufao")
+					}
+					const metadataPopup = node.matches(`[class^="Modal-shared__ModalSharedContainer-sc"][id="edit-metadata-overlay"]`)
+						? document.querySelectorAll(`div[class^="AudioAndMedia__Container"] div[class^="MetadataRow__MetadataRowDesktop"]`)[1]
+						: null
+					if (metadataPopup) {
+						metadataPopup.querySelector(`div[class^="AudioAndMedia__Gradient"]`)?.remove()
+
+						metadataPopup.classList.add("lyeh-cover-parent")
+						const coverWrapper = document.createElement("div")
+						coverWrapper.className = "lyeh-cover-wrapper"
+						metadataPopup.appendChild(coverWrapper)
+
+						createApp(coverSelector).mount(coverWrapper);
+						window.dispatchEvent(
+							new CustomEvent("lyeh:cover", {
+								detail: {
+									name: trackingData.songPage.trackingData.Title,
+									artists: trackingData.songPage.trackingData["Primary Artists"],
+								},
+							}),
+						);
+
 					}
 					//console.log(document.querySelector(`[class="square_button"][ng-if="$ctrl.can_edit_profile"]`))
 					const buttonContainer = node.matches(`[class^="column_layout-column_span"]`)
@@ -501,6 +596,30 @@ class Genie {
 				observer.observe(el);
 			}
 
+			const coverWrapper = document.querySelector<HTMLDivElement>(`div[class^="SongHeader-desktop__CoverArt-sc"]`)
+			const cover = document.querySelector<HTMLImageElement>(`div[class^="SongHeader-desktop__CoverArt-sc"] img`);
+
+			if (coverWrapper && cover) {
+				(async () => {
+					try {
+						await cover.decode();
+					} catch {
+						if (!cover.complete) {
+							await new Promise((resolve) => {
+								cover.onload = resolve;
+								cover.onerror = resolve;
+							});
+						}
+					}
+
+						const coverData = document.createElement("div");
+						coverData.className = "cover-data";
+						coverData.innerText = `${cover.naturalWidth}x${cover.naturalHeight}`;
+						coverWrapper.appendChild(coverData);
+
+
+				})()
+			}
 			if (youtubeToggled) {
 				this.mountYouTube();
 			}

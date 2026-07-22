@@ -10,7 +10,7 @@ export default defineConfig(({ command }) => ({
 			userscript: {
 				name: "Genie",
 				namespace: "npm/lyeh",
-				version: "1.8.4",
+				version: "1.9.0",
 				match: ["https://genius.com/*", "https://dialog.filepicker.io/dialog/open/*"],
 				grant: [
 					"GM_addStyle",
@@ -36,6 +36,11 @@ export default defineConfig(({ command }) => ({
 		basicSsl(),
 	],
 	server: {
-		https: false,
+		https: true,
+		cors: true,
+		headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Private-Network': 'true', // Drops the PNA loopback block
+    },
 	},
 }));

@@ -96,3 +96,7 @@ div[class^="StackedCoverArts__TextOverlay"]{
 div[class^="EmptyTrackSlot__Container"] {
     background-color: var(--accent-50);
 }
+
+div[class^="ScrollableTabs__ContentHeader"] {
+    background-color: transparent;
+}

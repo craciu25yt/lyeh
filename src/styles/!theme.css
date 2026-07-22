@@ -2,22 +2,17 @@
 /*[data-lyeh-theme="dark"]*/
 :root {
     --settings-background: #4d4545ff;
-    --background-main: color-mix(
-      in srgb,
-       rgba(0, 0, 0, 1),
-      var(--settings-background, transparent)
-    );
+    --background-main: color-mix(in srgb, rgba(0, 0, 0, 1), var(--settings-background, transparent));
     --background-main-full: rgb(from var(--settings-background) r g b / 1);
 
     --background-secondary: var(--settings-background);
 
-    --background-glassy-50: color-mix(in srgb, var(--settings-background), rgba(0,0,0,0.5) 50%);
+    --background-glassy-50: color-mix(in srgb, var(--settings-background), rgba(0, 0, 0, 0.5) 50%);
 
-    --background-glassy-container: color-mix(in srgb, rgba(41, 36, 36, 0.4),  var(--settings-background) 20%);
-    --background-glassy-layer: color-mix(in srgb, #16141496 , var(--settings-background) 25%);
+    --background-glassy-container: color-mix(in srgb, rgba(41, 36, 36, 0.4), var(--settings-background) 20%);
+    --background-glassy-layer: color-mix(in srgb, #16141496, var(--settings-background) 25%);
 
-    --background-glassy-hover: color-mix(in srgb, #161414 , var(--settings-background) 55%);
-
+    --background-glassy-hover: color-mix(in srgb, #161414, var(--settings-background) 55%);
 
     --settings-accent: #fa64a0; /* Custom accent color instead of Genius yellow */
     --lyeh-text-main: #f1f2f6;
@@ -44,7 +39,6 @@
 
     --profile-bg-primary: var(--settings-background);
     --profile-bg-secondary: var(--settings-background);
-
 }
 
 /* Overwrite the structural layout safely */
@@ -85,7 +79,6 @@ span[class^="ReferentFragment"] span {
 }
 div[class^="AnnotationPlaceholder__Block"] {
     background-color: var(--accent-50);
-
 }
 .rich_text_formatting a:hover {
     border-radius: 4px;
@@ -98,7 +91,6 @@ span[class^="ReferentFragment"] {
     background: var(--background-secondary);
     color: var(--lyeh-text-main) !important;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-
 
     z-index: 1;
 }
@@ -299,6 +291,10 @@ button {
     color: white !important;
 }
 
+span[class^="user_badge-role_icon"][class*="user_badge-role_icon--editor"] path,
+div[class^="UserBadge__Role-sc-"][role="editor"] path {
+    fill: #d4aaff !important
+}
 div[class^="UserBadge__Role-sc-"] {
     display: inline-flex;
     align-items: center;
@@ -376,7 +372,6 @@ div[class^="ScrollableTabs__TabNavContainer"] {
 div[class^="ScrollableTabs__ContentArea"] {
     position: relative;
     background-color: transparent;
-
 }
 div[class^="ScrollableTabs__ContentArea"]::before {
     content: "";
@@ -391,12 +386,11 @@ div[class^="ScrollableTabs__ContentArea"]::before {
 }
 
 input[class^="TextInput-sc"]:disabled {
-    background-color: rgba(0,0,0,0.6) !important;
+    background-color: rgba(0, 0, 0, 0.6) !important;
 }
 div[class^="TagInput__Container"]:has([class^="TagInput__DisabledIcon"]) {
-    background-color: rgba(0,0,0,1) !important;
+    background-color: rgba(0, 0, 0, 1) !important;
 }
-
 
 h3[class^="ScrollableTabsSection__Title"],
 legend[class^="Field-shared__FieldLabel"] {
@@ -420,7 +414,7 @@ div[id^="react-select"] {
     color: white;
 }
 div[class^="css-"][class*="menu"] {
-    background-color: var(--background-glassy-container)
+    background-color: var(--background-glassy-container);
 }
 div[class^="css-"][class*="option"]:hover {
     background-color: var(--accent-40) !important;
@@ -608,18 +602,14 @@ input[type="radio"]:checked ~ [class^="RadioButtons__Button-sc"]::before {
     background-color: var(--lyeh-text-main) !important;
 }
 
-
 div[class^="LyricsEditProposals-desktop__Proposal-sc"] {
     background-color: var(--background-glassy-50);
 }
 
-
 /* outside of iframe  */
-div[class^=fp__overlay] {
+div[class^="fp__overlay"] {
     background-color: transparent !important;
-
 }
-
 
 [class^="fp__container"] {
     background-color: transparent !important;
@@ -627,5 +617,35 @@ div[class^=fp__overlay] {
     border-radius: 15px;
 
     border: 1px solid rgba(255, 255, 255, 0.4);
+}
+div[class^="SongHeader-desktop__CoverArt-sc"] {
+    position: relative !important;
+    overflow: visible !important;
+}
+.cover-data {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    transform: translateY(-100%); /* Shifts the element up by its exact height */
+    text-align: center;
+    padding: 7px;
+    z-index: 100;
+    font-size: 0.75rem
+}
 
+
+.lyeh-cover-parent {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 15px
+}
+
+.lyeh-cover-wrapper {
+    position: relative;
+    background-color: var(--background-glassy-container);
+    min-height: 315px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 15px;
 }
