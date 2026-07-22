@@ -18,7 +18,7 @@ div[class^="styleAnchors__PageHeaderDropdownMenu"][class*="PageHeaderDropdown-de
 div[class*="styleAnchors__PageHeaderDropdownMenu"][class*="PageHeaderDropdown-desktop__Container"] {
     width: 35vw !important;
 }
-div[aria-label^="User Menu"] ~ div[class*="styleAnchors__PageHeaderDropdownMenu"] {
+button[aria-label^="User menu"] ~ div[class^="styleAnchors__PageHeaderDropdownMenu"] {
     width: 10vw !important;
 }
 /* Me */

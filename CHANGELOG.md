@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.1
+- Fixed some breaking changes from a genius update
+
 ## 1.9.0
 - Introduced hotkeys in text inputs (Control-B, Control-I, Control-D, Control-Shift-K. Check out the readme)
 - Added cover search (BETA)

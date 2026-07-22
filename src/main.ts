@@ -453,9 +453,10 @@ class Genie {
 					}
 
 					const menu = node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`);
-					if (menu && node.querySelector('a[href="/forums"]')) {
+					console.log(menu, node.querySelector('a[href="/firehose"]'))
+					if (menu && node.querySelector('a[href="/firehose"]')) {
 						const placeholder = document.createElement("button");
-						placeholder.className = "PageHeaderMenu__Title-sc-jiji PageHeaderMenu__Item-sc-holi gzRYgj";
+						placeholder.className = "PageHeaderMenu__Title-sc-24f4267f-7 PageHeaderMenu__Item-sc-24f4267f-8 chZDxM bCjpxo";
 						placeholder.style.padding = "0.75 rem";
 						placeholder.innerText = "Lyeh Settings";
 						placeholder.onclick = () => {

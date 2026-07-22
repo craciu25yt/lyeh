@@ -13,8 +13,8 @@ nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"
     color: contrast-color(var(--current-accent));
     text-decoration: none !important;
 }
-nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"]) div[class^="PageHeaderMenu__Iq"] {
-    color: contrast-color(var(--current-accent)) !important;
+div[class^="StickyNavLoggedIn__Container"] div[class^="PageHeaderMenu__Iq"] span {
+    color: var(--accent-text) !important;
 }
 
 main[class*="ProfileContent-desktop__PageGrid"] path {
