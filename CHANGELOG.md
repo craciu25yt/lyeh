@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.2
+- Added deezer & fixed column in cover search
+
 ## 1.9.1
 - Fixed some breaking changes from a genius update
 
