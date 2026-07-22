@@ -6,7 +6,10 @@ Lyeh (or Genie 🧞) is a project that aims to improve the overall user experien
 > Lyeh is already considered stable. Note: few Transcriber and Staff only menus unstyled. If you find any, please reach me out
 
 ## Preview 
-https://github.com/user-attachments/assets/c93ba9b7-adee-4753-8725-516c803908a7
+https://github.com/user-attachments/assets/d2f83f8d-b87f-432d-a485-f62a472b6938
+
+
+
 
 <br>
 
