@@ -9,15 +9,15 @@ Lyeh (or Genie 🧞) is a project that aims to improve the overall user experien
 https://github.com/user-attachments/assets/d2f83f8d-b87f-432d-a485-f62a472b6938
 
 
-
-
 <br>
 
 ## Features
 - Custom Genius UI, based on Glass and Dark Mode (further themes coming soon)
 - YouTube Support and Synced Lyrics
-- Customizable settings
+- Built-in Song & Album artwork finder
+- Custom profile gradient (visible for all Lyeh users)
 - User contribution heatmap
+- Customizable settings
 
 
 Note: Suggestions are welcome! You can open an [issue](https://github.com/craciu25yt/lyeh/issues) or contact me through Discord `craciu25yt` (you can also tag me in the official Genius Discord)
@@ -27,10 +27,10 @@ Note: Suggestions are welcome! You can open an [issue](https://github.com/craciu
 ## How to install?
 To run Lyeh you need TamperMonkey, ViolentMonkey, or any fork of it.
 Then you simply click [here](https://craciu25yt.github.io/lyeh/genie.user.js) to add it!
-
+Note: I recommend decreasing the Auto-Updater interval, or attempting to force-update every some time to be able to enjoy newer features
 
 > [!WARNING]
-> If you have any issues (such as auto-updater with the old url), please clear the executor's cache. For example in ViolentMonkey is:
+> If you have any issues, you can attempt to: Clear Lyeh's cache, force-fetch an update, or clear please clear the executor's cache. For example in ViolentMonkey is:
 > Extension settings -> Settings Vacuum Database
 >
 
