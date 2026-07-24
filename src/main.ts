@@ -259,7 +259,6 @@ class Genie {
 		// };
 		state = "pre-starting";
 	}
-	private tags = ["i", "b"]
 	private keybindManager(event: KeyboardEvent) {
 		const key = event.key.toLowerCase()
 
@@ -544,12 +543,14 @@ class Genie {
 		observer.observe(document.body, { childList: true, subtree: true });
 	}
 	private mountYouTube() {
+		const songEntity = trackingData.entities.songs[trackingData.songPage.song];
+		console.log(JSON.stringify(songEntity), JSON.stringify(trackingData.songPage))
 		console.log("mounting YouTube", trackingData.entities.songs[trackingData.songPage.song].youtubeUrl);
 		window.dispatchEvent(
 			new CustomEvent("lyeh:youtube:display", {
 				detail: {
-					name: trackingData.songPage.trackingData.Title,
-					artists: trackingData.songPage.trackingData["Primary Artists"],
+					name: trackingData.songPage.trackingData?.Title ?? songEntity.title ?? "Failed to get song title",
+					artists: trackingData.songPage.trackingData?.["Primary Artists"] ?? ["Failed to get artists"],
 					image: covers.get("https://genius.com" + trackingData.songPage.path),
 					appleMusicID: trackingData.entities.songs[trackingData.songPage.song].appleMusicId,
 					youtubeUrl: trackingData.entities.songs[trackingData.songPage.song].youtubeUrl,
@@ -626,43 +627,7 @@ class Genie {
 			}
 		}
 		if (currentPage == "profilePage") {
-			const SocialProfiles = document.querySelector(`[class^="SocialProfiles__Container"]`)
-			if (!SocialProfiles) {
-				console.log("social profiles not found")
-			}
-			SocialProfiles.classList = ""
-			while (SocialProfiles?.firstChild) {
-				SocialProfiles.removeChild(SocialProfiles.firstChild)
-			}
 
-			const containter = document.createElement("div")
-			containter.classList = "social-container"
-			SocialProfiles?.appendChild(containter)
-			for (let [social, username] of Object.entries(trackingData.entities.artists[trackingData.profilePage.artist].socialLinks) as [string, string][]) {
-				const elem = document.createElement("a")
-				elem.classList = "social-elem"
-				let displaySocial = social
-				if (social == "youtube") displaySocial = "YouTube"
-				else if (social == "tiktok") displaySocial = "TikTok"
-				else displaySocial = social
-								.replace(/([A-Z])/g, ' $1')
-								.replace(/^./, letter => letter.toUpperCase())
-								.trim()
-				// sometimes I wonder what the fuck do I code
-				elem.textContent = displaySocial
-
-				if (social == "instagram") username = "https://instagram.com/"+username
-				if (social == "snapchat") username = "https://snapchat.com/@"+username
-				if (social == "facebook") username = "https://facebook.com/"+username
-				if (social == "twitter") username = "https://twitter.com/"+username
-				if (social == "tiktok") username = "https://tiktok.com/@"+username
-				elem.href = username
-
-				containter?.appendChild(elem)
-				console.log(social, username)
-			}
-
-			console.log(SocialProfiles)
 		}
 		const url = new URL(window.location.href);
 		const userRegex = /^\/[^\/-]+\/?$/;

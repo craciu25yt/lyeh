@@ -573,7 +573,23 @@ Node.prototype.removeChild = function (child) {
   }
   return nativeRemoveChild.call(this, child);
 };
-
+const nativeInsertBefore = Node.prototype.insertBefore;
+//@ts-ignore
+Node.prototype.insertBefore = function (newNode, referenceNode) {
+  if (referenceNode && referenceNode.parentNode !== this) {
+    const actualParent = referenceNode.parentNode;
+    //@ts-ignore
+    if (actualParent && actualParent.classList?.contains("synced-line")) {
+      return nativeInsertBefore.call(actualParent, newNode, referenceNode);
+    }
+    // Fallback: If referenceNode is detached or modified, append to this container instead of crashing
+    if (this.contains(referenceNode)) {
+      return nativeInsertBefore.call(this, newNode, referenceNode);
+    }
+    return nativeInsertBefore.call(this, newNode, null);
+  }
+  return nativeInsertBefore.call(this, newNode, referenceNode);
+};
 
 const nativeReplaceChild = Node.prototype.replaceChild;
 //@ts-ignore

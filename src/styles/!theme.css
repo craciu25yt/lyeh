@@ -53,9 +53,11 @@ iframe {
     background: transparent !important;
 }
 path {
-    fill: var(--lyeh-text-main);
+  fill: var(--lyeh-text-main);
 }
-
+[class^="RoleIcon__Container"] path {
+  fill: #d4aaff;
+}
 div[class^="StickyNavLoggedIn__Container"] path {
     fill: color-contrast(var(--current-accent));
 }
@@ -571,7 +573,7 @@ button[class^="TextButton"] path {
 
 .iq_notification {
     border-radius: 10px;
-    background-color: rgb(219 89 141 / 49%) !important;
+    background-color: var(--accent-50) !important;
     backdrop-filter: blur(10px);
     box-shadow: none !important;
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -652,4 +654,8 @@ div[class^="SongHeader-desktop__CoverArt-sc"] {
 
 div[class^="MetadataRow__MetadataRowDesktop"] {
     flex-direction: column;
+}
+
+div[class^="BannerAlert__Container"] {
+    background-image: none !important;
 }
