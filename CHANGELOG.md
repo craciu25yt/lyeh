@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.9.4
+- Few styling fixes
+
+## 1.9.3
+- Few fixes
+
 ## 1.9.2
 - Added deezer & fixed column in cover search
 

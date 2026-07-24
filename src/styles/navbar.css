@@ -71,16 +71,20 @@ div[class="lyeh__ItemParent"]:has([class^="LineItemDetail__Container"]) [class^=
 }
 
 div[class^="ExpandableDiff__Lines"] ins,
-ins {
+ins, p ins  {
     color: var(--lyeh-text-main) !important;
     background-color: #13ff004a !important;
 }
 div[class^="ExpandableDiff__Lines"] del,
-del {
+del, del *, p del{
     color: var(--lyeh-text-main) !important;
     background-color: #ff00004a !important;
 }
 
+div[class^="MetadataChangesSection__Container"] {
+    color: var(--lyeh-text-main) !important;
+
+}
 div[class^="DetailSection__SectionWrapper"] {
     background-color: transparent !important;
 }
