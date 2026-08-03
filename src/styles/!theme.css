@@ -659,3 +659,6 @@ div[class^="MetadataRow__MetadataRowDesktop"] {
 div[class^="BannerAlert__Container"] {
     background-image: none !important;
 }
+form[class^="PyongNoteForm__Form"] {
+    background-color: transparent !important;
+}

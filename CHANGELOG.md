@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.6
+- Pyong comment css
+
 ## 1.9.5
 - Filter parenthesis from artists names to highly improve cover search
 - Fixed broken css
