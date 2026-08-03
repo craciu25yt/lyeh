@@ -223,7 +223,7 @@ class Genie {
 			}
 		}
 
-		if (document.readyState === "loading") {
+		if (document.readyState === "loading" || !document.body) {
 			window.addEventListener("DOMContentLoaded", () => this.startup());
 		} else {
 			this.startup();
@@ -713,7 +713,9 @@ class Genie {
 
 	private extractSongData() {
 		trackingData = (unsafeWindow as any).__PRELOADED_STATE__ || null;
-		if (!trackingData) return;
+		if (!trackingData) {
+			console.log("Failed to extract metadata????")
+		};
 		console.log("Genius Metadata captured:", trackingData);
 		currentPage = trackingData.currentPage;
 		for (const [_, data] of Object.entries(trackingData.entities.artists || {}) as [string, any]) {

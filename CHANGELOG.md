@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.9.5
+- Filter parenthesis from artists names to highly improve cover search
+- Fixed broken css
+- Fixed mutation observer race condition
+
 ## 1.9.4
 - Few styling fixes
 
@@ -9,7 +14,7 @@
 ## 1.9.2
 - Added deezer & fixed column in cover search
 
-## 1.9.1
+## 1.9.1  
 - Fixed some breaking changes from a genius update
 
 ## 1.9.0

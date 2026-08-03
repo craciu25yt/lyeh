@@ -10,7 +10,7 @@ export default defineConfig(({ command }) => ({
 			userscript: {
 				name: "Genie",
 				namespace: "npm/lyeh",
-				version: "1.9.4",
+				version: "1.9.5",
 				match: ["https://genius.com/*", "https://dialog.filepicker.io/dialog/open/*"],
 				grant: [
 					"GM_addStyle",
@@ -26,7 +26,7 @@ export default defineConfig(({ command }) => ({
 					"GM_listValues",
 					"unsafeWindow",
 				],
-				connect: ["genius.com", "images.genius.com", "t2.genius.com", "music.youtube.com", "lrclib.net"],
+				connect: ["genius.com", "images.genius.com", "t2.genius.com", "music.youtube.com", "lrclib.net", "lyeh.auchen.net"],
 				"run-at": "document-start",
 				updateURL: "https://raw.githubusercontent.com/craciu25yt/lyeh/gh-pages/genie.user.js",
 				downloadURL: "https://raw.githubusercontent.com/craciu25yt/lyeh/gh-pages/genie.user.js",

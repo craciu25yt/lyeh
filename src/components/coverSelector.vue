@@ -22,126 +22,126 @@
 					/>
 				</svg>
 				<svg v-if="cover.provider == 'deezer'" xmlns="http://www.w3.org/2000/svg" width="20" viewBox="20 0 190.4 70.3">
-  <g>
-    <path fill-rule="evenodd" clip-rule="evenodd" fill="#40ab5d" d="M155.5-25.1h42.9V0h-42.9z" />
-    <linearGradient
-      gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
-      y2="255.826"
-      x2="-111.943"
-      y1="241.804"
-      x1="-111.722"
-      gradientUnits="userSpaceOnUse"
-      id="a"
-    >
-      <stop offset="0" stop-color="#358c7b" />
-      <stop offset=".526" stop-color="#33a65e" />
-    </linearGradient>
-    <path fill="url(#a)" fill-rule="evenodd" clip-rule="evenodd" d="M155.5 9.7h42.9v25.1h-42.9z" />
-    <linearGradient
-      gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
-      y2="235.917"
-      x2="-99.772"
-      y1="223.628"
-      x1="-123.891"
-      gradientUnits="userSpaceOnUse"
-      id="b"
-    >
-      <stop offset="0" stop-color="#222b90" />
-      <stop offset="1" stop-color="#367b99" />
-    </linearGradient>
-    <path fill="url(#b)" fill-rule="evenodd" clip-rule="evenodd" d="M155.5 44.5h42.9v25.1h-42.9z" />
-    <linearGradient
-      gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
-      y2="210.773"
-      x2="-185.032"
-      y1="210.773"
-      x1="-208.432"
-      gradientUnits="userSpaceOnUse"
-      id="c"
-    >
-      <stop offset="0" stop-color="#f90" />
-      <stop offset="1" stop-color="#ff8000" />
-    </linearGradient>
-    <path fill="url(#c)" fill-rule="evenodd" clip-rule="evenodd" d="M0 79.3h42.9v25.1H0z" />
-    <linearGradient
-      gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
-      y2="210.773"
-      x2="-156.732"
-      y1="210.773"
-      x1="-180.132"
-      gradientUnits="userSpaceOnUse"
-      id="d"
-    >
-      <stop offset="0" stop-color="#ff8000" />
-      <stop offset="1" stop-color="#cc1953" />
-    </linearGradient>
-    <path fill="url(#d)" fill-rule="evenodd" clip-rule="evenodd" d="M51.8 79.3h42.9v25.1H51.8z" />
-    <linearGradient
-      gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
-      y2="210.773"
-      x2="-128.432"
-      y1="210.773"
-      x1="-151.832"
-      gradientUnits="userSpaceOnUse"
-      id="e"
-    >
-      <stop offset="0" stop-color="#cc1953" />
-      <stop offset="1" stop-color="#241284" />
-    </linearGradient>
-    <path fill="url(#e)" fill-rule="evenodd" clip-rule="evenodd" d="M103.7 79.3h42.9v25.1h-42.9z" />
-    <linearGradient
-      gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
-      y2="210.773"
-      x2="-100.16"
-      y1="210.773"
-      x1="-123.56"
-      gradientUnits="userSpaceOnUse"
-      id="f"
-    >
-      <stop offset="0" stop-color="#222b90" />
-      <stop offset="1" stop-color="#3559a6" />
-    </linearGradient>
-    <path fill="url(#f)" fill-rule="evenodd" clip-rule="evenodd" d="M155.5 79.3h42.9v25.1h-42.9z" />
-    <linearGradient
-      gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
-      y2="233.464"
-      x2="-127.508"
-      y1="226.081"
-      x1="-152.755"
-      gradientUnits="userSpaceOnUse"
-      id="g"
-    >
-      <stop offset="0" stop-color="#cc1953" />
-      <stop offset="1" stop-color="#241284" />
-    </linearGradient>
-    <path fill="url(#g)" fill-rule="evenodd" clip-rule="evenodd" d="M103.7 44.5h42.9v25.1h-42.9z" />
-    <linearGradient
-      gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
-      y2="225.211"
-      x2="-155.899"
-      y1="234.334"
-      x1="-180.965"
-      gradientUnits="userSpaceOnUse"
-      id="h"
-    >
-      <stop offset=".003" stop-color="#fc0" />
-      <stop offset="1" stop-color="#ce1938" />
-    </linearGradient>
-    <path fill="url(#h)" fill-rule="evenodd" clip-rule="evenodd" d="M51.8 44.5h42.9v25.1H51.8z" />
-    <linearGradient
-      gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
-      y2="239.791"
-      x2="-158.699"
-      y1="257.754"
-      x1="-178.165"
-      gradientUnits="userSpaceOnUse"
-      id="i"
-    >
-      <stop offset=".003" stop-color="#ffd100" />
-      <stop offset="1" stop-color="#fd5a22" />
-    </linearGradient>
-    <path fill="url(#i)" fill-rule="evenodd" clip-rule="evenodd" d="M51.8 9.7h42.9v25.1H51.8z" />
-  </g>
+					<g>
+						<path fill-rule="evenodd" clip-rule="evenodd" fill="#40ab5d" d="M155.5-25.1h42.9V0h-42.9z" />
+						<linearGradient
+							gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
+							y2="255.826"
+							x2="-111.943"
+							y1="241.804"
+							x1="-111.722"
+							gradientUnits="userSpaceOnUse"
+							id="a"
+						>
+							<stop offset="0" stop-color="#358c7b" />
+							<stop offset=".526" stop-color="#33a65e" />
+						</linearGradient>
+						<path fill="url(#a)" fill-rule="evenodd" clip-rule="evenodd" d="M155.5 9.7h42.9v25.1h-42.9z" />
+						<linearGradient
+							gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
+							y2="235.917"
+							x2="-99.772"
+							y1="223.628"
+							x1="-123.891"
+							gradientUnits="userSpaceOnUse"
+							id="b"
+						>
+							<stop offset="0" stop-color="#222b90" />
+							<stop offset="1" stop-color="#367b99" />
+						</linearGradient>
+						<path fill="url(#b)" fill-rule="evenodd" clip-rule="evenodd" d="M155.5 44.5h42.9v25.1h-42.9z" />
+						<linearGradient
+							gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
+							y2="210.773"
+							x2="-185.032"
+							y1="210.773"
+							x1="-208.432"
+							gradientUnits="userSpaceOnUse"
+							id="c"
+						>
+							<stop offset="0" stop-color="#f90" />
+							<stop offset="1" stop-color="#ff8000" />
+						</linearGradient>
+						<path fill="url(#c)" fill-rule="evenodd" clip-rule="evenodd" d="M0 79.3h42.9v25.1H0z" />
+						<linearGradient
+							gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
+							y2="210.773"
+							x2="-156.732"
+							y1="210.773"
+							x1="-180.132"
+							gradientUnits="userSpaceOnUse"
+							id="d"
+						>
+							<stop offset="0" stop-color="#ff8000" />
+							<stop offset="1" stop-color="#cc1953" />
+						</linearGradient>
+						<path fill="url(#d)" fill-rule="evenodd" clip-rule="evenodd" d="M51.8 79.3h42.9v25.1H51.8z" />
+						<linearGradient
+							gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
+							y2="210.773"
+							x2="-128.432"
+							y1="210.773"
+							x1="-151.832"
+							gradientUnits="userSpaceOnUse"
+							id="e"
+						>
+							<stop offset="0" stop-color="#cc1953" />
+							<stop offset="1" stop-color="#241284" />
+						</linearGradient>
+						<path fill="url(#e)" fill-rule="evenodd" clip-rule="evenodd" d="M103.7 79.3h42.9v25.1h-42.9z" />
+						<linearGradient
+							gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
+							y2="210.773"
+							x2="-100.16"
+							y1="210.773"
+							x1="-123.56"
+							gradientUnits="userSpaceOnUse"
+							id="f"
+						>
+							<stop offset="0" stop-color="#222b90" />
+							<stop offset="1" stop-color="#3559a6" />
+						</linearGradient>
+						<path fill="url(#f)" fill-rule="evenodd" clip-rule="evenodd" d="M155.5 79.3h42.9v25.1h-42.9z" />
+						<linearGradient
+							gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
+							y2="233.464"
+							x2="-127.508"
+							y1="226.081"
+							x1="-152.755"
+							gradientUnits="userSpaceOnUse"
+							id="g"
+						>
+							<stop offset="0" stop-color="#cc1953" />
+							<stop offset="1" stop-color="#241284" />
+						</linearGradient>
+						<path fill="url(#g)" fill-rule="evenodd" clip-rule="evenodd" d="M103.7 44.5h42.9v25.1h-42.9z" />
+						<linearGradient
+							gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
+							y2="225.211"
+							x2="-155.899"
+							y1="234.334"
+							x1="-180.965"
+							gradientUnits="userSpaceOnUse"
+							id="h"
+						>
+							<stop offset=".003" stop-color="#fc0" />
+							<stop offset="1" stop-color="#ce1938" />
+						</linearGradient>
+						<path fill="url(#h)" fill-rule="evenodd" clip-rule="evenodd" d="M51.8 44.5h42.9v25.1H51.8z" />
+						<linearGradient
+							gradientTransform="matrix(1.8318 0 0 -1.8318 381.813 477.953)"
+							y2="239.791"
+							x2="-158.699"
+							y1="257.754"
+							x1="-178.165"
+							gradientUnits="userSpaceOnUse"
+							id="i"
+						>
+							<stop offset=".003" stop-color="#ffd100" />
+							<stop offset="1" stop-color="#fd5a22" />
+						</linearGradient>
+						<path fill="url(#i)" fill-rule="evenodd" clip-rule="evenodd" d="M51.8 9.7h42.9v25.1H51.8z" />
+					</g>
 				</svg>
 			</div>
 			<p class="cover-autors">{{ cover.autors }}</p>
@@ -241,6 +241,64 @@ async function getCoversDezzer(query: string) {
 		},
 	});
 }
+// async function getCoversSoundCloud(query: string) {
+// 	GM_xmlhttpRequest({
+// 		method: "GET",
+// 		// https://tidal.com/v2/client-search/?includeContributors=true&includeDidYouMean=false&includeUserPlaylists=false&limit=5&query=CARAVAGGIO+DELLAFUENTE&supportsUserData=true&types=ALBUMS%2CTRACKS%2CVIDEOS%2CPLAYLISTS%2CUPLOADS&countryCode=ES&countryCode=ES&locale=en_US&deviceType=BROWSER
+// 		// wdym token fuck u tidal
+// 		url: `https://soundcloud.com/search?q=${encodeURIComponent(query)}`,
+// 		headers: {
+// 			"User-Agent": navigator.userAgent,
+// 			"Accept-Language": "en-US,en;q=0.9",
+// 		},
+// 		onload: (res: GM_xmlhttpRequest) => {
+// 			try {
+// 				console.log("SounCloud", res);
+// 				const html = res.responseText;
+// 				const match = html.match(/window\.__sc_hydration\s*=\s*(\[[\s\S]*?\]);/);
+// 				if (!match || !match[1]) return;
+
+// 				const hydrationData = JSON.parse(match[1]);
+// 				const songs = [];
+
+// 				console.log(JSON.parse(match[1]));
+// 				for (const item of hydrationData) {
+// 					// Look for hydratable items containing track data or search results
+// 					if (item.data && item.data.kind === "track") {
+// 						songs.push({
+// 							title: item.data.title,
+// 							artist: item.data.user?.username,
+// 							url: item.data.permalink_url,
+// 							artwork: item.data.artwork_url,
+// 						});
+// 					}
+
+// 					// Handle collection responses (e.g., search queries)
+// 					if (item.data && Array.isArray(item.data.collection)) {
+// 						for (const entry of item.data.collection) {
+// 							const track = entry.track || (entry.kind === "track" ? entry : null);
+// 							if (track) {
+// 								songs.push({
+// 									title: track.title,
+// 									artist: track.user?.username,
+// 									url: track.permalink_url,
+// 									artwork: track.artwork_url,
+// 								});
+// 							}
+// 						}
+// 					}
+// 				}
+
+// 				console.log("Parsed Songs:", songs);
+// 			} catch (error) {
+// 				console.error("[lyeh] Error parsing cover:", error);
+// 			}
+// 		},
+// 		onerror: (err: Error) => {
+// 			console.vLog("Failed while searching apple music covers", err);
+// 		},
+// 	});
+// }
 function getCoversYouTube(query: string) {
 	GM_xmlhttpRequest({
 		method: "GET",
@@ -329,9 +387,11 @@ function clickHandler(src: string) {
 }
 onMounted(() => {
 	window.addEventListener("lyeh:cover", ((data: CustomEvent<{ name: string; artists: Array<string> }>) => {
-		const query = `${data.detail.name} ${data.detail.artists.join(", ")}`;
+		const query = `${data.detail.name} ${data.detail.artists.map((str) => str.replace(/\s*\([^)]*\)/g, "")).join(", ")}`;
+		console.log(query);
 		getCoversApple(query);
 		getCoversDezzer(query);
+		getCoversSoundCloud(query);
 		getCoversYouTube(query);
 		loading.value = false;
 	}) as EventListener);
