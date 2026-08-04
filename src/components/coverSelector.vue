@@ -391,7 +391,7 @@ onMounted(() => {
 		console.log(query);
 		getCoversApple(query);
 		getCoversDezzer(query);
-		getCoversSoundCloud(query);
+		// getCoversSoundCloud(query);
 		getCoversYouTube(query);
 		loading.value = false;
 	}) as EventListener);
