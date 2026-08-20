@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.7
+- Added cover selector to Albums
+- Fixed few broken css, made lyeh settings button unbreakable, and few other messed up things I had
+
 ## 1.9.6
 - Pyong comment css
 

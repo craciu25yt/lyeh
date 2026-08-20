@@ -435,6 +435,29 @@ class Genie {
 						);
 
 					}
+					console.log("por esa curva yo me mato", node.matches(`[class^="Modal-shared__ModalSharedContainer-sc"][id="edit-metadata-overlay"]`))
+					const albumMetadata = node.matches(`[class^="Modal-shared__ModalSharedContainer-sc"][id="edit-metadata-overlay"]`)
+						? document.querySelectorAll(`section[class^="ScrollableTabsSection__Container"][data-section-index="1"]`)[0]
+						: null
+					if (albumMetadata) {
+						console.log("ALBUMXD")
+
+						albumMetadata.classList.add("lyeh-cover-parent")
+						const coverWrapper = document.createElement("div")
+						coverWrapper.className = "lyeh-cover-wrapper"
+						albumMetadata.appendChild(coverWrapper)
+
+						createApp(coverSelector).mount(coverWrapper);
+						window.dispatchEvent(
+							new CustomEvent("lyeh:cover", {
+								detail: {
+									name: trackingData.entities.albums[trackingData.albumPage.album.toString()].name,
+									artists: [trackingData.entities.albums[trackingData.albumPage.album].primaryArtistNames],
+								},
+							}),
+						);
+
+					}
 					//console.log(document.querySelector(`[class="square_button"][ng-if="$ctrl.can_edit_profile"]`))
 					const buttonContainer = node.matches(`[class^="column_layout-column_span"]`)
 						? document.querySelector(`[class="square_button"][ng-if="$ctrl.can_edit_profile"]`)
@@ -455,7 +478,8 @@ class Genie {
 					console.log(menu, node.querySelector('a[href="/firehose"]'))
 					if (menu && node.querySelector('a[href="/firehose"]')) {
 						const placeholder = document.createElement("button");
-						placeholder.className = "PageHeaderMenu__Title-sc-24f4267f-7 PageHeaderMenu__Item-sc-24f4267f-8 chZDxM bCjpxo";
+						// placeholder.className = "PageHeaderMenu__Title-sc-a67f9f1a-7 PageHeaderMenu__Item-sc-a67f9f1a-8 chZDxM bCjpxo";
+						placeholder.className = "lyeh-settings"
 						placeholder.style.padding = "0.75 rem";
 						placeholder.innerText = "Lyeh Settings";
 						placeholder.onclick = () => {

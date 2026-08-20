@@ -241,6 +241,7 @@ div[class^="TooltipShadow"] {
     background-color: transparent;
     position: relative;
     color: var(--lyeh-text-main);
+
     z-index: 1; /* Establish a stacking context */
     overflow: hidden; /* Keeps the blurred edges from bleeding out */
 }
@@ -257,7 +258,8 @@ div[class^="TooltipShadow"]::before {
     background-size: cover;
     background-position: center;
     border: 0px;
-    filter: blur(2px) brightness(0.5);
+    filter: blur(0px) brightness(0.5);
+
     transform: scale(1.1); /* Slight scale prevents white/transparent borders caused by blur */
     z-index: -1; /* Pushes it behind the text/links */
     border-radius: 15px !important;
@@ -661,4 +663,22 @@ div[class^="BannerAlert__Container"] {
 }
 form[class^="PyongNoteForm__Form"] {
     background-color: transparent !important;
+}
+
+div[class^="AnnotationEditProposals__Container"] {
+    padding: 10px;
+}
+.lyeh-settings {
+    padding: 0.75rem;
+    font-size: 0.75rem;
+    width: 100%;
+    text-align: left;
+}
+.lyeh-settings:hover {
+    background-color: var(--accent-40) !important;
+    transition: background-color 0.3s;
+}
+
+div[class^="AlertBanner__Container"] {
+    background-image: none;
 }

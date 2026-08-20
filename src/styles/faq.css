@@ -1,5 +1,8 @@
 nav[class^="StickyNav-desktop__Container"] path {
-    fill: color-contrast(var(--current-accent));
+    fill: var(--text-accent);
+}
+button[class^="StickyNavSearch-desktop__Icon"] path {
+    fill: var(--lyeh-text-main) !important;
 }
 
 /* iq */

@@ -236,7 +236,7 @@ div[class^="LineItem__EventCountBadge"] {
     color: rgb(255 255 255);
 }
 
-div[class^="StickyNavSearch-desktop__Icon"] path {
+div[class^="StickyNavSearch-desktop__Icon"] button {
     fill: white !important;
 }
 
