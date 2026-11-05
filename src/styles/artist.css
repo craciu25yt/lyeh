@@ -3,8 +3,11 @@ h2 {
 }
 
 nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"]) {
-    background-color: var(--current-accent);
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+nav[class^="StickyNav-desktop__Container"]:not(:has(~ main[class^="SongPage__Container"])) {
+    background-color: var(--current-accent);
+
 }
 nav[class^="StickyNav-desktop__Container"]:has(~ div[class^="Profile__Container"]) :is(a, span, path) {
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -113,7 +116,11 @@ button[class^="PagingActions__PageButton"]:has([style*="background-color"]) {
     background-color: red;
 }*/
 /* genius just don't update your page 🙏 (will add js in future just too lazy rn) | rn don't even know where that is lmao*/
-.iHfhfx {
+/*.iHfhfx {
+    background-color: var(--accent-50) !important;
+}*/
+/* edit: I could make it without css!! Got this work arround where it is ALWAYS the middle element*/
+button[class^="PagingActions__PageButton"]:nth-child(2) {
     background-color: var(--accent-50) !important;
 }
 
@@ -153,7 +160,13 @@ div[class^="AllSongsModal__Contents"] {
     backdrop-filter: blur(10px);
 }
 
+button[class^="SmallButton__Container"][class*="ProfileNavigationSections__TabButton"][aria-pressed=true] {
+    background-color: var(--accent-30) !important;
+}
 
+div[class^="ProfileNavigationSections__Container"] {
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
 
 /* Lyeh */
 

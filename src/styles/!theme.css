@@ -23,6 +23,8 @@
     --accent-50: color-mix(in srgb, var(--settings-accent) 50%, transparent);
     --accent-40: color-mix(in srgb, var(--settings-accent) 40%, transparent);
     --accent-30: color-mix(in srgb, var(--settings-accent) 30%, transparent);
+    --accent-20: color-mix(in srgb, var(--settings-accent) 20%, transparent);
+    --accent-10: color-mix(in srgb, var(--settings-accent) 10%, transparent);
 
     --accent-muted: color-mix(in srgb, var(--settings-accent) 50%, transparent);
     --lyeh-current-song-accent: #000000; /* fallback */
@@ -33,7 +35,8 @@
         rgba(49, 50, 68, 1) 50%,
         rgba(30, 30, 46, 1) 100%
     );
-    --current-accent: rgb(255, 255, 100);
+    --genius-accent: rgb(233, 233, 60);
+    --current-accent:  var(--genius-accent);
     --settings-player-width: 40vh;
     --settings-spotify: flex;
 
@@ -269,7 +272,7 @@ div[class^="TooltipShadow"]::before {
 div[class^="ArtistTooltip__Verified"] {
     color: black;
     font-size: 0.75rem;
-    background-color: rgb(255, 255, 100);
+    background-color: var(--genius-accent);
     border-radius: 15px !important;
     text-align: center;
     margin-right: 30%;
@@ -520,6 +523,17 @@ div[class^="TagInput__Container"] div[class^="css"][class*="-control"] {
 div[class^="Toast__Container"] {
     background-color: transparent !important;
 }
+div[class^="Toast__Container"] div[class^="Alert__Container"] {
+    background-color: var(--accent-40) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+
+}
+div[class^="Toast__Container"] div[class^="Alert__Container"] path {
+    fill: white !important;
+}
+
 div[class^="Toast__Container"] div[class^="Alert__Container"][color="success.main"] {
     background-color: var(--accent-40) !important;
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -529,21 +543,17 @@ div[class^="Toast__Container"] div[class^="Alert__Container"][color="success.mai
 div[class^="Toast__Container"] div[class^="Alert__Container"][color="success.main"] path {
     fill: var(--lyeh-text-main);
 }
-div[class^="Alert__Container"][color="background.on"] {
+
+div[class^="Alert__Container"][color="background.on"],
+div[class^="Alert__Container"][role="alert"],
+div[class^="Alert__Container"][color="error.main"],
+div[class^="LyricsEditArchiveInfoSection__Container"]{
     background-color: #ff43434a;
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 10px;
 }
-div[class^="Alert__Container"][color="error.main"] {
-    background-color: #ff43434a;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-}
-div[class^="LyricsEditArchiveInfoSection__Container"] {
-    background-color: #ff43434a;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 10px;
-}
+
+
 /*
 Popup:
 border-radius: 10px;
@@ -647,6 +657,7 @@ div[class^="SongHeader-desktop__CoverArt-sc"] {
 
 .lyeh-cover-wrapper {
     position: relative;
+
     background-color: var(--background-glassy-container);
     min-height: 315px;
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -656,6 +667,9 @@ div[class^="SongHeader-desktop__CoverArt-sc"] {
 
 div[class^="MetadataRow__MetadataRowDesktop"] {
     flex-direction: column;
+}
+div[class^="MetadataRow__MetadataRowDesktop"] > :not(:last-child) {
+    margin-right: 0;
 }
 
 div[class^="BannerAlert__Container"] {
@@ -681,4 +695,37 @@ div[class^="AnnotationEditProposals__Container"] {
 
 div[class^="AlertBanner__Container"] {
     background-image: none;
+}
+
+div[class^="LineItem__SpinnerContainer"] svg {
+    stroke: #FFFFFF;
+}
+
+svg[class^="Spinner"] {
+    stroke: rgb(154, 154, 154);
+}
+svg[class^="Spinner"] circle {
+
+    animation: 2s ease-out 0s infinite normal none running spinner;
+    stroke: rgb(154, 154, 154);
+
+}
+
+div[class^="LineItem__ItemRow"]::before {
+    border-radius: 8px 0px;
+    border-color: var(--accent-70) transparent transparent;
+}
+/* Using hFBEL risks to break on update, so I'll just copy it 😭*/
+@keyframes spinner {
+    0% {
+        stroke-dasharray: 150%;
+        stroke-dashoffset: 0%;
+    }
+    50% {
+        stroke-dasharray: 300%;
+    }
+    100% {
+        stroke-dasharray: 150%;
+        stroke-dashoffset: 600%;
+    }
 }

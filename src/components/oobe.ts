@@ -8,6 +8,11 @@ interface BaseTheme {
 export type Theme = BaseTheme
 export const themeList: Theme[] = [
 	{
+		id: "light-ash",
+		label: "Light Ash",
+		color: "#4d4545ff"
+	},
+	{
 		id: "ash",
 		label: "Ash",
 		color: "#272323"

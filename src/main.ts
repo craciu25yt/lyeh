@@ -12,6 +12,7 @@ import "./styles/home.css";
 import "./styles/add_song.css";
 import "./styles/font.css";
 import Heatmap from "./components/Heatmap.vue";
+import LyricsEditor from "./components/lyricsEditor.vue";
 import coverSelector from "./components/coverSelector.vue";
 
 import "./styles/art_extractor.css";
@@ -113,6 +114,7 @@ class Genie {
 			console.log("iframe detected, injecting config");
 			this.loadConfig(document.documentElement);
 			console.log("exitting");
+			return
 		}
 
 		console.realLog = console.log;
@@ -347,9 +349,12 @@ class Genie {
 
 		for (const category of settingsSchema) {
 			for (const setting of category.items) {
-				const value: string = GM_getValue(`lyeh:settings:${setting.id}`);
+				if (setting.type === "button") continue;
+				const value = GM_getValue(`lyeh:settings:${setting.id}`);
+				console.log(`lyeh:settings:${setting.id}`, value)
 				let settingValue = value;
-				if (!settingValue) {
+				if (value === undefined || value === null) {
+					console.log("one two three", setting)
 					settingValue = setting.default;
 
 					GM_setValue(`lyeh:settings:${setting.id}`, settingValue);
@@ -358,6 +363,7 @@ class Genie {
 					settingValue = setting.format.replace("$!", settingValue);
 				}
 				if (setting.id == "youtube") {
+					console.log("pene", settingValue)
 					if (settingValue) {
 						root.style.setProperty(`--settings-youtube`, "none");
 					} else {
@@ -410,13 +416,45 @@ class Genie {
 
 						createApp(Heatmap).mount(githubSkid);
 					}
+
+					const lyricsEditContainer = node.matches('[class^="TextInput"][class*="LyricsTextareaInput"]')
+						? document.querySelector(`[class^="LyricsEdit-desktop__Controls-sc"]`)
+						: null
+
+					if (lyricsEditContainer) {
+
+						const titleContainer = document.createElement("div"); // reuse genius tag
+						titleContainer.classList = "u-horizontal_margins u-vertical_margins";
+						titleContainer.style.display = "flex";
+						titleContainer.style.alignItems = "center";
+						titleContainer.style.gap = "8px";
+
+						const lyehTag = document.createElement("span");
+						lyehTag.textContent = "Lyeh";
+						lyehTag.classList = "lyeh-tag";
+						const title = document.createElement("span");
+						title.textContent = "Hotkeys";
+						title.classList = "lyeh-injected-title";
+						titleContainer.appendChild(lyehTag);
+						titleContainer.appendChild(title);
+
+						const lyricsEditorContainer = document.createElement("div");
+						lyricsEditContainer.id = "lyeh-lyricsContainer"
+
+						lyricsEditContainer.insertAdjacentElement("beforebegin", titleContainer);
+						lyricsEditContainer.insertAdjacentElement("beforebegin", lyricsEditorContainer);
+						createApp(LyricsEditor).mount(lyricsEditorContainer)
+
+						console.log(lyricsEditContainer)
+						console.log("LA FALDITA CORTA, EL PANTY SE LE VE")
+					}
 					if (node.matches(`[class^="SocialProfiles__Container"]`)) {
 						console.log("otia tio ke no lo he enxufao")
 					}
 					const metadataPopup = node.matches(`[class^="Modal-shared__ModalSharedContainer-sc"][id="edit-metadata-overlay"]`)
 						? document.querySelectorAll(`div[class^="AudioAndMedia__Container"] div[class^="MetadataRow__MetadataRowDesktop"]`)[1]
 						: null
-					if (metadataPopup) {
+					if (metadataPopup && trackingData.currentPage == "songPage") {
 						metadataPopup.querySelector(`div[class^="AudioAndMedia__Gradient"]`)?.remove()
 
 						metadataPopup.classList.add("lyeh-cover-parent")
@@ -435,12 +473,11 @@ class Genie {
 						);
 
 					}
-					console.log("por esa curva yo me mato", node.matches(`[class^="Modal-shared__ModalSharedContainer-sc"][id="edit-metadata-overlay"]`))
+					// console.log("por esa curva yo me mato", node.matches(`[class^="Modal-shared__ModalSharedContainer-sc"][id="edit-metadata-overlay"]`))
 					const albumMetadata = node.matches(`[class^="Modal-shared__ModalSharedContainer-sc"][id="edit-metadata-overlay"]`)
 						? document.querySelectorAll(`section[class^="ScrollableTabsSection__Container"][data-section-index="1"]`)[0]
 						: null
-					if (albumMetadata) {
-						console.log("ALBUMXD")
+					if (albumMetadata && trackingData.currentPage == "albumPage") {
 
 						albumMetadata.classList.add("lyeh-cover-parent")
 						const coverWrapper = document.createElement("div")
@@ -492,20 +529,24 @@ class Genie {
 
 					const navvar = document.querySelector(`[class^="StickyNav-desktop__Container"]`);
 					if (navvar) {
-						document.documentElement.style.setProperty(
-							"--current-accent",
-							window.getComputedStyle(navvar).backgroundColor,
-						);
+
+						// if (!window.location.pathname.startsWith("/artists/")) {
+						// 	document.documentElement.style.setProperty(
+						// 		"--current-accent",
+						// 		window.getComputedStyle(navvar).backgroundColor,
+						// 	);
+						// }
 						document.documentElement.style.setProperty(
 							"--accent-text",
 							window.getComputedStyle(navvar).color,
 						);
 					}
-					const referents = node.querySelectorAll(`[class^="Referent__FragmentContainer"]`);
-					if (referents.length != 0) {
-						for (const elem of referents) {
-						}
-					}
+					// not sure what I was cooking here lmao
+					// const referents = node.querySelectorAll(`[class^="Referent__FragmentContainer"]`);
+					// if (referents.length != 0) {
+					// 	for (const elem of referents) {
+					// 	}
+					// }
 					if (node.matches(`[class^="styleAnchors__PageHeaderDropdownMenu"]`)) {
 						const targets = node.querySelectorAll('[class^="LineItem__ItemRow"]');
 						for (const target of targets) {
@@ -730,10 +771,6 @@ class Genie {
 			console.log("Failed to load profile gradient", e);
 		}
 	}
-	private transformHeader(headerElement: HTMLElement) {
-		// Add custom Bleh classes instead of breaking React structure
-		headerElement.classList.add("bleh-custom-header");
-	}
 
 	private extractSongData() {
 		trackingData = (unsafeWindow as any).__PRELOADED_STATE__ || null;
@@ -897,7 +934,7 @@ class Genie {
 			const songAnchor = e.target.closest('a[class^="DiscographyItem__Container"]');
 
 			if (songAnchor) {
-				document.documentElement.style.setProperty("--current-accent", "rgb(255, 255, 100)");
+				document.documentElement.style.setProperty("--current-accent", "var(--genius-accent)");
 				document.documentElement.style.setProperty("--background-main-full", "#292424");
 			}
 		});

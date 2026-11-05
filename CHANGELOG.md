@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.9.8
+- Custom searchbar introduced into the cover selector
+- Fixed cover selector showing twice
+- Fixed a bug where settings were not saving correctly
+- Darkened a bit genius' navbar default color to improve contrast 
+- Minor css bugfixes
+
 ## 1.9.7
 - Added cover selector to Albums
 - Fixed few broken css, made lyeh settings button unbreakable, and few other messed up things I had

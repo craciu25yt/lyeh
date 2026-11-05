@@ -1,7 +1,5 @@
 <template>
-	<div v-if="visible" class="overlay"
-	@mousedown="onOverlayMousedown"
-  @mouseup="onOverlayMouseup">
+	<div v-if="visible" class="overlay" @mousedown="onOverlayMousedown" @mouseup="onOverlayMouseup">
 		<div class="box">
 			<div class="bar">
 				<span class="title">{{ title }}</span>
@@ -178,9 +176,18 @@ const fonts = {
 	"apple-font": "BlinkMacSystemFont",
 };
 const colorPickers: Record<string, any> = {};
+// Gradient colors are preview-only until "Save colors", so remember what was
+// applied when settings opened to discard unsaved previews on close.
+const gradientIds = ["bg-primary", "bg-secondary"];
+const gradientSnapshot: Record<string, string> = {};
+function liveColor(id: string) {
+	const name = gradientIds.includes(id) ? `--profile-${id}` : `--settings-${id}`;
+	const value = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+	return value && !value.startsWith("var(") ? value : null;
+}
 function colorCallback(id: string) {
 	if (!isOpen.value[id]) {
-		Object.keys(isOpen.value).forEach(k => isOpen.value[k] = false);
+		Object.keys(isOpen.value).forEach((k) => (isOpen.value[k] = false));
 	}
 	isOpen.value[id] = !isOpen.value[id];
 	//@ts-ignore
@@ -216,7 +223,9 @@ function colorCallback(id: string) {
 				const hexString = id === "accent" ? color.hexString : color.hex8String;
 				settingsState[id] = hexString;
 				applySetting(id, hexString);
-				GM_setValue(`lyeh:settings:${id}`, hexString);
+				if (!gradientIds.includes(id)) {
+					GM_setValue(`lyeh:settings:${id}`, hexString);
+				}
 			});
 
 			// Cache the picker instance
@@ -229,7 +238,7 @@ function toggleSelector(id: string) {
 		isOpen.value[id] = false;
 		return;
 	}
-	Object.keys(isOpen.value).forEach(k => isOpen.value[k] = false);
+	Object.keys(isOpen.value).forEach((k) => (isOpen.value[k] = false));
 	isOpen.value[id] = true;
 }
 function hexInputCallback(id: string, value: string) {
@@ -246,12 +255,14 @@ function applySetting(key: string, value: any) {
 	//console.log(key, value)
 	if (key == "accent" || key == "background") {
 		document.documentElement.style.setProperty(`--settings-${key}`, value);
-		return
+		return;
 	}
 	document.documentElement.style.setProperty(`--profile-${key}`, value);
 }
 function closeAllDropdowns() {
-	Object.keys(isOpen.value).forEach(key => { isOpen.value[key] = false; });
+	Object.keys(isOpen.value).forEach((key) => {
+		isOpen.value[key] = false;
+	});
 }
 function saveSetting(key: string, value: any, format: string | undefined = undefined) {
 	GM_setValue(`lyeh:settings:${key}`, value);
@@ -300,12 +311,10 @@ function buttonCallback(id: string) {
 	if (id == "clear-cache") {
 		clearCache();
 		window.location.reload();
-
 	}
 	if (id == "clear-data") {
 		clearData();
 		window.location.reload();
-
 	}
 	if (id == "auth") {
 		oauth2();
@@ -324,7 +333,7 @@ function oauth2() {
 	window.open(authUrl, "Lyeh Auth", `width=${width},height=${height},left=${left},top=${top},scrollbars=yes,resizable=yes`);
 
 	const handleMessage = (event: MessageEvent) => {
-		console.aLog("OAuth2 callback received")
+		console.aLog("OAuth2 callback received");
 
 		if (event.origin != "http://localhost:8080" && event.origin != "https://lyeh.auchen.net") return;
 
@@ -342,7 +351,6 @@ function oauth2() {
 
 	window.addEventListener("message", handleMessage);
 }
-
 
 async function saveGradient() {
 	const token = GM_getValue("lyeh:auth:access_token");
@@ -369,6 +377,8 @@ async function saveGradient() {
 	if (resp.ok) {
 		saveSetting("bg-primary", color1);
 		saveSetting("bg-secondary", color2);
+		gradientSnapshot["bg-primary"] = color1;
+		gradientSnapshot["bg-secondary"] = color2;
 		console.vLog("Gradient saved!");
 	}
 }
@@ -434,34 +444,49 @@ function clearData() {
 	console.vLog(`Successfully deleted ${(totalBytes / 1024).toFixed(2)} KB from StorageDB`);
 }
 function handler() {
+	if (visible.value) return;
+	// Show the gradient that is actually applied, not a stale unsaved preview.
+	schema.value.forEach((cat) => {
+		cat.items.forEach((item) => {
+			if (item.type !== "color" || !gradientIds.includes(item.id)) return;
+			const current = liveColor(item.id) ?? GM_getValue(`lyeh:settings:${item.id}`) ?? item.default;
+			gradientSnapshot[item.id] = current;
+			settingsState[item.id] = current;
+		});
+	});
 	visible.value = true;
 }
 
 function dismiss() {
 	closeAllDropdowns();
-	Object.keys(colorPickers).forEach(key => delete colorPickers[key]);
-	schema.value.forEach(cat => {
-		cat.items.forEach(item => {
-			if (item.type === 'color') {
-				const stored = GM_getValue(`lyeh:settings:${item.id}`);
-				const restored = stored !== undefined ? stored : item.default;
-				settingsState[item.id] = restored;
-				document.documentElement.style.setProperty(`--profile-${item.id}`, restored);
-			}
+	Object.keys(colorPickers).forEach((key) => delete colorPickers[key]);
+	schema.value.forEach((cat) => {
+		cat.items.forEach((item) => {
+			if (item.type !== "color") return;
+			// Gradients revert to what was applied on open; other colors are
+			// persisted live, so GM already holds their current value.
+			const stored = GM_getValue(`lyeh:settings:${item.id}`);
+			const restored = gradientIds.includes(item.id)
+				? gradientSnapshot[item.id] ?? stored ?? item.default
+				: stored !== undefined
+					? stored
+					: item.default;
+			settingsState[item.id] = restored;
+			applySetting(item.id, restored);
 		});
 	});
 	visible.value = false;
 }
 let isOverlayClick = false;
 function onOverlayMousedown(e: MouseEvent) {
-	isOverlayClick = e.target == e.currentTarget
+	isOverlayClick = e.target == e.currentTarget;
 }
 function onOverlayMouseup(e: MouseEvent) {
-  // Only dismiss if the click both started AND ended on the background overlay
-  if (isOverlayClick && e.target === e.currentTarget) {
-    dismiss();
-  }
-  isOverlayClick = false;
+	// Only dismiss if the click both started AND ended on the background overlay
+	if (isOverlayClick && e.target === e.currentTarget) {
+		dismiss();
+	}
+	isOverlayClick = false;
 }
 onMounted(() => {
 	window.addEventListener(props.eventName, handler as EventListener);
@@ -516,7 +541,6 @@ onUnmounted(() => {
 		0 8px 64px rgba(0, 0, 0, 0.5),
 		inset 0 1px 0 rgba(255, 255, 255, 0.1);
 	min-width: 45vw;
-
 }
 .bar {
 	display: flex;
@@ -555,9 +579,9 @@ onUnmounted(() => {
 }
 
 .category-row:not(:first-child) {
-    margin-top: 25px;
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    padding-top: 25px;
+	margin-top: 25px;
+	border-top: 1px solid rgba(255, 255, 255, 0.25);
+	padding-top: 25px;
 }
 
 .category-title {
@@ -790,7 +814,11 @@ onUnmounted(() => {
 		linear-gradient(45deg, transparent 75%, #808080 75%),
 		linear-gradient(-45deg, transparent 75%, #808080 75%);*/
 	background-size: 10px 10px;
-	background-position: 0 0, 0 5px, 5px -5px, -5px 0;
+	background-position:
+		0 0,
+		0 5px,
+		5px -5px,
+		-5px 0;
 }
 .color-input-btn:active {
 	transform: scale(0.95);

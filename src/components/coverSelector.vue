@@ -3,16 +3,20 @@
 
 	<div v-if="loading" class="spinner"></div>
 	<div v-if="!loading && covers.length == 0" class="not-found">No covers were found for this song</div>
+	<div class="searchbar">
+		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-search preview-icon">
+  <circle cx="11" cy="11" r="8" />
+  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+		</svg>
+		<input type="text" id="artwork-search" autocomplete="off", placeholder="Search...">
+
+	</div>
 	<div class="container">
 		<div class="cover" v-for="cover in covers" @click="clickHandler(cover.src)">
 			<img :src="cover.src" class="cover-img" alt="" />
 			<div class="cover-title-wrapper">
 				<p class="cover-title">{{ cover.title }}</p>
-				<svg v-if="cover.provider == 'apple'" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 812 1000" height="20">
-					<path
-						d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105.6-57-155.5-127C46.7 790.7 0 663 0 541.8c0-194.4 126.4-297.5 250.8-297.5 66.1 0 121.2 43.4 162.7 43.4 39.5 0 101.1-46 176.3-46 28.5 0 130.9 2.6 198.3 99.2zm-234-181.5c31.1-36.9 53.1-88.1 53.1-139.3 0-7.1-.6-14.3-1.9-20.1-50.6 1.9-110.8 33.7-147.1 75.8-28.5 32.4-55.1 83.6-55.1 135.5 0 7.8 1.3 15.6 1.9 18.1 3.2.6 8.4 1.3 13.6 1.3 45.4 0 102.5-30.4 135.5-71.3z"
-					/>
-				</svg>
+
 
 				<svg v-if="cover.provider === 'youtube'" class="external-icon external-icon-youtube" viewBox="0 0 28.57 20" width="23" aria-hidden="true" focusable="false">
 					<path
@@ -385,15 +389,39 @@ function clickHandler(src: string) {
 	valueSetter.call(input, src);
 	input.dispatchEvent(new Event("input", { bubbles: true }));
 }
+function executeSearch(query: string) {
+	getCoversApple(query);
+	getCoversDezzer(query);
+	// getCoversSoundCloud(query);
+	getCoversYouTube(query);
+}
+function debounce(fn: any, delay = 400) {
+	let timer = null;
+	return (...args) => {
+		loading.value = true;
+		clearTimeout(timer);
+		timer = setTimeout(() => {
+			fn(...args)
+		}, delay)
+	}
+}
 onMounted(() => {
 	window.addEventListener("lyeh:cover", ((data: CustomEvent<{ name: string; artists: Array<string> }>) => {
 		const query = `${data.detail.name} ${data.detail.artists.map((str) => str.replace(/\s*\([^)]*\)/g, "")).join(", ")}`;
-		console.log(query);
-		getCoversApple(query);
-		getCoversDezzer(query);
-		// getCoversSoundCloud(query);
-		getCoversYouTube(query);
+		const search = document.getElementById("artwork-search")
+		console.log("ARTWORKT SEACH", search)
+		search!.value = query
+		executeSearch(query)
 		loading.value = false;
+
+		const debounceSearch = debounce((event: any) => {
+			console.log("hola debounceado")
+			covers.value = []
+			executeSearch(event.target.value);
+			loading.value = false;
+
+		}, 600)
+		search!.addEventListener('input', debounceSearch)
 	}) as EventListener);
 });
 </script>
@@ -401,7 +429,7 @@ onMounted(() => {
 <style scoped>
 .title {
 	padding-bottom: 15px;
-	display: inline-flex;
+	display: flex;
 	gap: 10px;
 }
 .cover {
@@ -450,6 +478,7 @@ onMounted(() => {
 
 .spinner {
 	position: absolute;
+	top: 50%;
 	left: 50%;
 	border: 6px solid rgba(255, 255, 255, 0.3);
 	border-radius: 50%;
@@ -461,10 +490,10 @@ onMounted(() => {
 }
 @keyframes spin {
 	0% {
-		transform: translate(-50%, 150%) rotate(0deg);
+		transform: translate(-50%, -50%) rotate(0deg);
 	}
 	100% {
-		transform: translate(-50%, 150%) rotate(360deg);
+		transform: translate(-50%, -50%) rotate(360deg);
 	}
 }
 
@@ -477,5 +506,21 @@ onMounted(() => {
 	width: 100%;
 	text-align: center;
 	justify-self: center;
+}
+#artwork-search {
+    background-color: transparent;
+    padding: 10px 8px;
+    width: 100%;
+    outline: none;
+}
+.searchbar {
+    display: flex;
+    align-items: center;
+    background-color: var(--background-glassy-layer);
+    width: 100%;
+    padding: 0px 8px;
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 15px;
 }
 </style>

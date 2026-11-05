@@ -277,3 +277,6 @@ span[class^="square_item_and_iq"] span[class^="square_button"]:hover {
 span[class^="square_item_and_iq"] button[class^="square_button"]:hover {
     background: var(--settings-accent) !important;
 }
+/*nav[class^="StickyNav-desktop__Container"] {
+    background-color: var(--genius-accent);
+}*/

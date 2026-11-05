@@ -125,6 +125,8 @@ span[class^="user_badge-iq"] {
 .lyeh-injected-title {
     color: var(--lyeh-text-main) !important;
     mix-blend-mode: difference !important;
+    font-weight: bold;
+
     isolation: isolate;
 }
 path {
