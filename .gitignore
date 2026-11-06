@@ -22,10 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-.codegraph
 
-.projectmem/events.jsonl
-.projectmem/watch.pid
-.projectmem/watch.log
-.projectmem/structure.json
-.gitignore
+.codegraph
+.projectmem

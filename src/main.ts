@@ -421,8 +421,8 @@ class Genie {
 						? document.querySelector(`[class^="LyricsEdit-desktop__Controls-sc"]`)
 						: null
 
-					if (lyricsEditContainer) {
-
+					if (lyricsEditContainer && !document.querySelector(`#lyeh-lyricsContainer`)) {
+						console.log()
 						const titleContainer = document.createElement("div"); // reuse genius tag
 						titleContainer.classList = "u-horizontal_margins u-vertical_margins";
 						titleContainer.style.display = "flex";
@@ -445,7 +445,6 @@ class Genie {
 						lyricsEditContainer.insertAdjacentElement("beforebegin", lyricsEditorContainer);
 						createApp(LyricsEditor).mount(lyricsEditorContainer)
 
-						console.log(lyricsEditContainer)
 						console.log("LA FALDITA CORTA, EL PANTY SE LE VE")
 					}
 					if (node.matches(`[class^="SocialProfiles__Container"]`)) {

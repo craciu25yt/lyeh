@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.9
+- Fixed hotkeys dupping each time
+- Fixed styling
+
 ## 1.9.8
 - Custom searchbar introduced into the cover selector
 - Fixed cover selector showing twice

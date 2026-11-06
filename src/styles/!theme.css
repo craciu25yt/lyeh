@@ -704,7 +704,8 @@ div[class^="LineItem__SpinnerContainer"] svg {
 svg[class^="Spinner"] {
     stroke: rgb(154, 154, 154);
 }
-svg[class^="Spinner"] circle {
+svg[class^="Spinner"] circle,
+ellipse-spinner circle {
 
     animation: 2s ease-out 0s infinite normal none running spinner;
     stroke: rgb(154, 154, 154);
@@ -728,4 +729,20 @@ div[class^="LineItem__ItemRow"]::before {
         stroke-dasharray: 150%;
         stroke-dashoffset: 600%;
     }
+}
+
+div[class^="OdometerIQCounter__Container"],
+div[class^="OdometerLineItem__Container"]{
+	background-color: var(--accent-50);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	border-radius: 10px;
+}
+
+div[class^="UserBadge__NameAndRole-"] {
+  display: inline-flex;
+  align-items: center;
+}
+
+div[class^="UserBadge__Role-"] {
+  margin: 0 4px;
 }

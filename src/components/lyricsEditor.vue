@@ -12,11 +12,11 @@
    		<div><keybind keyName="ctrl" /> + <keybind keyName="i" /> </div>
       marks the selection/line as italic
    </div>
-  	<div class="bind-container">
+  	<div class="bind-container" style="">
    		<div><keybind keyName="ctrl" /> + <keybind keyName="b" /> </div>
       marks the selection/line as bold
    </div>
-
+   <!-- <hr style="border-color: rgba(255,255,255, 0.5)"> -->
   </div>
 </template>
 
