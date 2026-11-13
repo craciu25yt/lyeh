@@ -222,69 +222,68 @@ const youtubeContainer = ref<HTMLElement | null>(null);
 // intelligent search > genius link, as might contain videoclip sounds and mess with me
 //let youtubeUrl: string | null = null;
 
+// InnerTube API: no HTML scraping, and anonymous so nothing lands in the user's YouTube history
 function searchYouTube(query: string, relax: boolean = false): Promise<string | null> {
 	return new Promise((resolve) => {
 		GM_xmlhttpRequest({
-			method: "GET",
-			url: `https://music.youtube.com/search?q=${encodeURIComponent(query)}`,
-			headers: {
-				Cookie: "CONSENT=YES+cb",
-				"User-Agent": navigator.userAgent,
-				"Accept-Language": "en-US,en;q=0.9",
-			},
+			method: "POST",
+			url: "https://music.youtube.com/youtubei/v1/search?alt=json&prettyPrint=false",
+			headers: { "Content-Type": "application/json" },
+			// keep music.youtube.com cookies out of the request
+			anonymous: true,
+			data: JSON.stringify({
+				context: {
+					client: {
+						clientName: "WEB_REMIX",
+						// ytmusicapi trick: same-day version stamp so the client never looks stale
+						clientVersion: `1.${new Date().toISOString().slice(0, 10).replace(/-/g, "")}.01.00`,
+						hl: "en",
+						gl: "US",
+					},
+				},
+				query,
+			}),
 			onload: (res: GM_xmlhttpRequest) => {
 				try {
-					const html = res.responseText;
-					const entryMatches = html.match(/initialData\.push\(([\s\S]*?)\);/g);
+					const data = JSON.parse(res.responseText);
+					const contents =
+						data.contents?.tabbedSearchResultsRenderer?.tabs?.[0]?.tabRenderer?.content?.sectionListRenderer
+							?.contents ?? [];
+					let videoID = null;
 
-					for (const entry of entryMatches) {
-						if (entry.includes("music_search_catalog") || entry.includes("searchEndpoint")) {
-							const innerObjText = entry.replace(/^initialData\.push\(/, "").replace(/\);$/, "");
+					let i = 0;
+					// I think youtube likes nesting
+					for (const entry of contents) {
+						console.log(entry)
+						i++;
+						if (i > 5) {
+							console.yLog("no song was found");
+							break;
+						}
+						// info badge
+						if (entry.itemSectionRenderer?.contents[0]?.messageRenderer) continue;
+						// ts has me crying btw 😭
+						if (entry.musicCardShelfRenderer) {
+							const watchEndpoint = entry.musicCardShelfRenderer.title.runs[0].navigationEndpoint.watchEndpoint;
+							const type = watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType;
+							if (!relax && type != "MUSIC_VIDEO_TYPE_ATV") continue;
+							videoID = watchEndpoint.videoId;
+							break;
+						}
 
-							try {
-								// lost between 30m and 1h trying to just parse it into a fucking js object
-								const object = new Function(`return ${innerObjText};`)();
-								const data = JSON.parse(object.data);
-								let videoID = null;
+						if (entry.itemSectionRenderer) {
+							if (entry.itemSectionRenderer.contents[0].didYouMeanRenderer) continue;
+							const watchEndpoint =
+								entry.itemSectionRenderer.contents[0].musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer
+									.playNavigationEndpoint.watchEndpoint;
+							const type = watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType;
 
-								let i = 0;
-								// I think youtube likes nesting
-								for (const entry of data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents) {
-									i++;
-									if (i > 5) {
-										console.yLog("no song was found");
-										break;
-									}
-									// info badge
-									if (entry.itemSectionRenderer?.contents[0]?.messageRenderer) continue;
-									// ts has me crying btw 😭
-									if (entry.musicCardShelfRenderer) {
-										const watchEndpoint = entry.musicCardShelfRenderer.title.runs[0].navigationEndpoint.watchEndpoint;
-										const type = watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType;
-										if (!relax && type != "MUSIC_VIDEO_TYPE_ATV") continue;
-										videoID = watchEndpoint.videoId;
-										break;
-									}
-
-									if (entry.itemSectionRenderer) {
-										if (entry.itemSectionRenderer.contents[0].didYouMeanRenderer) continue;
-										const watchEndpoint =
-											entry.itemSectionRenderer.contents[0].musicResponsiveListItemRenderer.overlay.musicItemThumbnailOverlayRenderer.content.musicPlayButtonRenderer
-												.playNavigationEndpoint.watchEndpoint;
-										const type = watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType;
-
-										if (!relax && type != "MUSIC_VIDEO_TYPE_ATV") continue;
-										videoID = watchEndpoint.videoId;
-										break;
-									}
-								}
-								return resolve(videoID);
-							} catch (e) {
-								console.yLog(e);
-								continue;
-							}
+							if (!relax && type != "MUSIC_VIDEO_TYPE_ATV") continue;
+							videoID = watchEndpoint.videoId;
+							break;
 						}
 					}
+					return resolve(videoID);
 				} catch (error) {
 					console.error("[lyeh] Error parsing YouTube Music backend payload:", error);
 				}

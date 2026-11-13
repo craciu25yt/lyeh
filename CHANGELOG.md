@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.10
+- Searches won't show anymore in youtube's history
+
 ## 1.9.9
 - Fixed hotkeys dupping each time
 - Fixed styling

@@ -305,67 +305,66 @@ async function getCoversDezzer(query: string) {
 // }
 function getCoversYouTube(query: string) {
 	GM_xmlhttpRequest({
-		method: "GET",
-		url: `https://music.youtube.com/search?q=${encodeURIComponent(query)}`,
-		headers: {
-			Cookie: "CONSENT=YES+cb",
-			"User-Agent": navigator.userAgent,
-			"Accept-Language": "en-US,en;q=0.9",
-		},
+		method: "POST",
+		// InnerTube API: no HTML scraping, and anonymous so nothing lands in the user's YouTube history
+		url: "https://music.youtube.com/youtubei/v1/search?alt=json&prettyPrint=false",
+		headers: { "Content-Type": "application/json" },
+		// keep music.youtube.com cookies out of the request
+		anonymous: true,
+		data: JSON.stringify({
+			context: {
+				client: {
+					clientName: "WEB_REMIX",
+					// ytmusicapi trick: same-day version stamp so the client never looks stale
+					clientVersion: `1.${new Date().toISOString().slice(0, 10).replace(/-/g, "")}.01.00`,
+					hl: "en",
+					gl: "US",
+				},
+			},
+			query,
+		}),
 		onload: (res: GM_xmlhttpRequest) => {
 			try {
-				const html = res.responseText;
-				const entryMatches = html.match(/initialData\.push\(([\s\S]*?)\);/g);
+				const data = JSON.parse(res.responseText);
+				const contents =
+					data.contents?.tabbedSearchResultsRenderer?.tabs?.[0]?.tabRenderer?.content?.sectionListRenderer
+						?.contents ?? [];
+				let coverUrl = null;
 
-				for (const entry of entryMatches) {
-					if (entry.includes("music_search_catalog") || entry.includes("searchEndpoint")) {
-						const innerObjText = entry.replace(/^initialData\.push\(/, "").replace(/\);$/, "");
+				let i = 0;
+				// I think youtube likes nesting
+				for (const entry of contents) {
+					i++;
+					console.log(entry);
+					if (i > 7) {
+						break;
+					}
+					// info badge
+					const contents = entry.itemSectionRenderer?.contents[0];
+					if (contents?.messageRenderer) continue;
 
-						try {
-							const object = new Function(`return ${innerObjText};`)();
-							const data = JSON.parse(object.data);
-							let coverUrl = null;
+					if (entry.musicCardShelfRenderer) {
+						const watchEndpoint = entry.musicCardShelfRenderer.title.runs[0].navigationEndpoint.watchEndpoint;
+						const type = watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType;
+						if (type != "MUSIC_VIDEO_TYPE_ATV") continue;
+						coverUrl = watchEndpoint.videoId;
+						break;
+					}
+					const responsiveList = contents.musicResponsiveListItemRenderer;
+					if (entry.itemSectionRenderer) {
+						if (contents.didYouMeanRenderer) continue;
+						const watchEndpoint = responsiveList.overlay?.musicItemThumbnailOverlayRenderer?.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint;
+						const type = watchEndpoint?.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType;
 
-							let i = 0;
-							// I think youtube likes nesting
-							for (const entry of data.contents.tabbedSearchResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents) {
-								i++;
-								console.log(entry);
-								if (i > 7) {
-									break;
-								}
-								// info badge
-								const contents = entry.itemSectionRenderer?.contents[0];
-								if (contents?.messageRenderer) continue;
-
-								if (entry.musicCardShelfRenderer) {
-									const watchEndpoint = entry.musicCardShelfRenderer.title.runs[0].navigationEndpoint.watchEndpoint;
-									const type = watchEndpoint.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType;
-									if (type != "MUSIC_VIDEO_TYPE_ATV") continue;
-									coverUrl = watchEndpoint.videoId;
-									break;
-								}
-								const responsiveList = contents.musicResponsiveListItemRenderer;
-								if (entry.itemSectionRenderer) {
-									if (contents.didYouMeanRenderer) continue;
-									const watchEndpoint = responsiveList.overlay?.musicItemThumbnailOverlayRenderer?.content.musicPlayButtonRenderer.playNavigationEndpoint.watchEndpoint;
-									const type = watchEndpoint?.watchEndpointMusicSupportedConfigs.watchEndpointMusicConfig.musicVideoType;
-
-									if (type != "MUSIC_VIDEO_TYPE_ATV") continue;
-									const thumbnail = responsiveList.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails[0].url;
-									coverUrl = thumbnail.replace("w60-h60", "w1024-h1024");
-									covers.value.push({
-										title: responsiveList.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text,
-										autors: responsiveList.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[2].text,
-										provider: "youtube",
-										src: coverUrl,
-									});
-								}
-							}
-						} catch (e) {
-							console.yLog(e);
-							continue;
-						}
+						if (type != "MUSIC_VIDEO_TYPE_ATV") continue;
+						const thumbnail = responsiveList.thumbnail.musicThumbnailRenderer.thumbnail.thumbnails[0].url;
+						coverUrl = thumbnail.replace("w60-h60", "w1024-h1024");
+						covers.value.push({
+							title: responsiveList.flexColumns[0].musicResponsiveListItemFlexColumnRenderer.text.runs[0].text,
+							autors: responsiveList.flexColumns[1].musicResponsiveListItemFlexColumnRenderer.text.runs[2].text,
+							provider: "youtube",
+							src: coverUrl,
+						});
 					}
 				}
 			} catch (error) {
